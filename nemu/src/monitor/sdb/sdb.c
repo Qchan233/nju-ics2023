@@ -103,7 +103,7 @@ static int cmd_x(char *args){
   int i = 0;
   for (i = 0; i < n; i++)
   {
-    printf("%x\n", addr);
+    printf("%#x\n", addr);
   }
   return 0;
 }
