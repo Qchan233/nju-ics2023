@@ -50,11 +50,12 @@ static int cmd_c(char *args) {
 
 
 static int cmd_q(char *args) {
+  printf("Quiting NEMU\n");
   set_nemu_state(NEMU_QUIT, 0 , 0);
   return -1;
 }
 
-static int cmd_si(char * args) {
+static int cmd_si(char *args) {
   if (args == NULL){
     cpu_exec(1);
     return 0;
@@ -68,6 +69,21 @@ static int cmd_si(char * args) {
   return 0;
 }
 
+static int cmd_info(char *args){
+  char *arg = strtok(NULL, " ");
+  if (arg == NULL){
+    printf("Expect r for register and w for watchpoints\n");
+    return 0;
+  }
+  if (strcmp(arg, "r")){
+    
+  }
+  if (strcmp(arg, "w")){
+    printf("Watchpoints not supported yet\n");
+  }
+  return 0;
+}
+
 static int cmd_help(char *args);
 
 static struct {
@@ -78,7 +94,8 @@ static struct {
   { "help", "Display information about all supported commands", cmd_help },
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
-  { "si", "Execute Step", cmd_si }
+  { "si", "Execute Step", cmd_si },
+  { "info", "Display Info", cmd_info }
 
   /* TODO: Add more commands */
 
