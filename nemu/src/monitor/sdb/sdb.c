@@ -84,6 +84,30 @@ static int cmd_info(char *args){
   return 0;
 }
 
+static int cmd_x(char *args){
+  char *arg = strtok(NULL, " ");
+  int n = 0;
+  if (sscanf(arg, "%d", &n) < 1){
+    printf("Number Unrecognized.\n");
+    return 0;
+  }
+
+  arg = strtok(NULL, " ");
+  uint32_t addr = 0;
+
+  if (sscanf(arg, "%x", &addr) < 1){
+    printf("Number Unrecognized.\n");
+    return 0;
+  }
+
+  int i = 0;
+  for (i = 0; i < n; i++)
+  {
+    printf("%x\n", addr);
+  }
+  return 0;
+}
+
 static int cmd_help(char *args);
 
 static struct {
@@ -95,7 +119,8 @@ static struct {
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
   { "si", "Execute Step", cmd_si },
-  { "info", "Display Info", cmd_info }
+  { "info", "Display Info", cmd_info },
+  { "x", "Scan Memory", cmd_x }
 
   /* TODO: Add more commands */
 
