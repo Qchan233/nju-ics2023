@@ -75,10 +75,10 @@ static int cmd_info(char *args){
     printf("Expect r for register and w for watchpoints\n");
     return 0;
   }
-  if (strcmp(arg, "r")){
-    
+  if (strcmp(arg, "r") == 0){
+    isa_reg_display();
   }
-  if (strcmp(arg, "w")){
+  if (strcmp(arg, "w") == 0){
     printf("Watchpoints not supported yet\n");
   }
   return 0;
