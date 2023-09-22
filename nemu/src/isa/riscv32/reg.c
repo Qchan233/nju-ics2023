@@ -27,7 +27,7 @@ void isa_reg_display() {
   int n = 0;
   for (n = 0; n < 32; n++){
     word_t val = gpr(n);
-    printf("%-3s: %-10x %-10u\n", regs[n], val, val);
+    printf("%-3s: %#-10x %-10u\n", regs[n], val, val);
   }
 }
 
