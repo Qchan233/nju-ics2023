@@ -55,9 +55,10 @@ static int cmd_q(char *args) {
 }
 
 static int cmd_si(char * args) {
-  if (strlen(args) == 0){
+  char *arg = strtok(NULL, " ");
+  if (arg == NULL){
     cpu_exec(1);
-  } 
+  }
   int nstep;
   if (sscanf(args, "%d", &nstep) < 1){
     printf("Number Unrecognized.\n");
