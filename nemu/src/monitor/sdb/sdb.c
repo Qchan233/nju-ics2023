@@ -55,9 +55,9 @@ static int cmd_q(char *args) {
 }
 
 static int cmd_si(char * args) {
-  char *arg = strtok(NULL, " ");
-  if (arg == NULL){
+  if (args == NULL){
     cpu_exec(1);
+    return 0;
   }
   int nstep;
   if (sscanf(args, "%d", &nstep) < 1){
