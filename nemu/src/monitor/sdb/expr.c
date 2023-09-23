@@ -22,9 +22,9 @@
 
 enum {
   TK_NOTYPE = 256, TK_EQ,
-
-  /* TODO: Add more token types */
-
+  TK_NUM, 
+  TK_PLUS = '+', TK_MINUS = '-', TK_STAR = '*', TK_SLASH = '/',
+  TK_LP = '(', TK_RP = ')'
 };
 
 static struct rule {
@@ -37,7 +37,13 @@ static struct rule {
    */
 
   {" +", TK_NOTYPE},    // spaces
+  {"-?\\d+", TK_NUM},    //if minus sign is followed by numbers then it is integer
   {"\\+", '+'},         // plus
+  {"\\-", '-'},         // minus
+  {"\\*", '*'},         // star
+  {"\\/", '/'},         // slash
+  {"\\(", '('},         // left parenthesis
+  {"\\)", ')'},         // right parenthesis
   {"==", TK_EQ},        // equal
 };
 
