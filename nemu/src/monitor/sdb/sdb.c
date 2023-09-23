@@ -110,6 +110,24 @@ static int cmd_x(char *args){
   return 0;
 }
 
+static int cmd_p(char *args) {
+  char *arg = strtok(NULL, " ");
+  if (arg == NULL){
+    printf("Expect a expression\n");
+    return 0;
+  } 
+
+  printf("Evaluating: %s", arg);
+  bool success;
+  word_t result = expr(arg, &success);
+  if (!success){
+    printf("Invalid Expression\n");
+    return 0;
+  }
+  printf("%u", result);
+  return 0;
+}
+
 static int cmd_help(char *args);
 
 static struct {
@@ -122,10 +140,9 @@ static struct {
   { "q", "Exit NEMU", cmd_q },
   { "si", "Execute Step", cmd_si },
   { "info", "Display Info", cmd_info },
-  { "x", "Scan Memory", cmd_x }
-
+  { "x", "Scan Memory", cmd_x },
+  { "p", "Compute Expression", cmd_p}
   /* TODO: Add more commands */
-
 };
 
 #define NR_CMD ARRLEN(cmd_table)
