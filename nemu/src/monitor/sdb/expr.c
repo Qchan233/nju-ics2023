@@ -39,7 +39,7 @@ static struct rule {
    */
 
   {" +", TK_NOTYPE},    // spaces
-  {"-?[0-9]+", TK_NUM},    //if minus sign is followed by numbers then it is integer
+  {"[0-9]+", TK_NUM},    //if minus sign is followed by numbers then it is integer
   {"\\+", '+'},         // plus
   {"\\-", '-'},         // minus
   {"\\*", '*'},         // star
@@ -94,7 +94,7 @@ typedef struct token {
   char str[32];
 } Token;
 
-static Token tokens[32] __attribute__((used)) = {};
+static Token tokens[256] __attribute__((used)) = {};
 static int nr_token __attribute__((used))  = 0;
 
 static int token_count;

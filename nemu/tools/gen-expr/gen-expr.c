@@ -22,6 +22,7 @@
 
 // this should be enough
 static char buf[65536] = {};
+static char *current;
 static char code_buf[65536 + 128] = {}; // a little larger than `buf`
 static char *code_format =
 "#include <stdio.h>\n"
@@ -31,8 +32,62 @@ static char *code_format =
 "  return 0; "
 "}";
 
-static void gen_rand_expr() {
-  buf[0] = '\0';
+
+#define MAX_DEPTH 3
+
+uint32_t choose(uint32_t n){
+  srand(time(0));
+  return rand() % n;
+}
+
+static void gen(char* s){
+  int length = strlen(s);
+  sprintf(current, "%s", s);
+  current += length;
+}
+
+static void gen_num(){
+  uint32_t num = choose(1000);
+  char temp[5];
+  sprintf(temp, "%u", num);
+  int length = strlen(temp);
+  sprintf(current, "%s", temp);
+  current += length;
+}
+
+static void gen_rand_op(){
+  int op_type = choose(4);
+  char op;
+  switch (op_type)
+  {
+    case 0:
+      op = '+';
+      break;
+    case 1:
+      op = '-';
+      break;
+    case 2:
+      op = '*';
+      break;
+    case 3:
+      op = '/';
+      break;
+  }
+  sprintf(current, "%c", op);
+  current += 1;
+}
+
+
+static void gen_rand_expr(int depth) {
+  if (depth > MAX_DEPTH){
+    gen_num();
+  }
+
+  switch (choose(3)) {
+    case 0: gen_num(); break;
+    case 1: gen("("); gen_rand_expr(depth + 1); gen(")"); break;
+    default: gen_rand_expr(depth + 1); gen_rand_op(); gen_rand_expr(depth + 1); break;
+  }
 }
 
 int main(int argc, char *argv[]) {
@@ -44,7 +99,8 @@ int main(int argc, char *argv[]) {
   }
   int i;
   for (i = 0; i < loop; i ++) {
-    gen_rand_expr();
+    current = buf;
+    gen_rand_expr(0);
 
     sprintf(code_buf, code_format, buf);
 
