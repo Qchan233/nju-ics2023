@@ -181,16 +181,26 @@ word_t eval(int p, int q){
     int op = -1;
     int op_pos = -1;
 
+    int paren_depth = 0;
+
     for(i = p; i <= q; i++){
       int ttype = tokens[i].type;
+      if (ttype == TK_LP){
+        paren_depth += 1;
+      }
+      else if (ttype == TK_RP){
+        paren_depth -= 1;
+      }
+      
       if (ttype == TK_PLUS || ttype == TK_MINUS || ttype == TK_STAR || ttype == TK_SLASH){
-        if (precedence(ttype) < precedence(op)){
+        if (precedence(ttype) < precedence(op) && paren_depth == 0 ){
           op = ttype;
           op_pos = i;
         }
       }
     }
-    if (op_pos < 0){
+
+    if (op_pos < 0 || paren_depth != 0){
       expr_error = true;
       return 0;
     }
