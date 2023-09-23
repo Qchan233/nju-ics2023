@@ -179,16 +179,24 @@ word_t eval(int p, int q){
   else {
     int i = 0;
     int op = -1;
+    int op_pos = -1;
+
     for(i = p; i <= q; i++){
       int ttype = tokens[i].type;
       if (ttype == TK_PLUS || ttype == TK_MINUS || ttype == TK_STAR || ttype == TK_SLASH){
         if (precedence(op) < precedence(ttype)){
           op = ttype;
+          op_pos = i;
         }
       }
     }
-    word_t val1 = eval(p, i - 1);
-    word_t val2 = eval(i + 1, q);
+    if (op_pos < 0){
+      expr_error = true;
+      return 0;
+    }
+
+    word_t val1 = eval(p, op_pos - 1);
+    word_t val2 = eval(op_pos + 1, q);
 
     switch (op) {
       case '+': return val1 + val2;
