@@ -39,7 +39,7 @@ static struct rule {
    */
 
   {" +", TK_NOTYPE},    // spaces
-  {"\\d+", TK_NUM},    //if minus sign is followed by numbers then it is integer
+  {"[0-9]+", TK_NUM},    //if minus sign is followed by numbers then it is integer
   {"\\+", '+'},         // plus
   {"\\-", '-'},         // minus
   {"\\*", '*'},         // star
