@@ -187,8 +187,8 @@ word_t eval(int p, int q){
         }
       }
     }
-    word_t val1 = eval(p, op - 1);
-    word_t val2 = eval(op + 1, q);
+    word_t val1 = eval(p, i - 1);
+    word_t val2 = eval(i + 1, q);
 
     switch (op) {
       case '+': return val1 + val2;
