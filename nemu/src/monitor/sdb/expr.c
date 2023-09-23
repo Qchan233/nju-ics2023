@@ -221,7 +221,6 @@ word_t expr(char *e, bool *success) {
     *success = false;
     return 0;
   }
-  printf("%d", token_count);
 
   expr_error = false;
   int p = 0;
