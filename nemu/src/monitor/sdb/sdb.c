@@ -100,7 +100,6 @@ static int cmd_x(char *args){
     printf("Number Unrecognized.\n");
     return 0;
   }
-  // paddr_t paddr = host_to_guest(addr);
 
   int i = 0;
   for (i = 0; i < n; i++)
