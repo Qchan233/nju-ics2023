@@ -15,6 +15,7 @@
 
 #include <isa.h>
 #include <cpu/cpu.h>
+#include <memory/paddr.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "sdb.h"
@@ -99,11 +100,12 @@ static int cmd_x(char *args){
     printf("Number Unrecognized.\n");
     return 0;
   }
+  // paddr_t paddr = host_to_guest(addr);
 
   int i = 0;
   for (i = 0; i < n; i++)
   {
-    printf("%#x\n", addr);
+    printf("%#x: %d\n", addr, paddr_read(addr, i));
   }
   return 0;
 }
