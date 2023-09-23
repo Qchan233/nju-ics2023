@@ -104,8 +104,8 @@ static int cmd_x(char *args){
   int i = 0;
   for (i = 0; i < n; i++)
   {
-    addr += 4;
     printf("%#x: %#x\n", addr, paddr_read(addr, 4));
+    addr += 4;
   }
   return 0;
 }
