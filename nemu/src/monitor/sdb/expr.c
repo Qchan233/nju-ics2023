@@ -184,7 +184,7 @@ word_t eval(int p, int q){
     for(i = p; i <= q; i++){
       int ttype = tokens[i].type;
       if (ttype == TK_PLUS || ttype == TK_MINUS || ttype == TK_STAR || ttype == TK_SLASH){
-        if (precedence(op) < precedence(ttype)){
+        if (precedence(ttype) < precedence(op)){
           op = ttype;
           op_pos = i;
         }
