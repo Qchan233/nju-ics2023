@@ -19,6 +19,7 @@
  * Type 'man regex' for more information about POSIX regex functions.
  */
 #include <regex.h>
+#include <string.h>
 
 enum {
   TK_NOTYPE = 256, TK_EQ,
@@ -79,6 +80,7 @@ static int nr_token __attribute__((used))  = 0;
 static bool make_token(char *e) {
   int position = 0;
   int i;
+  int token_count = 0;
   regmatch_t pmatch;
 
   nr_token = 0;
@@ -100,10 +102,24 @@ static bool make_token(char *e) {
          * of tokens, some extra actions should be performed.
          */
 
-        switch (rules[i].token_type) {
-          default: TODO();
-        }
 
+        switch (rules[i].token_type) {
+          case '+':
+          case '-':
+          case '*':
+          case '/':
+          case '(':
+          case ')':
+            tokens[token_count].type = rules[i].token_type;
+            break;
+          case TK_NUM:
+            tokens[token_count].type = TK_NUM;
+            strncpy(tokens[token_count].str, substr_start, substr_len);
+            break;
+          case TK_NOTYPE:
+            break;
+          default: break;
+        }
         break;
       }
     }
