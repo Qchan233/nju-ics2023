@@ -155,7 +155,28 @@ static bool make_token(char *e) {
 bool expr_error;
 
 bool check_parentheses(int p, int q){
-  return tokens[p].type == TK_LP && tokens[q].type == TK_RP;
+  if (tokens[p].type != TK_LP){
+    return false;
+  }
+  int count = 0;
+  int i = 0;
+  for(i=p;i<=q;i++){
+    if (tokens[i].type == TK_LP){
+      count++;
+    }
+    else if (tokens[i].type == TK_RP){
+      count--;
+    }
+
+    if (count == 0 && i < q){
+      return false;
+    }
+  }
+
+  if (count != 0){
+    expr_error = true;
+  }
+  return true;
 }
 
 word_t eval(int p, int q){
