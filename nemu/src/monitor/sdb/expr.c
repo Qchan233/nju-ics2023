@@ -20,6 +20,7 @@
  */
 #include <regex.h>
 #include <string.h>
+#include <common.h>
 
 enum {
   TK_NOTYPE = 256, TK_EQ,
@@ -47,6 +48,25 @@ static struct rule {
   {"\\)", ')'},         // right parenthesis
   {"==", TK_EQ},        // equal
 };
+
+
+int precedence(int token){
+  switch (token)
+  {
+    case TK_EQ:
+      return 0;
+    case TK_PLUS:
+    case TK_MINUS:
+      return 1;
+    case TK_STAR:
+    case TK_SLASH:
+      return 2;
+    case -1:  
+      return 2147483647;
+    default:
+      return -1;
+  }
+}
 
 #define NR_REGEX ARRLEN(rules)
 
@@ -77,13 +97,15 @@ typedef struct token {
 static Token tokens[32] __attribute__((used)) = {};
 static int nr_token __attribute__((used))  = 0;
 
+static int token_count;
+
 static bool make_token(char *e) {
   int position = 0;
   int i;
-  int token_count = 0;
   regmatch_t pmatch;
 
   nr_token = 0;
+  token_count = 0;
 
   while (e[position] != '\0') {
     /* Try all rules one by one. */
@@ -101,8 +123,6 @@ static bool make_token(char *e) {
          * to record the token in the array `tokens'. For certain types
          * of tokens, some extra actions should be performed.
          */
-
-
         switch (rules[i].token_type) {
           case '+':
           case '-':
@@ -120,10 +140,10 @@ static bool make_token(char *e) {
             break;
           default: break;
         }
+        token_count++;
         break;
       }
     }
-
     if (i == NR_REGEX) {
       printf("no match at position %d\n%s\n%*.s^\n", position, e, position, "");
       return false;
@@ -131,6 +151,61 @@ static bool make_token(char *e) {
   }
 
   return true;
+}
+ 
+bool expr_error;
+
+bool check_parentheses(int p, int q){
+  return tokens[p].type == TK_LP && tokens[q].type == TK_RP;
+}
+
+word_t eval(int p, int q){
+  if (p > q) {
+    expr_error = true;
+    return 0;
+  }
+  else if (p == q) {
+    /* Single token.
+     * For now this token should be a number.
+     * Return the value of the number.
+     */
+    return atoi(tokens[p].str);
+  }
+  else if (check_parentheses(p, q) == true) {
+    /* The expression is surrounded by a matched pair of parentheses.
+     * If that is the case, just throw away the parentheses.
+     */
+    return eval(p + 1, q - 1);
+  }
+  else {
+    int i = 0;
+    int op = -1;
+    for(i = p; i <= q; i++){
+      int ttype = tokens[i].type;
+      if (ttype == TK_PLUS || ttype == TK_MINUS || ttype == TK_STAR || ttype == TK_SLASH){
+        if (precedence(op) < precedence(ttype)){
+          op = ttype;
+        }
+      }
+    }
+    word_t val1 = eval(p, op - 1);
+    word_t val2 = eval(op + 1, q);
+
+    switch (op) {
+      case '+': return val1 + val2;
+      case '-': return val1 - val2;
+      case '*': return val1 * val2;
+      case '/': 
+        if (val2 == 0){
+          expr_error = true;
+          return 0;
+        }
+        return val1 / val2;
+      default:
+        expr_error = true;
+        return 0;
+    }
+  }
 }
 
 
@@ -140,8 +215,15 @@ word_t expr(char *e, bool *success) {
     return 0;
   }
 
-  /* TODO: Insert codes to evaluate the expression. */
-  TODO();
+  expr_error = false;
+  int p = 0;
+  int q = token_count - 1;
 
-  return 0;
+  int result = eval(p, q);
+  if (expr_error){
+    *success = false;
+    return 0;
+  }
+  
+  return result;
 }
