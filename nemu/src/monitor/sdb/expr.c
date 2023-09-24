@@ -216,7 +216,7 @@ word_t eval(int p, int q){
       }
       
       if (ttype == TK_PLUS || ttype == TK_MINUS || ttype == TK_STAR || ttype == TK_SLASH){
-        if (precedence(ttype) < precedence(op) && paren_depth == 0 ){
+        if (precedence(ttype) <= precedence(op) && paren_depth == 0 ){
           op = ttype;
           op_pos = i;
         }
