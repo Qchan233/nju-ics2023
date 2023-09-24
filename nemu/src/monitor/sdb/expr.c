@@ -140,6 +140,8 @@ static bool make_token(char *e) {
             tokens[token_count].type = rules[i].token_type;
             token_count++;
             break;
+          case TK_HEX:
+          case TK_REG:
           case TK_NUM:
             tokens[token_count].type = TK_NUM;
             memset(tokens[token_count].str, 0, TOKEN_STR);
