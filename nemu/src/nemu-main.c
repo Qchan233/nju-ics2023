@@ -39,7 +39,6 @@
 #include <stdlib.h>
 #include "monitor/sdb/sdb.h"
 
-
 int main() {
     FILE *file = fopen("exprs", "r");
     if (file == NULL) {
