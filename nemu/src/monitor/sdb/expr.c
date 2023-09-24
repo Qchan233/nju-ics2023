@@ -60,6 +60,8 @@ int precedence(int token){
   switch (token)
   {
     case TK_EQ:
+    case TK_NEQ:
+    case TK_AND:
       return 0;
     case TK_PLUS:
     case TK_MINUS:
@@ -137,6 +139,9 @@ static bool make_token(char *e) {
           case '/':
           case '(':
           case ')':
+          case TK_EQ:
+          case TK_NEQ:
+          case TK_AND:
             tokens[token_count].type = rules[i].token_type;
             token_count++;
             break;
@@ -266,6 +271,9 @@ word_t eval(int p, int q){
           return 0;
         }
         return val1 / val2;
+      case TK_EQ: return val1 == val2;
+      case TK_NEQ: return val1 != val2;
+      case TK_AND: return val1 && val2;
       default:
         expr_error = true;
         return 0;
