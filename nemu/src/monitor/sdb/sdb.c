@@ -111,14 +111,13 @@ static int cmd_x(char *args){
 }
 
 static int cmd_p(char *args) {
-  char *arg = strtok(NULL, " ");
-  if (arg == NULL){
+  if (args == NULL){
     printf("Expect a expression\n");
     return 0;
   } 
 
   bool success;
-  word_t result = expr(arg, &success);
+  word_t result = expr(args, &success);
   if (!success){
     printf("Invalid Expression\n");
     return 0;
