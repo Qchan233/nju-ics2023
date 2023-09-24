@@ -245,11 +245,21 @@ word_t eval(int p, int q){
         paren_depth -= 1;
       }
       
-      if (ttype == TK_PLUS || ttype == TK_MINUS || ttype == TK_STAR || ttype == TK_SLASH){
-        if (precedence(ttype) <= precedence(op) && paren_depth == 0 ){
-          op = ttype;
-          op_pos = i;
-        }
+      switch (ttype)
+      {
+        case TK_PLUS:
+        case TK_MINUS:
+        case TK_STAR:
+        case TK_SLASH:
+        case TK_AND:
+        case TK_EQ:
+        case TK_NEQ:
+          if (precedence(ttype) <= precedence(op) && paren_depth == 0 ){
+            op = ttype;
+            op_pos = i;
+          }
+          break;
+        default: break;
       }
     }
 
