@@ -145,12 +145,13 @@ static bool make_token(char *e) {
             memset(tokens[token_count].str, 0, TOKEN_STR);
             strncpy(tokens[token_count].str, substr_start, substr_len);
             token_count++;
+            break;
           case TK_REG:
             tokens[token_count].type = TK_REG;
             memset(tokens[token_count].str, 0, TOKEN_STR);
             strncpy(tokens[token_count].str, substr_start, substr_len);
             token_count++;
-
+            break;
           case TK_NUM:
             tokens[token_count].type = TK_NUM;
             memset(tokens[token_count].str, 0, TOKEN_STR);
