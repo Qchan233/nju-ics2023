@@ -202,7 +202,7 @@ word_t eval(int p, int q){
       return atoi(tokens[p].str);
     }
     else if (tokens[p].type == TK_HEX){
-      return strtol(tokens[p].str, NULL, 16);
+      return (word_t) strtol(tokens[p].str, NULL, 16);
     }
     return 0;
   }
