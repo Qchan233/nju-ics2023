@@ -216,11 +216,26 @@ word_t eval(int p, int q){
      * For now this token should be a number.
      * Return the value of the number.
      */
+    int tktype = tokens[p].type;
+    switch (tktype)
+    {
+      case TK_NUM:
+        return atoi(tokens[p].str);
+      case TK_HEX:
+        return (word_t) strtol(tokens[p].str, NULL, 16);
+      case TK_REG:
+        bool success;
+        word_t result = isa_reg_str2val(tokens[p].str+1, &success);
+        if (!success){
+          expr_error = true;
+        }
+        return result;
+      default:
+        return 0;
+    }
     if (tokens[p].type == TK_NUM){
-      return atoi(tokens[p].str);
     }
     else if (tokens[p].type == TK_HEX){
-      return (word_t) strtol(tokens[p].str, NULL, 16);
     }
     return 0;
   }
