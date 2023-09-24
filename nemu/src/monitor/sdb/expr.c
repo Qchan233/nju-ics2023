@@ -24,8 +24,9 @@
 
 enum {
   TK_NOTYPE = 256, TK_EQ,
-  TK_NUM, 
+  TK_NUM, TK_HEX, TK_REG,
   TK_PLUS = '+', TK_MINUS = '-', TK_STAR = '*', TK_SLASH = '/',
+  TK_NEQ, TK_AND,
   TK_LP = '(', TK_RP = ')'
 };
 
@@ -39,7 +40,10 @@ static struct rule {
    */
 
   {" +", TK_NOTYPE},    // spaces
-  {"[0-9]+", TK_NUM},    //if minus sign is followed by numbers then it is integer
+  {"0x[0-9a-f]", TK_HEX},
+  {"$[0-9a-z]", TK_REG},
+  {"[0-9]+", TK_NUM},    
+
   {"\\+", '+'},         // plus
   {"\\-", '-'},         // minus
   {"\\*", '*'},         // star
@@ -47,6 +51,8 @@ static struct rule {
   {"\\(", '('},         // left parenthesis
   {"\\)", ')'},         // right parenthesis
   {"==", TK_EQ},        // equal
+  {"!=", TK_NEQ},         // not equal
+  {"&&", TK_AND}         // logic and
 };
 
 
