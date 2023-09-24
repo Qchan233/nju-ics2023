@@ -132,18 +132,18 @@ static bool make_token(char *e) {
           case '(':
           case ')':
             tokens[token_count].type = rules[i].token_type;
+            token_count++;
             break;
           case TK_NUM:
             tokens[token_count].type = TK_NUM;
             memset(tokens[token_count].str, 0, TOKEN_STR);
             strncpy(tokens[token_count].str, substr_start, substr_len);
+            token_count++;
             break;
           case TK_NOTYPE:
-            token_count--;
             break;
           default: break;
         }
-        token_count++;
         break;
       }
     }
