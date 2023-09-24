@@ -39,6 +39,7 @@
 #include <stdlib.h>
 #include "monitor/sdb/sdb.h"
 
+void init_regex();
 int main() {
     FILE *file = fopen("exprs", "r");
     if (file == NULL) {
@@ -46,6 +47,8 @@ int main() {
         return 1;
     }
     bool success;
+    init_regex();
+
 
     char expression[65536];
     int expected_result;
