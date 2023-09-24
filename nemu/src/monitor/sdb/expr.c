@@ -89,9 +89,10 @@ void init_regex() {
   }
 }
 
+#define TOKEN_STR 32
 typedef struct token {
   int type;
-  char str[32];
+  char str[TOKEN_STR];
 } Token;
 
 static Token tokens[256] __attribute__((used)) = {};
@@ -134,6 +135,7 @@ static bool make_token(char *e) {
             break;
           case TK_NUM:
             tokens[token_count].type = TK_NUM;
+            memset(tokens[token_count].str, 0, TOKEN_STR);
             strncpy(tokens[token_count].str, substr_start, substr_len);
             break;
           case TK_NOTYPE:
