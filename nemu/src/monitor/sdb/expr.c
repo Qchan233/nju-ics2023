@@ -139,6 +139,7 @@ static bool make_token(char *e) {
             strncpy(tokens[token_count].str, substr_start, substr_len);
             break;
           case TK_NOTYPE:
+            token_count--;
             break;
           default: break;
         }
