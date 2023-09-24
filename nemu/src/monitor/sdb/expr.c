@@ -27,7 +27,8 @@ enum {
   TK_NUM, TK_HEX, TK_REG,
   TK_PLUS = '+', TK_MINUS = '-', TK_STAR = '*', TK_SLASH = '/',
   TK_NEQ, TK_AND,
-  TK_LP = '(', TK_RP = ')'
+  TK_LP = '(', TK_RP = ')',
+  TK_DEREF
 };
 
 static struct rule {
