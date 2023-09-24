@@ -40,8 +40,8 @@ static struct rule {
    */
 
   {" +", TK_NOTYPE},    // spaces
-  {"0x[0-9a-f]", TK_HEX},
-  {"$[0-9a-z]", TK_REG},
+  {"0x[0-9a-f]+", TK_HEX},
+  {"$[0-9a-z]+", TK_REG},
   {"[0-9]+", TK_NUM},    
 
   {"\\+", '+'},         // plus
