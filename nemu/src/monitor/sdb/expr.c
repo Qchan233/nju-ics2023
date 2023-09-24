@@ -233,11 +233,6 @@ word_t eval(int p, int q){
       default:
         return 0;
     }
-    if (tokens[p].type == TK_NUM){
-    }
-    else if (tokens[p].type == TK_HEX){
-    }
-    return 0;
   }
   else if (check_parentheses(p, q) == true) {
     /* The expression is surrounded by a matched pair of parentheses.
