@@ -136,6 +136,12 @@ static int cmd_w(char* args) {
     free_wp(2*i);
   }
   print_wp();
+  printf("--------------------\n");
+  for (i=0;i<16;i++){
+    free_wp(2*i+1);
+  }
+  print_wp();
+
  return 0;
 }
 
