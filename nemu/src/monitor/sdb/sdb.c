@@ -142,6 +142,22 @@ static int cmd_d(char* args) {
   return 0;
 }
 
+static int cmd_t(char* args){
+  int i;
+  int j;
+  for (i=0;i<10;i++){
+    for (j=0;j<32;j++){
+      new_wp("");
+    }
+    for (j=0;j<32;j++){
+      free_wp(j);
+    }
+    print_wp();
+  }
+
+  return 0;
+}
+
 static int cmd_help(char *args);
 
 static struct {
@@ -157,7 +173,8 @@ static struct {
   { "x", "Scan Memory", cmd_x },
   { "p", "Compute Expression", cmd_p},
   { "w", "Set Watch Points", cmd_w},
-  { "d", "Delete Watch Points", cmd_d}
+  { "d", "Delete Watch Points", cmd_d},
+  {"t", "Run Tests", cmd_t}
   /* TODO: Add more commands */
 };
 
