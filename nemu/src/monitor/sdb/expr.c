@@ -29,13 +29,12 @@ enum {
   TK_LP = '(', TK_RP = ')',
   TK_PLUS = '+', TK_MINUS = '-', TK_STAR = '*', TK_SLASH = '/',
   TK_NEQ, TK_AND,
-  TK_DEREF
+  TK_DEREF, TK_NEG // unary operators
 };
 
 inline bool is_operator(int tk_type){
   return tk_type == TK_PLUS || tk_type == TK_MINUS || tk_type == TK_STAR || tk_type == TK_SLASH || tk_type == TK_EQ \
-  || tk_type == TK_NEQ || tk_type == TK_DEREF; 
-
+  || tk_type == TK_NEQ || tk_type == TK_DEREF || tk_type == TK_NEG; 
 }
 
 static struct rule {
@@ -78,6 +77,7 @@ int precedence(int tk_type){
     case TK_SLASH:
       return 2;
     case TK_DEREF:
+    case TK_NEG:
       return 3;
     case -1:  
       return 2147483647;
@@ -261,7 +261,6 @@ word_t eval(int p, int q){
       else if (tk_type == TK_RP){
         paren_depth -= 1;
       }
-
       
       if (is_operator(tokens[i].type)){
           if (precedence(tk_type) <= precedence(op) && paren_depth == 0 ){
@@ -285,7 +284,8 @@ word_t eval(int p, int q){
       {
         case TK_DEREF:
           return paddr_read(val, 4);
-          break;
+        case TK_NEG:
+          return -val;
         default:
           return 0;
           break;
