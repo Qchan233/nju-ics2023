@@ -286,7 +286,6 @@ word_t eval(int p, int q){
       return 0;
     }
 
-
     if (op_pos == p){ //unary operators
       word_t val = eval(p+1, q);
       if (expr_error){
