@@ -26,11 +26,14 @@ typedef struct watchpoint {
   int NO;
   struct watchpoint *next;
   char expr[EXPR_LEN];
+  bool initialized;
+  word_t prev_value;
 } WP;
 
 void init_wp_pool();
 WP* new_wp(char* expr);
 void free_wp(int index);
 void print_wp();
+bool check_wp();
 
 #endif

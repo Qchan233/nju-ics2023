@@ -40,6 +40,7 @@ WP* new_wp(char* expr){
   wp->next = head;
   strcpy(wp->expr, expr);
   head = wp;
+  wp->initialized = false;
   return wp;
 }
 
@@ -64,6 +65,10 @@ void print_wp(){
     printf("Watchpoint %d: %s\n", wp->NO, wp->expr);
     wp = wp->next;
   }
+}
+
+bool check_change(){
+  return false;
 }
 
 
