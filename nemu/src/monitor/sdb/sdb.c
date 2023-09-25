@@ -128,28 +128,17 @@ static int cmd_p(char *args) {
 }
 
 static int cmd_w(char* args) {
-  int i=0;
-  for (i=0;i<33;i++){
-    new_wp("");
-  }
-  for (i=0;i<16;i++){
-    free_wp(2*i);
-  }
-  print_wp();
-  printf("--------------------\n");
-  for (i=0;i<16;i++){
-    free_wp(2*i+1);
-  }
-  for (i=0;i<16;i++){
-    new_wp("");
-  }
-
-  print_wp();
-
+ new_wp(args);
  return 0;
 }
 
 static int cmd_d(char* args) {
+  int index;
+  if (sscanf(args, "%d", &index) < 1){
+    printf("Number Unrecognized.\n");
+    return 0;
+  }
+  free_wp(index);
   return 0;
 }
 
