@@ -327,7 +327,11 @@ word_t expr(char *e, bool *success) {
     if (tokens[i].type == '*' && (i == 0 || is_operator(tokens[i-1].type)) ) {
       tokens[i].type = TK_DEREF;
     }
+    if (tokens[i].type == '-' && (i == 0 || is_operator(tokens[i-1].type)) ) {
+      tokens[i].type = TK_NEG;
+    }
   }
+
 
   expr_error = false;
   int p = 0;
