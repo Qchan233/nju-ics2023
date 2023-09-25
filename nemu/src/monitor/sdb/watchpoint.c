@@ -36,10 +36,9 @@ WP* new_wp(char* expr){
     Log("Run out of watch points");
     return NULL;
   }
-
+  free_ = free_->next;
   wp->next = head;
   strcpy(wp->expr, expr);
-  free_ = free_->next;
   head = wp;
   return wp;
 }
