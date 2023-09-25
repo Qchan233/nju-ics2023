@@ -81,7 +81,7 @@ static int cmd_info(char *args){
     isa_reg_display();
   }
   if (strcmp(arg, "w") == 0){
-    printf("Watchpoints not supported yet\n");
+    print_wp();
   }
   return 0;
 }
@@ -133,6 +133,7 @@ static int cmd_w(char* args) {
   new_wp("");
   new_wp("");
   new_wp("");
+  print_wp();
  return 0;
 }
 

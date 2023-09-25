@@ -59,4 +59,12 @@ void free_wp(int index){
   } 
 }
 
+void print_wp(){
+  WP* wp = head;
+  while (wp){
+    printf("Watchpoint %d: %s\n", wp->NO, wp->expr);
+    wp = wp->next;
+  }
+}
+
 
