@@ -128,11 +128,10 @@ static int cmd_p(char *args) {
 }
 
 static int cmd_w(char* args) {
-  new_wp("1");
-  new_wp("2");
-  new_wp("3");
-  new_wp("4");
-  new_wp("5");
+  int i=0;
+  for (i=0;i<21;i++){
+    new_wp("");
+  }
   print_wp();
  return 0;
 }
