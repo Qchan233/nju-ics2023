@@ -332,7 +332,6 @@ word_t expr(char *e, bool *success) {
     }
   }
 
-
   expr_error = false;
   int p = 0;
   int q = token_count - 1;
