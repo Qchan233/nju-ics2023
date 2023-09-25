@@ -21,6 +21,7 @@
 #include <regex.h>
 #include <string.h>
 #include <common.h>
+#include <memory/paddr.h>
 
 enum {
   TK_NOTYPE = 256, TK_EQ,
@@ -30,6 +31,12 @@ enum {
   TK_LP = '(', TK_RP = ')',
   TK_DEREF
 };
+
+inline bool is_operator(int tk_type){
+  return tk_type == TK_PLUS || tk_type == TK_MINUS || tk_type == TK_STAR || tk_type == TK_SLASH || tk_type == TK_EQ \
+  || tk_type == TK_NEQ || tk_type == TK_DEREF; 
+
+}
 
 static struct rule {
   const char *regex;
@@ -57,8 +64,8 @@ static struct rule {
 };
 
 
-int precedence(int token){
-  switch (token)
+int precedence(int tk_type){
+  switch (tk_type)
   {
     case TK_EQ:
     case TK_NEQ:
@@ -105,16 +112,13 @@ typedef struct token {
 } Token;
 
 static Token tokens[256] __attribute__((used)) = {};
-static int nr_token __attribute__((used))  = 0;
-
-static int token_count;
+static int __attribute__((used))token_count;
 
 static bool make_token(char *e) {
   int position = 0;
   int i;
   regmatch_t pmatch;
 
-  nr_token = 0;
   token_count = 0;
 
   while (e[position] != '\0') {
@@ -248,15 +252,32 @@ word_t eval(int p, int q){
     int paren_depth = 0;
 
     for(i = p; i <= q; i++){
-      int ttype = tokens[i].type;
-      if (ttype == TK_LP){
+      int tk_type = tokens[i].type;
+      if (tk_type == TK_LP){
         paren_depth += 1;
       }
-      else if (ttype == TK_RP){
+      else if (tk_type == TK_RP){
         paren_depth -= 1;
       }
+
+      if (op_pos == p){ //unary operators
+        word_t val = eval(p+1, q);
+        if (expr_error){
+          return 0;
+        }
+        switch (tk_type)
+        {
+          case TK_DEREF:
+            return paddr_read(val, 4);
+            break;
+          default:
+            return 0;
+            break;
+        }
+
+      }
       
-      switch (ttype)
+      switch (tk_type)
       {
         case TK_PLUS:
         case TK_MINUS:
@@ -265,8 +286,8 @@ word_t eval(int p, int q){
         case TK_AND:
         case TK_EQ:
         case TK_NEQ:
-          if (precedence(ttype) <= precedence(op) && paren_depth == 0 ){
-            op = ttype;
+          if (precedence(tk_type) <= precedence(op) && paren_depth == 0 ){
+            op = tk_type;
             op_pos = i;
           }
           break;
@@ -307,6 +328,13 @@ word_t expr(char *e, bool *success) {
   if (!make_token(e)) {
     *success = false;
     return 0;
+  }
+
+  int i;
+  for (i = 0; i < token_count; i ++) {
+    if (tokens[i].type == '*' && (i == 0 || is_operator(tokens[i-1].type)) ) {
+      tokens[i].type = TK_DEREF;
+    }
   }
 
   expr_error = false;
