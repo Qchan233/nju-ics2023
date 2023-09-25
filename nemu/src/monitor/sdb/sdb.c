@@ -133,7 +133,7 @@ static int cmd_w(char* args) {
     new_wp("");
   }
   for (i=0;i<16;i++){
-    free_wp(i);
+    free_wp(2*i);
   }
   print_wp();
  return 0;
