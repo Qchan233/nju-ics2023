@@ -26,9 +26,9 @@
 enum {
   TK_NOTYPE = 256, TK_EQ,
   TK_NUM, TK_HEX, TK_REG,
+  TK_LP = '(', TK_RP = ')',
   TK_PLUS = '+', TK_MINUS = '-', TK_STAR = '*', TK_SLASH = '/',
   TK_NEQ, TK_AND,
-  TK_LP = '(', TK_RP = ')',
   TK_DEREF
 };
 
@@ -77,6 +77,8 @@ int precedence(int tk_type){
     case TK_STAR:
     case TK_SLASH:
       return 2;
+    case TK_DEREF:
+      return 3;
     case -1:  
       return 2147483647;
     default:
