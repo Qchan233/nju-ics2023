@@ -128,6 +128,8 @@ static int cmd_p(char *args) {
 }
 
 static int cmd_w(char* args) {
+  new_wp("");
+  free_wp(0);
  return 0;
 }
 
