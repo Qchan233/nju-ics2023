@@ -37,6 +37,15 @@ inline bool is_operator(int tk_type){
   || tk_type == TK_NEQ || tk_type == TK_DEREF || tk_type == TK_NEG; 
 }
 
+inline bool is_unary(int tk_type){
+  return tk_type == TK_DEREF || tk_type == TK_NEG;
+}
+
+inline bool is_binary(int tk_type){
+  return tk_type == TK_PLUS || tk_type == TK_MINUS || tk_type == TK_STAR || tk_type == TK_SLASH || tk_type == TK_EQ \
+  || tk_type == TK_NEQ;
+}
+
 static struct rule {
   const char *regex;
   int token_type;
@@ -262,8 +271,15 @@ word_t eval(int p, int q){
         paren_depth -= 1;
       }
       
-      if (is_operator(tokens[i].type)){
+      if (is_binary(tokens[i].type)){
           if (precedence(tk_type) <= precedence(op) && paren_depth == 0 ){
+            op = tk_type;
+            op_pos = i;
+          }
+      }
+
+      else if (is_unary(tokens[i].type)){
+          if (precedence(tk_type) < precedence(op) && paren_depth == 0 ){
             op = tk_type;
             op_pos = i;
           }
