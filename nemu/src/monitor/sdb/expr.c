@@ -263,21 +263,11 @@ word_t eval(int p, int q){
       }
 
       
-      switch (tk_type)
-      {
-        case TK_PLUS:
-        case TK_MINUS:
-        case TK_STAR:
-        case TK_SLASH:
-        case TK_AND:
-        case TK_EQ:
-        case TK_NEQ:
+      if (is_operator(tokens[i].type)){
           if (precedence(tk_type) <= precedence(op) && paren_depth == 0 ){
             op = tk_type;
             op_pos = i;
           }
-          break;
-        default: break;
       }
     }
 
