@@ -149,7 +149,7 @@ static int cmd_t(char* args){
     for (j=0;j<32;j++){
       new_wp("");
     }
-    for (j=0;j<32;j++){
+    for (j=0;j<100;j++){
       free_wp(j);
     }
     print_wp();
