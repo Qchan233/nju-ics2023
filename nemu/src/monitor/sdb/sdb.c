@@ -127,6 +127,14 @@ static int cmd_p(char *args) {
   return 0;
 }
 
+static int cmd_w(char* args) {
+ return 0;
+}
+
+static int cmd_d(char* args) {
+  return 0;
+}
+
 static int cmd_help(char *args);
 
 static struct {
@@ -140,7 +148,9 @@ static struct {
   { "si", "Execute Step", cmd_si },
   { "info", "Display Info", cmd_info },
   { "x", "Scan Memory", cmd_x },
-  { "p", "Compute Expression", cmd_p}
+  { "p", "Compute Expression", cmd_p},
+  { "w", "Set Watch Points", cmd_w},
+  { "d", "Delete Watch Points", cmd_d}
   /* TODO: Add more commands */
 };
 

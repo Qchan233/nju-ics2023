@@ -20,4 +20,16 @@
 
 word_t expr(char *e, bool *success);
 
+#define NR_WP 32
+#define EXPR_LEN 64
+typedef struct watchpoint {
+  int NO;
+  struct watchpoint *next;
+  char expr[EXPR_LEN];
+} WP;
+
+void init_wp_pool();
+WP* new_wp(char* expr);
+void free_wp(int index);
+
 #endif
