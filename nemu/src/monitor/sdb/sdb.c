@@ -129,7 +129,7 @@ static int cmd_p(char *args) {
 
 static int cmd_w(char* args) {
   int i=0;
-  for (i=0;i<32;i++){
+  for (i=0;i<33;i++){
     new_wp("");
   }
   for (i=0;i<16;i++){
