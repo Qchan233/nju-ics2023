@@ -140,6 +140,10 @@ static int cmd_w(char* args) {
   for (i=0;i<16;i++){
     free_wp(2*i+1);
   }
+  for (i=0;i<16;i++){
+    new_wp("");
+  }
+
   print_wp();
 
  return 0;
