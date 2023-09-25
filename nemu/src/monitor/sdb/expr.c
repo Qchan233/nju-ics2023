@@ -262,22 +262,6 @@ word_t eval(int p, int q){
         paren_depth -= 1;
       }
 
-      if (op_pos == p){ //unary operators
-        word_t val = eval(p+1, q);
-        if (expr_error){
-          return 0;
-        }
-        switch (tk_type)
-        {
-          case TK_DEREF:
-            return paddr_read(val, 4);
-            break;
-          default:
-            return 0;
-            break;
-        }
-
-      }
       
       switch (tk_type)
       {
@@ -300,6 +284,23 @@ word_t eval(int p, int q){
     if (op_pos < 0 || paren_depth != 0){
       expr_error = true;
       return 0;
+    }
+
+
+    if (op_pos == p){ //unary operators
+      word_t val = eval(p+1, q);
+      if (expr_error){
+        return 0;
+      }
+      switch (tokens[p].type)
+      {
+        case TK_DEREF:
+          return paddr_read(val, 4);
+          break;
+        default:
+          return 0;
+          break;
+      }
     }
 
     word_t val1 = eval(p, op_pos - 1);
