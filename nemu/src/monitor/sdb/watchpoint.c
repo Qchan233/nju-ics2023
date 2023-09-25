@@ -48,9 +48,10 @@ void free_wp(int index){
 
   while (*wp_ptr){
     if ((*wp_ptr)->NO == index){
-      (*wp_ptr)->next = free_;
-      free_ = *wp_ptr;
+      WP* temp = *wp_ptr;
       *wp_ptr = (*wp_ptr)->next;
+      temp->next = free_;
+      free_ = temp;
       break;
     }
     wp_ptr = &(*wp_ptr)->next;
