@@ -74,7 +74,7 @@ bool check_change(){
   while (wp){
     word_t val = expr(wp->expr, &success);
     if(wp->prev_value != val){
-      Log("Watchpoint %d: %s changed: Prev: %u, Now: %u\n", wp->NO, wp->expr, wp->prev_value, val);
+      Log("Watchpoint %d: %s changed: Prev: %u, Now: %u", wp->NO, wp->expr, wp->prev_value, val);
       wp->prev_value = val;
       return true;
     }
