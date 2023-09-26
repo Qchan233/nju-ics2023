@@ -26,7 +26,6 @@ typedef struct watchpoint {
   int NO;
   struct watchpoint *next;
   char expr[EXPR_LEN];
-  bool initialized;
   word_t prev_value;
 } WP;
 

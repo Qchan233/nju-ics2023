@@ -30,7 +30,7 @@ void init_wp_pool() {
   free_ = wp_pool;
 }
 
-WP* new_wp(char* expr){
+WP* new_wp(char* expression){
   WP* wp = free_;
   if (free_ == NULL){
     Log("Run out of watch points");
@@ -38,9 +38,10 @@ WP* new_wp(char* expr){
   }
   free_ = free_->next;
   wp->next = head;
-  strcpy(wp->expr, expr);
+  strcpy(wp->expr, expression);
   head = wp;
-  wp->initialized = false;
+  bool success;
+  wp->prev_value = expr(wp->expr, &success);
   return wp;
 }
 
@@ -72,11 +73,7 @@ bool check_change(){
   bool success;
   while (wp){
     word_t val = expr(wp->expr, &success);
-    if (!wp->initialized){
-      wp->prev_value = val;
-      wp->initialized = true;
-    }
-    else if(wp->prev_value != val){
+    if(wp->prev_value != val){
       Log("Watchpoint %d: %s changed: Prev: %u, Now: %u\n", wp->NO, wp->expr, wp->prev_value, val);
       wp->prev_value = val;
       return true;
