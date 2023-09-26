@@ -68,8 +68,7 @@ void print_wp(){
 }
 
 bool check_change(){
-  Log("Checking Watch Points");
-  return false;
+  return true;
 }
 
 
