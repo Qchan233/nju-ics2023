@@ -68,7 +68,22 @@ void print_wp(){
 }
 
 bool check_change(){
-  return true;
+  WP* wp = head;
+  bool success;
+  while (wp){
+    word_t val = expr(wp->expr, &success);
+    if (!wp->initialized){
+      wp->prev_value = val;
+      wp->initialized = true;
+    }
+    else if(wp->prev_value != val){
+      Log("Watchpoint %d: %s changed: Prev: %u, Now: %u\n", wp->NO, wp->expr, wp->prev_value, val);
+      wp->prev_value = val;
+      return true;
+    }
+    wp = wp->next;
+  }
+  return false;
 }
 
 
