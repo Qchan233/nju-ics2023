@@ -123,7 +123,7 @@ static int cmd_p(char *args) {
     printf("Invalid Expression\n");
     return 0;
   }
-  printf("%u\n", result);
+  printf("%#010x\n", result);
   return 0;
 }
 
