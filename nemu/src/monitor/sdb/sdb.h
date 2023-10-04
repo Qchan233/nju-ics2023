@@ -29,6 +29,7 @@ typedef struct watchpoint {
   word_t prev_value;
 } WP;
 
+
 void init_wp_pool();
 WP* new_wp(char* expr);
 void free_wp(int index);

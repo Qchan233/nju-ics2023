@@ -14,17 +14,16 @@ char* itoa(int num,char* str,int radix)
     //获取要转换的整数的绝对值
     if(num<0)//要转换成十进制数并且是负数
     {
-        unum=(unsigned)-num;//将num的绝对值赋给unum
-        str[i++]='-';//在字符串最前面设置为'-'号，并且索引加1
+      num = -num;     // 将num的绝对值赋给unum
+      str[i++] = '-'; // 在字符串最前面设置为'-'号，并且索引加1
     }
-    else unum=(unsigned)num;//若是num为正，直接赋值给unum
  
     //转换部分，注意转换后是逆序的
     do
     {
         str[i++]=index[unum%(unsigned)radix];//取unum的最后一位，并设置为str对应位，指示索引加1
         unum/=radix;//unum去掉最后一位 
-    }while(unum);//直至unum为0退出循环
+    }while(num);//直至unum为0退出循环
  
     str[i]='\0';//在字符串最后添加'\0'字符，c语言字符串以'\0'结束。
  

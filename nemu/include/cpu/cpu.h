@@ -18,6 +18,13 @@
 
 #include <common.h>
 
+#define N_BUFFER 16
+#define BUFFER_SIZE 128
+
+typedef struct ringbuffer{
+  char buffer[N_BUFFER][BUFFER_SIZE];
+  size_t index;
+} RB;
 void cpu_exec(uint64_t n);
 
 void set_nemu_state(int state, vaddr_t pc, int halt_ret);
