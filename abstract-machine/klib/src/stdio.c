@@ -90,7 +90,7 @@ int sprintf(char *out, const char *fmt, ...) {
       out[out_count++] = current;
     }
   }
-
+  out[out_count] = '\0';
   va_end(args);
   return out_count;
 }
