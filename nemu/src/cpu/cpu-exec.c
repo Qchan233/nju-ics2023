@@ -139,9 +139,10 @@ void cpu_exec(uint64_t n) {
       // fall through
     case NEMU_QUIT: statistic();
     int i = 0;
+    int current = (ring_buffer.index - 1) % N_BUFFER;
     for (i = 0; i< N_BUFFER; i++){
-      if (i == ring_buffer.index){
-        ring_buffer.buffer[(i-1)%N_BUFFER][0] = '>';
+      if (i == current){
+        ring_buffer.buffer[i][0] = '>';
       }
       printf("%s\n", ring_buffer.buffer[i]);
     }
