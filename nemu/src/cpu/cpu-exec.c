@@ -141,7 +141,7 @@ void cpu_exec(uint64_t n) {
     int i = 0;
     for (i = 0; i< N_BUFFER; i++){
       if (i == ring_buffer.index){
-        ring_buffer.buffer[i][0] = '>';
+        ring_buffer.buffer[(i-1)%N_BUFFER][0] = '>';
       }
       printf("%s\n", ring_buffer.buffer[i]);
     }
