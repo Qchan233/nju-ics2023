@@ -65,7 +65,7 @@ int sprintf(char *out, const char *fmt, ...) {
         return out_count;    // Consider the format is not complete and not write %
       }
 
-      size_t dlen;
+      size_t dlen = 0;
       switch (fmt[fmt_count++])
       {
       case 'd':
