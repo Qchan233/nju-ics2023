@@ -77,7 +77,7 @@ int sprintf(char *out, const char *fmt, ...) {
         break;
       case 's':
         char* str = va_arg(args, char*);
-        dlen = strlen(buffer);
+        dlen = strlen(str);
         strcpy(out + out_count, str);
         break; 
       default:
