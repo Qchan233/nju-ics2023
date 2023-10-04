@@ -126,13 +126,6 @@ void cpu_exec(uint64_t n) {
   uint64_t timer_end = get_time();
   g_timer += timer_end - timer_start;
 
-  int i = 0;
-  for (i = 0; i< N_BUFFER; i++){
-    if (i == ring_buffer.index){
-      ring_buffer.buffer[i][0] = '>';
-    }
-    printf("%s\n", ring_buffer.buffer[i]);
-  }
 
   switch (nemu_state.state) {
     case NEMU_RUNNING: nemu_state.state = NEMU_STOP; break;
@@ -145,5 +138,13 @@ void cpu_exec(uint64_t n) {
           nemu_state.halt_pc);
       // fall through
     case NEMU_QUIT: statistic();
+    int i = 0;
+    for (i = 0; i< N_BUFFER; i++){
+      if (i == ring_buffer.index){
+        ring_buffer.buffer[i][0] = '>';
+      }
+      printf("%s\n", ring_buffer.buffer[i]);
+    }
+
   }
 }
