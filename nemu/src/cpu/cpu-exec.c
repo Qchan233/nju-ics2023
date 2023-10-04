@@ -76,14 +76,12 @@ static void exec_once(Decode *s, vaddr_t pc) {
   void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
   disassemble(p, s->logbuf + sizeof(s->logbuf) - p,
       MUXDEF(CONFIG_ISA_x86, s->snpc, s->pc), (uint8_t *)&s->isa.inst.val, ilen);
-  printf("Itrace: %s\n", s->logbuf);
 #else
   p[0] = '\0'; // the upstream llvm does not support loongarch32r
 #endif
 #endif
-
-  ring_buffer.index++;
-
+  sprintf(ring_buffer.buffer[ring_buffer.index], "  %s", s->logbuf); 
+  ring_buffer.index = (ring_buffer.index+1) % N_BUFFER;
 }
 
 static void execute(uint64_t n) {
@@ -127,6 +125,14 @@ void cpu_exec(uint64_t n) {
 
   uint64_t timer_end = get_time();
   g_timer += timer_end - timer_start;
+
+  int i = 0;
+  for (i = 0; i< N_BUFFER; i++){
+    if (i == ring_buffer.index){
+      ring_buffer.buffer[i][0] = '>';
+    }
+    printf("%s\n", ring_buffer.buffer[i]);
+  }
 
   switch (nemu_state.state) {
     case NEMU_RUNNING: nemu_state.state = NEMU_STOP; break;
