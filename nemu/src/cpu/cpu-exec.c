@@ -26,7 +26,6 @@
  * You can modify this value as you want.
  */
 #define MAX_INST_TO_PRINT 10
-void check_call(word_t pc, word_t dnpc);
 
 CPU_state cpu = {};
 uint64_t g_nr_guest_inst = 0;
@@ -39,6 +38,7 @@ static RB ring_buffer;
 void device_update();
 
 bool check_change();
+void check_call(word_t pc, word_t dnpc);
 
 static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
 #ifdef CONFIG_WATCHPOINT
