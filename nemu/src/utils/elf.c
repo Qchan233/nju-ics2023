@@ -81,6 +81,7 @@ void init_elf(const char *elf_file){
         }
     }
 
+    fseek(file, symtab_shdr->sh_offset, SEEK_SET);
     intervals = malloc(func_count * sizeof(Func_Interval));
     func_count = 0;
     for (int i = 0; i < symbol_count; ++i) {
