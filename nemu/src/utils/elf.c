@@ -90,8 +90,8 @@ void init_elf(const char *elf_file){
             Func_Interval current;
             current.start = sym.st_value;
             current.end = sym.st_value + sym.st_size;
-            strncpy(current.func_name, strtab + sym.st_name, NAME_BUF_SIZE);
             Log("Start: %x, End:%x, Name:%s", current.start, current.end, current.func_name);
+            strncpy(current.func_name, strtab + sym.st_name, NAME_BUF_SIZE);
             func_count++; 
         }
     }
