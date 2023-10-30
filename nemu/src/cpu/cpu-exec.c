@@ -31,7 +31,9 @@ CPU_state cpu = {};
 uint64_t g_nr_guest_inst = 0;
 static uint64_t g_timer = 0; // unit: us
 static bool g_print_step = false;
+#ifdef CONFIG_ITRACE
 static RB ring_buffer;
+#endif
 
 void device_update();
 
@@ -149,6 +151,6 @@ void cpu_exec(uint64_t n) {
       }
       printf("%s\n", ring_buffer.buffer[i]);
     }
-  }
 #endif
+  }
 }
