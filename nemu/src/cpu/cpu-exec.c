@@ -26,6 +26,7 @@
  * You can modify this value as you want.
  */
 #define MAX_INST_TO_PRINT 10
+void check_call(word_t pc, word_t dnpc);
 
 CPU_state cpu = {};
 uint64_t g_nr_guest_inst = 0;
@@ -58,6 +59,10 @@ static void exec_once(Decode *s, vaddr_t pc) {
   s->pc = pc;
   s->snpc = pc;
   isa_exec_once(s);
+
+/*Function Trace*/
+  check_call(s->pc, s->dnpc);
+
   cpu.pc = s->dnpc;
 #ifdef CONFIG_ITRACE
   char *p = s->logbuf;
@@ -86,9 +91,6 @@ static void exec_once(Decode *s, vaddr_t pc) {
   sprintf(ring_buffer.buffer[ring_buffer.index], "  %s", s->logbuf); 
   ring_buffer.index = (ring_buffer.index+1) % N_BUFFER;
 
-/*Function Trace*/
-  size_t i = 0;
-  for (i = 0; i)
 
 #endif
 
