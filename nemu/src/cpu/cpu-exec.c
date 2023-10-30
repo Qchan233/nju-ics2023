@@ -48,6 +48,7 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
     }
   }
 #endif
+check_call(_this->pc, dnpc);
 #ifdef CONFIG_ITRACE_COND
   if (ITRACE_COND) { log_write("%s\n", _this->logbuf); }
 #endif
@@ -61,8 +62,6 @@ static void exec_once(Decode *s, vaddr_t pc) {
   isa_exec_once(s);
 
 /*Function Trace*/
-  check_call(s->pc, s->dnpc);
-
   cpu.pc = s->dnpc;
 #ifdef CONFIG_ITRACE
   char *p = s->logbuf;
