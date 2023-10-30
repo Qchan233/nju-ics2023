@@ -72,7 +72,6 @@ static void exec_once(Decode *s, vaddr_t pc) {
   space_len = space_len * 3 + 1;
   memset(p, ' ', space_len);
   p += space_len;
-#endif
 
 #ifndef CONFIG_ISA_loongarch32r
   void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
@@ -83,6 +82,8 @@ static void exec_once(Decode *s, vaddr_t pc) {
 #endif
   sprintf(ring_buffer.buffer[ring_buffer.index], "  %s", s->logbuf); 
   ring_buffer.index = (ring_buffer.index+1) % N_BUFFER;
+#endif
+
 }
 
 static void execute(uint64_t n) {
@@ -139,6 +140,7 @@ void cpu_exec(uint64_t n) {
           nemu_state.halt_pc);
       // fall through
     case NEMU_QUIT: statistic();
+#ifdef CONFIG_ITRACE
     int i = 0;
     int current = (ring_buffer.index - 1) % N_BUFFER;
     for (i = 0; i< N_BUFFER; i++){
@@ -147,6 +149,6 @@ void cpu_exec(uint64_t n) {
       }
       printf("%s\n", ring_buffer.buffer[i]);
     }
-
   }
+#endif
 }
