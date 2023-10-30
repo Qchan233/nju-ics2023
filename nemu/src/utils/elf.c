@@ -14,4 +14,6 @@ void init_elf(const char *elf_file){
     if (elf_file != NULL){
         Log("Opening ELF %s", elf_file);
     }
+
+    
 }
