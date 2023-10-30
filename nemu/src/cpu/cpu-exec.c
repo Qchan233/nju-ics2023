@@ -82,8 +82,14 @@ static void exec_once(Decode *s, vaddr_t pc) {
 #else
   p[0] = '\0'; // the upstream llvm does not support loongarch32r
 #endif
+/*Ring buffer Trace*/
   sprintf(ring_buffer.buffer[ring_buffer.index], "  %s", s->logbuf); 
   ring_buffer.index = (ring_buffer.index+1) % N_BUFFER;
+
+/*Function Trace*/
+  size_t i = 0;
+  for (i = 0; i)
+
 #endif
 
 }

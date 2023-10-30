@@ -26,13 +26,13 @@ void safe_read (void *__restrict ptr, size_t size, size_t n,
 }
 
 
+static uint32_t func_count = 0;
 
 void init_elf(const char *elf_file){
     if (elf_file != NULL){
         Log("Opening ELF %s", elf_file);
     }
 
-    uint32_t func_count = 0;
     FILE *file = fopen(elf_file, "rb");
     Elf32_Ehdr ehdr;
     safe_read(&ehdr, sizeof(Elf32_Ehdr), 1, file);
@@ -99,4 +99,14 @@ void init_elf(const char *elf_file){
 
     free(strtab);
     fclose(file);
+}
+
+void check_call(word_t pc, word_t dnpc){
+   uint32_t i;
+   for(i = 0; i < func_count; i++){
+    if (intervals[i].start == dnpc){
+        Log("%#08x: call [%s@%#08x] ", pc, intervals[i].func_name, dnpc);
+        break;
+    }
+   } 
 }
