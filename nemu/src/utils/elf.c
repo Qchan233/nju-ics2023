@@ -27,6 +27,7 @@ void safe_read (void *__restrict ptr, size_t size, size_t n,
 
 
 static uint32_t func_count = 0;
+static unsigned int indent;
 
 void init_elf(const char *elf_file){
     if (elf_file != NULL){
@@ -91,6 +92,8 @@ void init_elf(const char *elf_file){
 
     free(strtab);
     fclose(file);
+
+    indent = 0;
 }
 
 void check_call(word_t pc, word_t dnpc){
@@ -98,8 +101,15 @@ void check_call(word_t pc, word_t dnpc){
    for(i = 0; i < func_count; i++){
     // Log("%s", intervals[i].func_name);
     if (intervals[i].start == dnpc){
-        Log("%#08x: call [%s@%#08x]", pc, intervals[i].func_name, dnpc);
+        printf("%#08x: call [%s@%#08x]\n", pc, intervals[i].func_name, dnpc);
         break;
     }
    } 
+}
+
+#define RET_HEX 0x00008067
+void check_return(word_t svalue){
+    if (svalue == RET_HEX){
+        printf("ret\n");
+    }
 }
