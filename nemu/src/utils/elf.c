@@ -91,7 +91,7 @@ void init_elf(const char *elf_file){
             intervals[i].start = sym.st_value;
             intervals[i].end = sym.st_value + sym.st_size;
             strncpy(intervals[i].func_name, strtab + sym.st_name, NAME_BUF_SIZE);
-            // Log("Start: %x, End:%x, Name:%s", current.start, current.end, current.func_name);
+            Log("Start: %x, End:%x, Name:%s", intervals[i].start, intervals[i].end, intervals[i].func_name);
             func_count++; 
         }
     }
