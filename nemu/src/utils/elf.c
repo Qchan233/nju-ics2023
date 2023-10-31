@@ -99,7 +99,7 @@ void init_elf(const char *elf_file){
 void inline putindent(unsigned int n){
    unsigned int i;
    for (i=0; i<n; i++){
-    putchar('\t');
+    putchar(' ');
    } 
 }
 
