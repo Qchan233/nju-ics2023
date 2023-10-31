@@ -104,6 +104,7 @@ void inline putindent(unsigned int n){
 }
 
 void check_call(word_t pc, word_t dnpc, int rd){
+#ifdef CONFIG_ITRACE
    unsigned int i;
    for(i = 0; i < func_count; i++){
     // Log("%s", intervals[i].func_name);
@@ -117,10 +118,12 @@ void check_call(word_t pc, word_t dnpc, int rd){
         break;
     }
    } 
+#endif
 }
 
 #define RET_HEX 0x00008067
 void check_return(word_t pc, word_t svalue){
+#ifdef CONFIG_ITRACE
     if (svalue == RET_HEX){
         printf("%#08x:", pc);
         indent--;
@@ -135,4 +138,5 @@ void check_return(word_t pc, word_t svalue){
             }
         }
     }
+#endif
 }
