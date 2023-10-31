@@ -95,6 +95,7 @@ void init_elf(const char *elf_file){
             func_count++; 
         }
     }
+    
     int i;
     for(i = 0; i < func_count; i++){
         Log("%s", intervals[i].func_name);
