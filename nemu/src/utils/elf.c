@@ -117,7 +117,7 @@ void check_call(word_t pc, word_t dnpc){
 }
 
 #define RET_HEX 0x00008067
-void check_return(word_t svalue){
+void check_return(word_t pc, word_t svalue){
     if (svalue == RET_HEX){
         indent--;
         putindent(indent);
@@ -125,7 +125,10 @@ void check_return(word_t svalue){
         unsigned int i;
         for (i = 0; i < func_count; i++)
         {
-            printf("ret[%s]\n", intervals[i].func_name);
+            if (intervals[i].start <= pc && pc < intervals[i].end){
+                printf("ret[%s]\n", intervals[i].func_name);
+                break;
+            }
         }
     }
 }
