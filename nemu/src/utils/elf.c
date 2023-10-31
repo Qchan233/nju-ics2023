@@ -88,10 +88,9 @@ void init_elf(const char *elf_file){
         Elf32_Sym sym;
         safe_read(&sym, sizeof(Elf32_Sym), 1, file);
         if (ELF32_ST_TYPE(sym.st_info) == STT_FUNC){
-            Func_Interval * current = &intervals[i];
-            current->start = sym.st_value;
-            current->end = sym.st_value + sym.st_size;
-            strncpy(current->func_name, strtab + sym.st_name, NAME_BUF_SIZE);
+            intervals[i].start = sym.st_value;
+            intervals[i].end = sym.st_value + sym.st_size;
+            strncpy(intervals[i].func_name, strtab + sym.st_name, NAME_BUF_SIZE);
             // Log("Start: %x, End:%x, Name:%s", current.start, current.end, current.func_name);
             func_count++; 
         }
