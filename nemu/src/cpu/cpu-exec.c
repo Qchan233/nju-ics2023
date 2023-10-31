@@ -38,7 +38,6 @@ static RB ring_buffer;
 void device_update();
 
 bool check_change();
-void check_call(word_t pc, word_t dnpc);
 
 static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
 #ifdef CONFIG_WATCHPOINT
@@ -48,7 +47,6 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
     }
   }
 #endif
-check_call(_this->pc, dnpc);
 #ifdef CONFIG_ITRACE_COND
   if (ITRACE_COND) { log_write("%s\n", _this->logbuf); }
 #endif
