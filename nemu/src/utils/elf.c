@@ -88,11 +88,11 @@ void init_elf(const char *elf_file){
         Elf32_Sym sym;
         safe_read(&sym, sizeof(Elf32_Sym), 1, file);
         if (ELF32_ST_TYPE(sym.st_info) == STT_FUNC){
-            Func_Interval current;
-            current.start = sym.st_value;
-            current.end = sym.st_value + sym.st_size;
-            strncpy(current.func_name, strtab + sym.st_name, NAME_BUF_SIZE);
-            Log("Start: %x, End:%x, Name:%s", current.start, current.end, current.func_name);
+            Func_Interval * current = &intervals[i];
+            current->start = sym.st_value;
+            current->end = sym.st_value + sym.st_size;
+            strncpy(current->func_name, strtab + sym.st_name, NAME_BUF_SIZE);
+            // Log("Start: %x, End:%x, Name:%s", current.start, current.end, current.func_name);
             func_count++; 
         }
     }
@@ -103,9 +103,7 @@ void init_elf(const char *elf_file){
 
 void check_call(word_t pc, word_t dnpc){
    uint32_t i;
-   Log("pc:%#08x dnpc:%#08x]", pc, dnpc);
    for(i = 0; i < func_count; i++){
-    Log("%d", intervals[i].start);
     if (intervals[i].start == dnpc){
         Log("%#08x: call [%s@%#08x]", pc, intervals[i].func_name, dnpc);
         break;
