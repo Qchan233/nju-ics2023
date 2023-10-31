@@ -104,7 +104,7 @@ void inline putindent(unsigned int n){
 }
 
 void check_call(word_t pc, word_t dnpc){
-   uint32_t i;
+   unsigned int i;
    for(i = 0; i < func_count; i++){
     // Log("%s", intervals[i].func_name);
     if (intervals[i].start == dnpc){
@@ -121,6 +121,11 @@ void check_return(word_t svalue){
     if (svalue == RET_HEX){
         indent--;
         putindent(indent);
-        printf("ret\n");
+
+        unsigned int i;
+        for (i = 0; i < func_count; i++)
+        {
+            printf("ret[%s]\n", intervals[i].func_name);
+        }
     }
 }
