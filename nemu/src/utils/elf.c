@@ -91,9 +91,13 @@ void init_elf(const char *elf_file){
             intervals[i].start = sym.st_value;
             intervals[i].end = sym.st_value + sym.st_size;
             strncpy(intervals[i].func_name, strtab + sym.st_name, NAME_BUF_SIZE);
-            Log("Start: %x, End:%x, Name:%s", intervals[i].start, intervals[i].end, intervals[i].func_name);
+            // Log("Start: %x, End:%x, Name:%s", intervals[i].start, intervals[i].end, intervals[i].func_name);
             func_count++; 
         }
+    }
+    int i;
+    for(i = 0; i < func_count; i++){
+        Log("%s", intervals[i].func_name);
     }
 
     free(strtab);
@@ -103,7 +107,7 @@ void init_elf(const char *elf_file){
 void check_call(word_t pc, word_t dnpc){
    uint32_t i;
    for(i = 0; i < func_count; i++){
-    Log("%s", intervals[i].func_name);
+    // Log("%s", intervals[i].func_name);
     if (intervals[i].start == dnpc){
         Log("%#08x: call [%s@%#08x]", pc, intervals[i].func_name, dnpc);
         break;
