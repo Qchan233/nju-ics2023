@@ -119,8 +119,8 @@ void check_call(word_t pc, word_t dnpc){
 
 #define RET_HEX 0x00008067
 void check_return(word_t pc, word_t svalue){
-    printf("%#08x:", pc);
     if (svalue == RET_HEX){
+        printf("%#08x:", pc);
         indent--;
         putindent(indent);
 
