@@ -70,13 +70,6 @@ void init_elf(const char *elf_file){
         Elf32_Sym sym;
         safe_read(&sym, sizeof(Elf32_Sym), 1, file);
         if (ELF32_ST_TYPE(sym.st_info) == STT_FUNC){
-            // printf("Symbol %d:\n", i);
-            // printf("  Name: %s\n", strtab + sym.st_name);
-            // printf("  Value: %08x\n", sym.st_value);
-            // printf("  Size: %08x\n", sym.st_size);
-            // printf("  Info: %02x\n", sym.st_info);
-            // printf("  Other: %02x\n", sym.st_other);
-            // printf("  Shndx: %04x\n", sym.st_shndx);
            func_count++; 
         }
     }
@@ -88,17 +81,12 @@ void init_elf(const char *elf_file){
         Elf32_Sym sym;
         safe_read(&sym, sizeof(Elf32_Sym), 1, file);
         if (ELF32_ST_TYPE(sym.st_info) == STT_FUNC){
-            intervals[i].start = sym.st_value;
-            intervals[i].end = sym.st_value + sym.st_size;
-            strncpy(intervals[i].func_name, strtab + sym.st_name, NAME_BUF_SIZE);
+            intervals[func_count].start = sym.st_value;
+            intervals[func_count].end = sym.st_value + sym.st_size;
+            strncpy(intervals[func_count].func_name, strtab + sym.st_name, NAME_BUF_SIZE);
             // Log("Start: %x, End:%x, Name:%s", intervals[i].start, intervals[i].end, intervals[i].func_name);
             func_count++; 
         }
-    }
-
-    int i;
-    for(i = 0; i < func_count; i++){
-        Log("%x,%x,%s", intervals[i].start, intervals[i].end, intervals[i].func_name);
     }
 
     free(strtab);
