@@ -96,11 +96,20 @@ void init_elf(const char *elf_file){
     indent = 0;
 }
 
+void inline putindent(unsigned int n){
+   unsigned int i;
+   for (i=0; i<n; i++){
+    putchar('\t');
+   } 
+}
+
 void check_call(word_t pc, word_t dnpc){
    uint32_t i;
    for(i = 0; i < func_count; i++){
     // Log("%s", intervals[i].func_name);
     if (intervals[i].start == dnpc){
+        putindent(indent);
+        indent++;
         printf("%#08x: call [%s@%#08x]\n", pc, intervals[i].func_name, dnpc);
         break;
     }
@@ -110,6 +119,8 @@ void check_call(word_t pc, word_t dnpc){
 #define RET_HEX 0x00008067
 void check_return(word_t svalue){
     if (svalue == RET_HEX){
+        putindent(indent);
+        indent--;
         printf("ret\n");
     }
 }
