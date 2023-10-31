@@ -104,6 +104,7 @@ void init_elf(const char *elf_file){
 void check_call(word_t pc, word_t dnpc){
    uint32_t i;
    for(i = 0; i < func_count; i++){
+    Log("%d", intervals[i].start);
     if (intervals[i].start == dnpc){
         Log("%#08x: call [%s@%#08x]", pc, intervals[i].func_name, dnpc);
         break;
