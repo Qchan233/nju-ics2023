@@ -105,12 +105,13 @@ void inline putindent(unsigned int n){
 
 void check_call(word_t pc, word_t dnpc){
    unsigned int i;
+   printf("%#08x", pc);
    for(i = 0; i < func_count; i++){
     // Log("%s", intervals[i].func_name);
     if (intervals[i].start == dnpc){
         putindent(indent);
         indent++;
-        printf("%#08x: call [%s@%#08x]\n", pc, intervals[i].func_name, dnpc);
+        printf("call [%s@%#08x]\n", intervals[i].func_name, dnpc);
         break;
     }
    } 
@@ -118,6 +119,7 @@ void check_call(word_t pc, word_t dnpc){
 
 #define RET_HEX 0x00008067
 void check_return(word_t pc, word_t svalue){
+    printf("%#08x", pc);
     if (svalue == RET_HEX){
         indent--;
         putindent(indent);
