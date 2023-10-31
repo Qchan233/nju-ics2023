@@ -98,7 +98,7 @@ void init_elf(const char *elf_file){
 
     int i;
     for(i = 0; i < func_count; i++){
-        Log("%s", intervals[i].func_name);
+        Log("%x,%x,%s", intervals[i].start, intervals[i].end, intervals[i].func_name);
     }
 
     free(strtab);
