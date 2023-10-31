@@ -105,10 +105,10 @@ void inline putindent(unsigned int n){
 
 void check_call(word_t pc, word_t dnpc){
    unsigned int i;
-   printf("%#08x: ", pc);
    for(i = 0; i < func_count; i++){
     // Log("%s", intervals[i].func_name);
     if (intervals[i].start == dnpc){
+        printf("%#08x: ", pc);
         putindent(indent);
         indent++;
         printf("call [%s@%#08x]\n", intervals[i].func_name, dnpc);
