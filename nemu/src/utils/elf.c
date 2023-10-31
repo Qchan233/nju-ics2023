@@ -109,10 +109,10 @@ void check_call(word_t pc, word_t dnpc, int rd){
     // Log("%s", intervals[i].func_name);
     if (intervals[i].start == dnpc){
         printf("%#08x:", pc);
+        putindent(indent);
         if (rd == 1){
             indent++;
         }
-        putindent(indent);
         printf("call [%s@%#08x]\n", intervals[i].func_name, dnpc);
         break;
     }
