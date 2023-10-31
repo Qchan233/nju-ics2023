@@ -13,7 +13,7 @@ typedef struct Func_Interval
     char func_name[NAME_BUF_SIZE + 1];
 } Func_Interval;
 
-Func_Interval *intervals;
+static Func_Interval *intervals;
 
 void safe_read (void *__restrict ptr, size_t size, size_t n,
        FILE *__restrict stream)
@@ -95,7 +95,7 @@ void init_elf(const char *elf_file){
             func_count++; 
         }
     }
-    
+
     int i;
     for(i = 0; i < func_count; i++){
         Log("%s", intervals[i].func_name);
