@@ -20,8 +20,7 @@
 bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc) {
   unsigned int n;
   for (n = 0; n < 32; n++){
-    if (ref_r->gpr[n] != gpr(n)){
-      Log("%d", n);
+    if (!difftest_check_reg("", pc, ref_r->gpr[n], gpr(n))){
       return false;
     }
   }
