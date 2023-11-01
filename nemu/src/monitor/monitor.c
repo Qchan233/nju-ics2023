@@ -114,7 +114,7 @@ void init_monitor(int argc, char *argv[]) {
 
   /* Open the log file. */
   init_log(log_file);
-  
+  Log("Reading ELF"); 
   /* Open and parse elf file*/
   init_elf(elf_file);
 
