@@ -30,9 +30,12 @@ static uint32_t func_count = 0;
 static unsigned int indent;
 
 void init_elf(const char *elf_file){
-    if (elf_file != NULL){
-        Log("Opening ELF %s", elf_file);
+    if (elf_file == NULL){
+        return;
     }
+    
+    Log("Opening ELF %s", elf_file);
+
 
     FILE *file = fopen(elf_file, "rb");
     Elf32_Ehdr ehdr;
