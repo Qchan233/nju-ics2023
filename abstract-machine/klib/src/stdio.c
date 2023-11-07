@@ -41,14 +41,13 @@ char* itoa(int num,char* str,int radix)
     return str;//返回转换后的字符串
 }
 
-int sprintf(char *out, const char *fmt, ...);
-
+int vsnprintf(char *out, size_t n, const char *fmt, va_list ap);
 #define BUFFER_SIZE 2048
 int printf(const char *fmt, ...) {
-  va_list args;
   char buffer[BUFFER_SIZE];
+  va_list args;
   va_start(args, fmt);
-  size_t count = snprintf(buffer, BUFFER_SIZE, fmt, args);
+  size_t count = vsnprintf(buffer, BUFFER_SIZE, fmt, args);
   putstr(buffer);
   va_end(args);
   return count;
@@ -62,15 +61,16 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
 int sprintf(char *out, const char *fmt, ...) {
   va_list args;
   va_start(args, fmt);
-  size_t count = snprintf(out, -1, fmt, args);
+  size_t count = vsnprintf(out, -1, fmt, args);
   va_end(args);
   return count;
 }
 
 int snprintf(char *out, size_t n, const char *fmt, ...) {
-  va_list args;
-  va_start(args, fmt);
+  panic("Not implemented");
+}
 
+int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
   size_t fmt_count = 0;
   size_t out_count = 0;
   size_t limit = n - 1;
@@ -87,13 +87,13 @@ int snprintf(char *out, size_t n, const char *fmt, ...) {
       {
       case 'd':
         char buffer[16];
-        int value = va_arg(args, int);
+        int value = va_arg(ap, int);
         itoa(value, buffer, 10);
         dlen = strlen(buffer);
         strcpy(out + out_count, buffer);
         break;
       case 's':
-        char* str = va_arg(args, char*);
+        char* str = va_arg(ap, char*);
         dlen = strlen(str);
         strcpy(out + out_count, str);
         break; 
@@ -108,12 +108,7 @@ int snprintf(char *out, size_t n, const char *fmt, ...) {
     }
   }
   out[out_count] = '\0';
-  va_end(args);
   return out_count;
-}
-
-int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
-  panic("Not implemented");
 }
 
 #endif
