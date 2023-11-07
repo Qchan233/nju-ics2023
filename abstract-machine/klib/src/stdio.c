@@ -42,6 +42,7 @@ char* itoa(int num,char* str,int radix)
 }
 
 int sprintf(char *out, const char *fmt, ...);
+
 #define BUFFER_SIZE 2048
 int printf(const char *fmt, ...) {
   char buffer[BUFFER_SIZE];
