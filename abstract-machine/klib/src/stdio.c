@@ -41,23 +41,34 @@ char* itoa(int num,char* str,int radix)
     return str;//返回转换后的字符串
 }
 
+int sprintf(char *out, const char *fmt, ...);
+#define BUFFER_SIZE 1024
 int printf(const char *fmt, ...) {
-  panic("Not implemented");
+  // char* buffer[BUFFER_SIZE];
+  return 0;
+
+  
 }
+#undef BUFFER_SIZE
 
 int vsprintf(char *out, const char *fmt, va_list ap) {
   panic("Not implemented");
 }
 
 int sprintf(char *out, const char *fmt, ...) {
+  return snprintf(out, -1, fmt);
+}
+
+int snprintf(char *out, size_t n, const char *fmt, ...) {
   va_list args;
   va_start(args, fmt);
 
   size_t fmt_count = 0;
   size_t out_count = 0;
+  size_t limit = n - 1;
   char current;
 
-  while((current = fmt[fmt_count++]) != '\0'){
+  while(((current = fmt[fmt_count++]) != '\0') && out_count < limit){
     if (current == '%'){
       if (fmt[fmt_count] == '\0'){
         return out_count;    // Consider the format is not complete and not write %
@@ -91,10 +102,6 @@ int sprintf(char *out, const char *fmt, ...) {
   out[out_count] = '\0';
   va_end(args);
   return out_count;
-}
-
-int snprintf(char *out, size_t n, const char *fmt, ...) {
-  panic("Not implemented");
 }
 
 int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
