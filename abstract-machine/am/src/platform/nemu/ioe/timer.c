@@ -5,8 +5,8 @@ void __am_timer_init() {
 }
 
 void __am_timer_uptime(AM_TIMER_UPTIME_T *uptime) {
-  // uptime->us = io_read(AM_TIMER_UPTIME).us;
-  panic("Not implmented");
+  uptime->us = io_read(AM_TIMER_UPTIME).us;
+  // panic("Not implmented");
 }
 
 void __am_timer_rtc(AM_TIMER_RTC_T *rtc) {
