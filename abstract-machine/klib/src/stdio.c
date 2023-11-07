@@ -45,8 +45,8 @@ int sprintf(char *out, const char *fmt, ...);
 
 #define BUFFER_SIZE 2048
 int printf(const char *fmt, ...) {
-  char buffer[BUFFER_SIZE];
   va_list args;
+  char buffer[BUFFER_SIZE];
   va_start(args, fmt);
   size_t count = snprintf(buffer, BUFFER_SIZE, fmt, args);
   putstr(buffer);
