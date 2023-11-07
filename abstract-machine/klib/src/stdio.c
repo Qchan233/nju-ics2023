@@ -7,6 +7,10 @@
 
 char* itoa(int num,char* str,int radix)
 {
+    if (num == -2147483648){
+      strcpy(str, "-2147483648");
+      return str;
+    }
     char index[]="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";//索引表
     int i=0,j,k;//i用来指示设置字符串相应位，转换之后i其实就是字符串的长度；转换后顺序是逆序的，有正负的情况，k用来指示调整顺序的开始位置;j用来指示调整顺序时的交换。
  
