@@ -44,10 +44,11 @@ char* itoa(int num,char* str,int radix)
 int sprintf(char *out, const char *fmt, ...);
 #define BUFFER_SIZE 2048
 int printf(const char *fmt, ...) {
-  char buffer[BUFFER_SIZE];
-  size_t count = snprintf(buffer, BUFFER_SIZE, fmt);
-  putstr(buffer);
-  return count;
+  // char buffer[BUFFER_SIZE];
+  // size_t count = snprintf(buffer, BUFFER_SIZE, fmt);
+  // putstr(buffer);
+  // return count;
+  return 0;
 }
 #undef BUFFER_SIZE
 
