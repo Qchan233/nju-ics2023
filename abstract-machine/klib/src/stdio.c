@@ -7,26 +7,26 @@
 
 char* itoa(int num,char* str,int radix)
 {
-    int64_t new_num;
+    if (num == -2147483648){
+      strcpy(str, "-2147483648");
+      return str;
+    }
     char index[]="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";//索引表
     int i=0,j,k;//i用来指示设置字符串相应位，转换之后i其实就是字符串的长度；转换后顺序是逆序的，有正负的情况，k用来指示调整顺序的开始位置;j用来指示调整顺序时的交换。
  
     //获取要转换的整数的绝对值
     if(num<0)//要转换成十进制数并且是负数
     {
-      new_num = -num;     // 将num的绝对值赋给unum
+      num = -num;     // 将num的绝对值赋给unum
       str[i++] = '-'; // 在字符串最前面设置为'-'号，并且索引加1
-    }
-    else{
-      new_num = num;
     }
  
     //转换部分，注意转换后是逆序的
     do
     {
-        str[i++]=index[new_num%(unsigned)radix];//取unum的最后一位，并设置为str对应位，指示索引加1
-        new_num/=radix;//unum去掉最后一位 
-    }while(new_num);//直至unum为0退出循环
+        str[i++]=index[num%(unsigned)radix];//取unum的最后一位，并设置为str对应位，指示索引加1
+        num/=radix;//unum去掉最后一位 
+    }while(num);//直至unum为0退出循环
  
     str[i]='\0';//在字符串最后添加'\0'字符，c语言字符串以'\0'结束。
  
