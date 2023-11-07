@@ -37,6 +37,7 @@ char* itoa(int num,char* str,int radix)
         str[j]=str[i-1+k-j];//尾部赋值给头部
         str[i-1+k-j]=temp;//将临时变量的值(其实就是之前的头部值)赋给尾部
     }
+    putstr(str);
  
     return str;//返回转换后的字符串
 }
