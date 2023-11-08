@@ -99,7 +99,7 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
     
       unsigned int format_length = read_int(&fmt[fmt_count], &fmt_count);
       size_t dlen = 0;
-      char pad = ' ';
+      char pad = '0';
       switch (current = fmt[fmt_count++])
       {
       case 'd':
