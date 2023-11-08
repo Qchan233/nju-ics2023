@@ -87,7 +87,7 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
       }
 
       size_t dlen = 0;
-      switch (fmt[fmt_count++])
+      switch (current = fmt[fmt_count++])
       {
       case 'd':
         char buffer[16];
@@ -102,7 +102,7 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
         strcpy(out + out_count, str);
         break; 
       default:
-        
+
         return out_count;
         break;
       }
