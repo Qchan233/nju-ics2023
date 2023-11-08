@@ -77,6 +77,8 @@ int snprintf(char *out, size_t n, const char *fmt, ...) {
 unsigned int read_int(const char *start, size_t* position){
   unsigned int num = 0;
   unsigned int index = 0;
+  putch(start[index]);
+  putch('|');
   while ('0' <= start[index] && start[index] <= '9'){
     num = num * 10 + *start - '0';  
     (*position)++;
@@ -106,9 +108,6 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
       case 'd':
         char buffer[16];
         int value = va_arg(ap, int);
-        itoa(format_length, buffer, 10);
-        putstr(buffer);
-        putch('|');
         itoa(value, buffer, 10);
         dlen = strlen(buffer);
         while(format_length > dlen){
