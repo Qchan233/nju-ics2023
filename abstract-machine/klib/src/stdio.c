@@ -77,13 +77,14 @@ int snprintf(char *out, size_t n, const char *fmt, ...) {
 unsigned int read_int(const char *start, size_t* position){
   unsigned int num = 0;
   unsigned int index = 0;
-  putch(start[index]);
-  putch('|');
+
   while ('0' <= start[index] && start[index] <= '9'){
     num = num * 10 + *start - '0';  
+    putch(start[index]);
     (*position)++;
     index++;
   }
+  putch('|');
   return num;
 }
 
