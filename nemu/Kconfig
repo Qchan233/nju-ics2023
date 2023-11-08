@@ -140,6 +140,10 @@ config MTRACE
   bool "Enable memory tracer"
   default n
 
+config DTRACE
+  bool "Enable device tracer"
+  default n
+
 config TRACE_START
   depends on TRACE
   int "When tracing is enabled (unit: number of instructions)"
