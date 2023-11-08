@@ -78,7 +78,6 @@ unsigned int read_int(const char *start, size_t* position){
   unsigned int num = 0;
   unsigned int index = 0;
   while ('0' <= start[index] && start[index] <= '9'){
-    putch('c');
     num = num * 10 + *start - '0';  
     (*position)++;
     index++;
@@ -109,6 +108,7 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
         itoa(value, buffer, 10);
         dlen = strlen(buffer);
         while(format_length > dlen){
+          putch('C');
           format_length--;
           out[out_count++] = pad;
         }
