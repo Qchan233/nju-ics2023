@@ -102,6 +102,7 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
         strcpy(out + out_count, str);
         break; 
       default:
+        
         return out_count;
         break;
       }
