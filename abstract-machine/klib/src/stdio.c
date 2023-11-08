@@ -77,16 +77,12 @@ int snprintf(char *out, size_t n, const char *fmt, ...) {
 unsigned int read_int(const char *start, size_t* position){
   unsigned int num = 0;
   unsigned int index = 0;
-  char buffer[16];
 
   while ('0' <= start[index] && start[index] <= '9'){
-    num = num * 10 + *start - '0';  
+    num = num * 10 + start[index] - '0';  
     (*position)++;
     index++;
   }
-  itoa(num, buffer, 10);
-  putstr(buffer);
-  putch('|');
   return num;
 }
 
