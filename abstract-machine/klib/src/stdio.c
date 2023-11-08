@@ -74,6 +74,16 @@ int snprintf(char *out, size_t n, const char *fmt, ...) {
   panic("Not implemented");
 }
 
+unsigned int read_int(const char *start){
+  unsigned int num = 0;
+  unsigned int index = 0;
+  while ('0' <= start[index] && start[index] <= 9){
+    num = num * 10 + *start - '0';  
+    index++;
+  }
+  return num;
+}
+
 int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
   size_t fmt_count = 0;
   size_t out_count = 0;
@@ -81,26 +91,50 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
   char current;
 
   while(((current = fmt[fmt_count++]) != '\0') && out_count < limit){
+    unsigned int format_length = 0;
     if (current == '%'){
       if (fmt[fmt_count] == '\0'){
         return out_count;    // Consider the format is not complete and not write %
       }
 
       size_t dlen = 0;
+      char pad = ' ';
       switch (current = fmt[fmt_count++])
       {
+      case '0':
+        fmt_count++;
+        pad = '0';
+        format_length = read_int(&fmt[fmt_count]);
+        break;
+      case '1':
+      case '2':
+      case '3':
+      case '4':
+      case '5':
+      case '6':
+      case '7':
+      case '8':
+      case '9':
+        format_length = read_int(&fmt[fmt_count - 1]);
+      break;
       case 'd':
         char buffer[16];
         int value = va_arg(ap, int);
         itoa(value, buffer, 10);
         dlen = strlen(buffer);
+        while(format_length > dlen){
+          format_length--;
+          out[out_count++] = pad;
+        }
         strcpy(out + out_count, buffer);
+        format_length = 0;
         break;
       case 's':
         char* str = va_arg(ap, char*);
         dlen = strlen(str);
         strcpy(out + out_count, str);
         break; 
+      break;
       default:
 
         return out_count;
