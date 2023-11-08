@@ -98,6 +98,7 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
       }
     
       unsigned int format_length = read_int(&fmt[fmt_count], &fmt_count);
+
       size_t dlen = 0;
       char pad = '0';
       switch (current = fmt[fmt_count++])
@@ -105,10 +106,12 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
       case 'd':
         char buffer[16];
         int value = va_arg(ap, int);
+        itoa(format_length, buffer, 10);
+        putstr(buffer);
+        putch('|');
         itoa(value, buffer, 10);
         dlen = strlen(buffer);
         while(format_length > dlen){
-          putch('C');
           format_length--;
           out[out_count++] = pad;
         }
