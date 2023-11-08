@@ -7,7 +7,7 @@ void __am_timer_init() {
 int printf(const char *fmt, ...);
 void __am_timer_uptime(AM_TIMER_UPTIME_T *uptime) {
   // printf("Reading Time\n");
-  uptime->us = io_read(AM_TIMER_UPTIME).us;
+  // uptime->us = io_read(AM_TIMER_UPTIME).us;
   // panic("Not implmented");
 }
 
