@@ -93,6 +93,7 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
   char current;
 
   while(((current = fmt[fmt_count++]) != '\0') && out_count < limit){
+
     if (current == '%'){
       if (fmt[fmt_count] == '\0'){
         return out_count;    // Consider the format is not complete and not write %
@@ -121,6 +122,8 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
         dlen = strlen(str);
         strcpy(out + out_count, str);
         break; 
+      case '%':
+        out[out_count++] = '%';
       break;
       default:
 
