@@ -48,8 +48,8 @@ char* itoa(int num,char* str,int radix)
 int vsnprintf(char *out, size_t n, const char *fmt, va_list ap);
 #define BUFFER_SIZE 2048
 int printf(const char *fmt, ...) {
-  char buffer[BUFFER_SIZE];
   va_list args;
+  char buffer[BUFFER_SIZE];
   va_start(args, fmt);
   size_t count = vsnprintf(buffer, BUFFER_SIZE, fmt, args);
   putstr(buffer);
