@@ -18,7 +18,7 @@ void __am_timer_uptime(AM_TIMER_UPTIME_T *uptime) {
     // printf("\nlo:%d\n",lo);
     // printf("\nhigh:%d\n",hi);
   // }
-  uint64_t now = ((uint64_t) hi) << 32 | lo; 
+  uint64_t now = (((uint64_t) hi) << 32) | lo; 
   uptime->us = now;
 }
 
