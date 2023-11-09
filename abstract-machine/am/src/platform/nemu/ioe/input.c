@@ -5,11 +5,12 @@
 #define KEYDOWN_MASK 0x8000
 
 void __am_input_keybrd(AM_INPUT_KEYBRD_T *kbd) {
-  kbd->keycode = KEYDOWN_MASK & inl(KBD_ADDR);
+  kbd->keycode = inl(KBD_ADDR);
   if (kbd->keycode==AM_KEY_NONE){
     kbd->keydown = false;
   }
   else{
+    printf("Read Key");
     kbd->keydown = true;
   }
 }
