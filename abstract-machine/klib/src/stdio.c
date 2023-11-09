@@ -99,7 +99,7 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
         return out_count;    // Consider the format is not complete and not write %
       }
     
-      unsigned int format_length = read_int(&fmt[fmt_count], &fmt_count);
+      unsigned int format_length = 0;
 
       size_t dlen = 0;
       char pad = '0';
