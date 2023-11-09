@@ -122,11 +122,14 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
         dlen = strlen(str);
         strcpy(out + out_count, str);
         break; 
+      case 'c':
+        char c = va_arg(ap, int);
+        out[out_count++] = c;
+        break; 
       case '%':
         out[out_count++] = '%';
       break;
       default:
-
         return out_count;
         break;
       }
