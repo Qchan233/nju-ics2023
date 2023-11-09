@@ -99,7 +99,7 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
         return out_count;    // Consider the format is not complete and not write %
       }
     
-      unsigned int format_length = 0;
+      unsigned int format_length = read_int(&fmt[fmt_count], &fmt_count);
 
       size_t dlen = 0;
       char pad = '0';
@@ -119,6 +119,7 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
         break;
       case 's':
         char* str = va_arg(ap, char*);
+        assert(str != NULL);
         dlen = strlen(str);
         strcpy(out + out_count, str);
         break; 
