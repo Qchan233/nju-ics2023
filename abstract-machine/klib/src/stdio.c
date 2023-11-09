@@ -123,7 +123,7 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
         strcpy(out + out_count, str);
         break; 
       case 'c':
-        char c = va_arg(ap, int);
+        char c = va_arg(ap, int) & 0xFF;
         out[out_count++] = c;
         break; 
       case '%':
