@@ -119,7 +119,6 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
         break;
       case 's':
         char* str = va_arg(ap, char*);
-        assert(str != NULL);
         dlen = strlen(str);
         strcpy(out + out_count, str);
         break; 
