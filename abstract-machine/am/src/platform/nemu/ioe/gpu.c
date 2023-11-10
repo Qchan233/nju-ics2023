@@ -20,7 +20,7 @@ void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
   uint32_t wh = inl(VGACTL_ADDR);
   *cfg = (AM_GPU_CONFIG_T) {
     .present = true, .has_accel = false,
-    .width = wh >> 16, .height = HMASK & wh,
+    .width = wh & HMASK, .height = HMASK & wh,
     .vmemsz = 0
   };
 }
