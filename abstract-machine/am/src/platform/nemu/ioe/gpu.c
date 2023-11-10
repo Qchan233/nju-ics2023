@@ -8,13 +8,6 @@ static int WIDTH, HEIGHT;
 void __am_gpu_init() {
   WIDTH = io_read(AM_GPU_CONFIG).width;
   HEIGHT = io_read(AM_GPU_CONFIG).height;
-  int i;
-  int w = io_read(AM_GPU_CONFIG).width;  // TODO: get the correct width
-  int h = io_read(AM_GPU_CONFIG).height;  // TODO: get the correct height
-  
-  uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
-  for (i = 0; i < w * h; i ++) fb[i] = i;
-  outl(SYNC_ADDR, 1);
 }
 
 #define HMASK 0xFFFF
