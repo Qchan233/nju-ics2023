@@ -77,7 +77,7 @@ void vga_update_screen() {
   if (vgactl_port_base[1]){
     update_screen();
   }
-  vgactl_port_base[1] = 0;
+  vgactl_port_base[1] = false;
 }
 
 void init_vga() {
