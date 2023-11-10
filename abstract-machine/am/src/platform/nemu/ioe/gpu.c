@@ -4,7 +4,7 @@
 
 #define SYNC_ADDR (VGACTL_ADDR + 4)
 static int WIDTH, HEIGHT;
-#define POS(x,y) (x)*(WIDTH) + (y)
+#define POS(x,y) (x) + (y) * (WIDTH)
 void __am_gpu_init() {
   WIDTH = io_read(AM_GPU_CONFIG).width;
   HEIGHT = io_read(AM_GPU_CONFIG).height;
@@ -32,9 +32,9 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
     outl(SYNC_ADDR, 1);
   }
   int i,j;
-  for(i=0;i<ctl->h;i++){
-    for(j=0;j<ctl->w;j++){
-      outl(FB_ADDR + POS(ctl->x + j, ctl->y + i), ((uint32_t*)(ctl->pixels))[i*ctl->w + j]);
+  for(i=0;i<ctl->w;i++){
+    for(j=0;j<ctl->h;j++){
+      outl(FB_ADDR + POS(ctl->x + i, ctl->y + j) * 4, ((uint32_t*)(ctl->pixels))[i + j * ctl->w]);
     }
   }
   
