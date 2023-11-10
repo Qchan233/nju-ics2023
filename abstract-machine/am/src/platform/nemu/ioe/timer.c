@@ -3,7 +3,6 @@
 #include <time.h>
 #include <stdio.h>
 
-static uint32_t previous_time;
 void __am_timer_init() {
 }
 
@@ -11,7 +10,6 @@ void __am_timer_uptime(AM_TIMER_UPTIME_T *uptime) {
   uint32_t hi = inl(RTC_ADDR + 4);
   uint32_t lo = inl(RTC_ADDR);
   // if (previous_time != lo){
-    previous_time = lo;
     // printf("\nlo:%d\n",lo);
     // printf("\nhigh:%d\n",hi);
   // }
