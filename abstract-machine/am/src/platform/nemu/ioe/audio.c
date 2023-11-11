@@ -40,6 +40,5 @@ void __am_audio_play(AM_AUDIO_PLAY_T *ctl) {
   for(i = (uint16_t*) ctl->buf.start; i < (uint16_t*)ctl->buf.end; i++){
     outw((uintptr_t) write_pos, *i);
     write_pos += 2;
-  }
-  
+  } 
 }
