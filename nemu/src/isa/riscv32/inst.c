@@ -74,12 +74,16 @@ void set_csr_value(word_t csr, word_t val){
   {
   case 0x300:
     cpu.mstatus = val;
+    break;
   case 0x305:
     cpu.mtvec = val;
+    break;
   case 0x341:
     cpu.mepc = val;
+    break;
   case 0x342:
     cpu.mcause = val; 
+    break;
   default:
     return;
   }
