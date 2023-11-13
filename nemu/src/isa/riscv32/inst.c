@@ -52,6 +52,38 @@ static void decode_operand(Decode *s, int *rd, word_t *src1, word_t *src2, word_
   }
 }
 
+word_t get_csr_value(word_t csr){
+  switch (csr)
+  {
+  case 0x300:
+    return cpu.mstatus;
+  case 0x305:
+    return cpu.mtvec;
+  case 0x341:
+    return cpu.mepc;
+  case 0x342:
+    return cpu.mcause; 
+  default:
+    return 0;
+    break;
+  }
+}
+
+void set_csr_value(word_t csr, word_t val){
+  switch (csr)
+  {
+  case 0x300:
+    cpu.mstatus = val;
+  case 0x305:
+    cpu.mtvec = val;
+  case 0x341:
+    cpu.mepc = val;
+  case 0x342:
+    cpu.mcause = val; 
+  default:
+    return;
+  }
+}
 
 
 void check_call(word_t pc, word_t dnpc, int rd);
@@ -126,7 +158,7 @@ static int decode_exec(Decode *s) {
 
   INSTPAT("0000000 00001 00000 000 00000 11100 11", ebreak , N, NEMUTRAP(s->pc, R(10))); // R(10) is $a0
   INSTPAT("0000000 00000 00000 000 00000 11100 11", ecall  , N, s->dnpc = isa_raise_intr(0, s->pc)); 
-  INSTPAT("??????? ????? ????? 001 ????? 11100 11", csrrw  , I, cpu.mtvec = src1);
+  INSTPAT("??????? ????? ????? 001 ????? 11100 11", csrrw  , I, R(rd) = get_csr_value(imm), set_csr_value(imm, src1));
   INSTPAT("??????? ????? ????? ??? ????? ????? ??", inv    , N, INV(s->pc));
 
   INSTPAT_END();
