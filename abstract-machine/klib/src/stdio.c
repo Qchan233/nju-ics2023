@@ -8,7 +8,16 @@
 char* itoa(int num,char* str,int radix)
 {
     if (num == -2147483648){
-      strcpy(str, "-2147483648");
+      switch (radix)
+      {
+      case 10:
+        strcpy(str, "-2147483648");
+        break;
+      case 16:
+        strcpy(str, "-80000000");
+      default:
+        break;
+      }
       return str;
     }
     char index[]="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";//索引表
@@ -115,6 +124,18 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
           out[out_count++] = pad;
         }
         strcpy(out + out_count, buffer);
+        format_length = 0;
+        break;
+      case 'x':
+        char hex_buffer[16];
+        int hex_value = va_arg(ap, int);
+        itoa(hex_value, hex_buffer, 16);
+        dlen = strlen(hex_buffer);
+        while(format_length > dlen){
+          format_length--;
+          out[out_count++] = pad;
+        }
+        strcpy(out + out_count, hex_buffer);
         format_length = 0;
         break;
       case 's':
