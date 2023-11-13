@@ -69,7 +69,6 @@ word_t isa_reg_str2val(const char *s, bool *success) {
     return cpu.pc;
   }
 
-
   if (success != NULL){
     *success = false;
   }
