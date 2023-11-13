@@ -126,18 +126,6 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
         strcpy(out + out_count, buffer);
         format_length = 0;
         break;
-      case 'x':
-        char hex_buffer[16];
-        int hex_value = va_arg(ap, int);
-        itoa(hex_value, hex_buffer, 16);
-        dlen = strlen(hex_buffer);
-        while(format_length > dlen){
-          format_length--;
-          out[out_count++] = pad;
-        }
-        strcpy(out + out_count, hex_buffer);
-        format_length = 0;
-        break;
       case 's':
         char* str = va_arg(ap, char*);
         dlen = strlen(str);
