@@ -23,6 +23,7 @@ const char *regs[] = {
   "s8", "s9", "s10", "s11", "t3", "t4", "t5", "t6"
 };
 
+
 void isa_reg_display() {
   int n = 0;
   printf("%-3s: %#-10x %-10u\n", "pc", cpu.pc, cpu.pc);
@@ -30,6 +31,10 @@ void isa_reg_display() {
     word_t val = gpr(n);
     printf("%-3s: %#-10x %-10u\n", regs[n], val, val);
   }
+  printf("%-6s: %#-10x %-10u\n", "mcause", cpu.mcause, cpu.mcause);
+  printf("%-6s: %#-10x %-10u\n", "mstatus", cpu.mstatus, cpu.mstatus);
+  printf("%-6s: %#-10x %-10u\n", "mepc", cpu.mepc, cpu.mepc);
+  printf("%-6s: %#-10x %-10u\n", "mtvec", cpu.mtvec, cpu.mtvec);
 }
 
 word_t isa_reg_str2val(const char *s, bool *success) {
@@ -43,10 +48,27 @@ word_t isa_reg_str2val(const char *s, bool *success) {
     }
   }
 
+  if (strcmp(s, "mepc") == 0){
+    *success = true;
+    return cpu.mepc;
+  }
+  if (strcmp(s, "mstatus") == 0){
+    *success = true;
+    return cpu.mstatus;
+  }
+  if (strcmp(s, "mcause") == 0){
+    *success = true;
+    return cpu.mcause;
+  }
+  if (strcmp(s, "mtvec") == 0){
+    *success = true;
+    return cpu.mtvec;
+  }
   if (strcmp(s, "pc") == 0){
     *success = true;
     return cpu.pc;
   }
+
 
   if (success != NULL){
     *success = false;
