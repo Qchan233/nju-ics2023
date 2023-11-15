@@ -18,6 +18,13 @@
 
 #include <common.h>
 
+typedef enum {
+    U = 0, // 代表第一个值
+    S = 1, // 代表第二个值
+    M = 2 // 代表第三个值
+} Level;
+
+
 typedef struct {
   word_t gpr[MUXDEF(CONFIG_RVE, 16, 32)];
   vaddr_t pc;
@@ -25,6 +32,7 @@ typedef struct {
   word_t mstatus;
   word_t mcause;
   word_t mtvec;
+  Level level;
 } MUXDEF(CONFIG_RV64, riscv64_CPU_state, riscv32_CPU_state);
 
 // decode
