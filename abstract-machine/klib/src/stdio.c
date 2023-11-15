@@ -7,28 +7,27 @@
 
 char* itoa(int num,char* str,int radix)
 {
-    if (num == -2147483648){
-      switch (radix)
-      {
-      case 10:
-        strcpy(str, "-2147483648");
-        break;
-      case 16:
-        strcpy(str, "-80000000");
-      default:
-        break;
-      }
-      return str;
-    }
+    // if (num == -2147483648){
+    //   switch (radix)
+    //   {
+    //   case 10:
+    //     strcpy(str, "-2147483648");
+    //     break;
+    //   case 16:
+    //     strcpy(str, "-80000000");
+    //   default:
+    //     break;
+    //   }
+    //   return str;
+    // }
     char index[]="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";//索引表
     int i=0,j,k;//i用来指示设置字符串相应位，转换之后i其实就是字符串的长度；转换后顺序是逆序的，有正负的情况，k用来指示调整顺序的开始位置;j用来指示调整顺序时的交换。
  
-    //获取要转换的整数的绝对值
-    if(num<0)//要转换成十进制数并且是负数
-    {
-      num = -num;     // 将num的绝对值赋给unum
-      str[i++] = '-'; // 在字符串最前面设置为'-'号，并且索引加1
-    }
+    // if(num<0)//要转换成十进制数并且是负数
+    // {
+    //   num = -num;     // 将num的绝对值赋给unum
+    //   str[i++] = '-'; // 在字符串最前面设置为'-'号，并且索引加1
+    // }
  
     //转换部分，注意转换后是逆序的
     do
