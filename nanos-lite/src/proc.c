@@ -25,7 +25,6 @@ void init_proc() {
   Log("Initializing processes...");
 
   // load program here
-
 }
 
 Context* schedule(Context *prev) {
