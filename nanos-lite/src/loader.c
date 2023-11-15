@@ -9,8 +9,16 @@
 # define Elf_Phdr Elf32_Phdr
 #endif
 
+size_t ramdisk_read(void *buf, size_t offset, size_t len);
+
+/* write `len' bytes starting from `buf' into the `offset' of ramdisk */
+size_t ramdisk_write(const void *buf, size_t offset, size_t len);
+
 static uintptr_t loader(PCB *pcb, const char *filename) {
-  TODO();
+  // TODO();
+  Elf_Ehdr ehdr;
+  ramdisk_read(&ehdr, 0, sizeof(Elf_Ehdr));
+  printf("emachine: %d\n",ehdr.e_machine);
   return 0;
 }
 
