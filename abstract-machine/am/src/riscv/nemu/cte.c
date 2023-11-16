@@ -13,6 +13,7 @@ Context* __am_irq_handle(Context *c) {
     switch (c->mcause) {
       case 8:
         ev.event = EVENT_YIELD;
+        c->mepc += 4;
         break;
       case 12:
         ev.event = EVENT_PAGEFAULT;
