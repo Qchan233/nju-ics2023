@@ -10,16 +10,27 @@
 #endif
 
 size_t ramdisk_read(void *buf, size_t offset, size_t len);
-
-/* write `len' bytes starting from `buf' into the `offset' of ramdisk */
 size_t ramdisk_write(const void *buf, size_t offset, size_t len);
+size_t ramdisk_copy(const void *buf, size_t offset, size_t len);
 
 static uintptr_t loader(PCB *pcb, const char *filename) {
   // TODO();
   Elf_Ehdr ehdr;
   ramdisk_read(&ehdr, 0, sizeof(Elf_Ehdr));
-  printf("emachine: %d\n",ehdr.e_machine);
-  return 0;
+  Elf_Phdr phdr[ehdr.e_phnum];
+  ramdisk_read(&phdr, ehdr.e_phoff, sizeof(Elf_Phdr) * ehdr.e_phnum);
+  int i;
+  for(i=0;i<ehdr.e_phnum;i++){
+    Elf_Phdr current = phdr[i];
+    if (current.p_type == PT_LOAD){
+      void * dst = (void *) current.p_vaddr;
+      ramdisk_copy(dst, current.p_offset, current.p_filesz);
+
+      memset((void *)(current.p_vaddr + current.p_filesz), 0, current.p_memsz - current.p_filesz);
+    }
+  }
+
+  return ehdr.e_entry;
 }
 
 void naive_uload(PCB *pcb, const char *filename) {

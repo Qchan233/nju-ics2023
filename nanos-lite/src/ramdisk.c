@@ -23,6 +23,12 @@ size_t ramdisk_write(const void *buf, size_t offset, size_t len) {
   return len;
 }
 
+size_t ramdisk_copy(void *buf, size_t offset, size_t len) {
+  assert(offset + len <= RAMDISK_SIZE);
+  memcpy(buf, &ramdisk_start + offset, len);
+  return len;
+}
+
 void init_ramdisk() {
   Log("ramdisk info: start = %p, end = %p, size = %d bytes",
       &ramdisk_start, &ramdisk_end, RAMDISK_SIZE);
