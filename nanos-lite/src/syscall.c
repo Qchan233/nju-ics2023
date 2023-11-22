@@ -5,9 +5,9 @@
 void do_syscall(Context *c) {
   uintptr_t a[4];
   a[0] = c->GPR1;
-#ifdef CONFIG_STRACE
+// #ifdef CONFIG_STRACE
   Log("System Call: %s", sysname[a[0]]);
-#endif
+// #endif
 
   switch (a[0]) {
     case SYS_yield: yield(); break;
