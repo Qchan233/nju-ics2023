@@ -4,7 +4,7 @@ static Context* do_event(Event e, Context* c) {
   printf("Event: %d\n", e.event);
   switch (e.event) {
     case EVENT_YIELD:
-      Log("Yield");
+      yield();
       break;
     case EVENT_SYSCALL:
       // do_syscall(c);
