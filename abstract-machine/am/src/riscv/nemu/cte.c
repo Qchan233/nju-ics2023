@@ -5,14 +5,12 @@
 static Context* (*user_handler)(Event, Context*) = NULL;
 
 Context* __am_irq_handle(Context *c) {
-  // printf("mepc: %d\n", c->mepc);
-  printf("mcause: %d\n", c->mcause);
-  // printf("mstatus: %d\n", c->mstatus);
   if (user_handler) {
     Event ev = {0};
     switch (c->mcause) {
       case 8:
         ev.event = c->GPR1;
+        printf("ev.event: %d\n", ev.event);
         c->mepc += 4;
         break;
       case 12:
