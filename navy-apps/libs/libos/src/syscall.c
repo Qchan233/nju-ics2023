@@ -79,6 +79,7 @@ void *_sbrk(intptr_t increment) {
     initialized = true;
     program_break = &end;
   }
+  char* new_break = 
   _syscall_(SYS_brk, increment, 0, 0);
   // if (GPRx < 0){
   //   return (void *)-1;
