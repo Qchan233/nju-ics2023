@@ -7,6 +7,7 @@ void do_syscall(Context *c);
 Context* __am_irq_handle(Context *c) {
   if (user_handler) {
     Event ev = {0};
+    printf("mcause: %d\n", c->mcause);
     switch (c->mcause) {
       case 8:
         ev.event = c->GPR1;
