@@ -11,13 +11,12 @@ Context* __am_irq_handle(Context *c) {
       case 8:
       case 9:
       case 11:
+        c->mepc += 4;
         if (c->GPR1 == -1) {
-          c->mepc += 4;
-          printf("Yield event\n"); //底层的yield()，a7=-1
+          ev.event = EVENT_YIELD;
           break;
         } 
-        ev.event = c->GPR1;
-        c->mepc += 4;
+        ev.event = EVENT_SYSCALL;
         break;
       case 12:
         ev.event = EVENT_PAGEFAULT;
