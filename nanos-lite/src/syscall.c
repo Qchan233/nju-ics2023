@@ -5,6 +5,8 @@
 void do_syscall(Context *c) {
   uintptr_t a[4];
   a[0] = c->GPR1;
+  Log("System Call: %s", sysname[a[0]]);
+
 
   switch (a[0]) {
     case SYS_yield: yield(); break;

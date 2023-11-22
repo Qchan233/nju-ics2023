@@ -4,7 +4,7 @@ void do_syscall(Context *c);
 static Context* do_event(Event e, Context* c) {
   switch (e.event) {
     case EVENT_YIELD:
-      Log("Yield\n");
+      Log("Yield");
       break;
     case EVENT_SYSCALL:
       do_syscall(c);
