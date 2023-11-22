@@ -11,10 +11,10 @@ Context* __am_irq_handle(Context *c) {
   if (user_handler) {
     Event ev = {0};
     switch (c->mcause) {
-      // case 8:
-      //   ev.event = EVENT_YIELD;
-      //   c->mepc += 4;
-      //   break;
+      case 8:
+        ev.event = c->GPR1;
+        c->mepc += 4;
+        break;
       case 12:
         ev.event = EVENT_PAGEFAULT;
       default:ev.event = EVENT_ERROR; break;
