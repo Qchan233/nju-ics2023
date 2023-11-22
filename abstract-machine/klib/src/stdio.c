@@ -5,52 +5,60 @@
 
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 
-char* itoa(int num,char* str,int radix)
+void reverse(char str[], int length)
 {
-    // if (num == -2147483648){
-    //   switch (radix)
-    //   {
-    //   case 10:
-    //     strcpy(str, "-2147483648");
-    //     break;
-    //   case 16:
-    //     strcpy(str, "-80000000");
-    //   default:
-    //     break;
-    //   }
-    //   return str;
-    // }
-    char index[]="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";//索引表
-    int i=0,j,k;//i用来指示设置字符串相应位，转换之后i其实就是字符串的长度；转换后顺序是逆序的，有正负的情况，k用来指示调整顺序的开始位置;j用来指示调整顺序时的交换。
+    int start = 0;
+    int end = length - 1;
+    while (start < end) {
+        char temp = str[start];
+        str[start] = str[end];
+        str[end] = temp;
+        end--;
+        start++;
+    }
+}
+
+char* itoa(int num, char* str, int base)
+{
+    int i = 0;
+    bool isNegative = false;
  
-    // if(num<0)//要转换成十进制数并且是负数
-    // {
-    //   num = -num;     // 将num的绝对值赋给unum
-    //   str[i++] = '-'; // 在字符串最前面设置为'-'号，并且索引加1
-    // }
- 
-    //转换部分，注意转换后是逆序的
-    do
-    {
-        str[i++]=index[num%(unsigned)radix];//取unum的最后一位，并设置为str对应位，指示索引加1
-        num/=radix;//unum去掉最后一位 
-    }while(num);//直至unum为0退出循环
- 
-    str[i]='\0';//在字符串最后添加'\0'字符，c语言字符串以'\0'结束。
- 
-    //将顺序调整过来
-    if(str[0]=='-') k=1;//如果是负数，符号不用调整，从符号后面开始调整
-    else k=0;//不是负数，全部都要调整
- 
-    char temp;//临时变量，交换两个值时用到
-    for(j=k;j<=(i-1)/2;j++)//头尾一一对称交换，i其实就是字符串的长度，索引最大值比长度少1
-    {
-        temp=str[j];//头部赋值给临时变量
-        str[j]=str[i-1+k-j];//尾部赋值给头部
-        str[i-1+k-j]=temp;//将临时变量的值(其实就是之前的头部值)赋给尾部
+    /* Handle 0 explicitly, otherwise empty string is
+     * printed for 0 */
+    if (num == 0) {
+        str[i++] = '0';
+        str[i] = '\0';
+        return str;
     }
  
-    return str;//返回转换后的字符串
+    // In standard itoa(), negative numbers are handled
+    // only with base 10. Otherwise numbers are
+    // considered unsigned.
+    if (num < 0 && base == 10) {
+      if (num == INT32_MIN){
+        strcpy(str, "-2147483648");
+        return str;
+      }
+        isNegative = true;
+        num = -num;
+    }
+    // Process individual digits
+    while (num != 0) {
+        int rem = num % base;
+        str[i++] = (rem > 9) ? (rem - 10) + 'a' : rem + '0';
+        num = num / base;
+    }
+ 
+    // If number is negative, append '-'
+    if (isNegative)
+        str[i++] = '-';
+ 
+    str[i] = '\0'; // Append string terminator
+ 
+    // Reverse the string
+    reverse(str, i);
+ 
+    return str;
 }
 
 int vsnprintf(char *out, size_t n, const char *fmt, va_list ap);
