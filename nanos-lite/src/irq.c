@@ -2,7 +2,6 @@
 
 void do_syscall(Context *c);
 static Context* do_event(Event e, Context* c) {
-  printf("e.event = %d\n", e.event);
   switch (e.event) {
     case EVENT_YIELD:
       Log("Yield");
