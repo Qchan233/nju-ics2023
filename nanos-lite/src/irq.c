@@ -5,6 +5,7 @@ static Context* do_event(Event e, Context* c) {
   switch (e.event) {
     case EVENT_YIELD:
       Log("Yield");
+      c->GPRx = 0;
       break;
     case EVENT_SYSCALL:
       do_syscall(c);
