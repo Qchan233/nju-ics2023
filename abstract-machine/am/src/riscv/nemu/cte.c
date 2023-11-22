@@ -10,6 +10,8 @@ Context* __am_irq_handle(Context *c) {
     printf("mcause: %d\n", c->mcause);
     switch (c->mcause) {
       case 8:
+      case 9:
+      case 11:
         ev.event = c->GPR1;
         c->mepc += 4;
         break;
