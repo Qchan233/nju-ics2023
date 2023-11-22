@@ -17,6 +17,7 @@ Context* __am_irq_handle(Context *c) {
         break;
       case 12:
         ev.event = EVENT_PAGEFAULT;
+        break;
       default:ev.event = EVENT_ERROR; break;
     }
 
