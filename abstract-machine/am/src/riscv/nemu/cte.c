@@ -3,13 +3,16 @@
 #include <klib.h>
 
 static Context* (*user_handler)(Event, Context*) = NULL;
-
+void do_syscall(Context *c);
 Context* __am_irq_handle(Context *c) {
   if (user_handler) {
     Event ev = {0};
     switch (c->mcause) {
       case 8:
         ev.event = c->GPR1;
+        if (ev.event == EVENT_SYSCALL){
+          do_syscall(c);
+        }
         printf("ev.event: %d\n", ev.event);
         c->mepc += 4;
         break;
