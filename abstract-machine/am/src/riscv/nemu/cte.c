@@ -10,10 +10,6 @@ Context* __am_irq_handle(Context *c) {
     switch (c->mcause) {
       case 8:
         ev.event = c->GPR1;
-        if (ev.event == EVENT_SYSCALL){
-          do_syscall(c);
-        }
-        printf("ev.event: %d\n", ev.event);
         c->mepc += 4;
         break;
       case 12:
