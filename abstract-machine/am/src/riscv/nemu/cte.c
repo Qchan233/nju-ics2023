@@ -13,8 +13,8 @@ Context* __am_irq_handle(Context *c) {
       case 11:
         if (c->GPR1 == -1) {
           c->mepc += 4;
-          printf("Get a yield event\n");
-          return c;
+          printf("Get a yield event\n"); //底层的yield()，a7=-1
+          break;
         } 
         ev.event = c->GPR1;
         c->mepc += 4;
