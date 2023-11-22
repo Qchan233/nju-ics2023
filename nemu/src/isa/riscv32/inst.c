@@ -91,19 +91,20 @@ void set_csr_value(word_t csr, word_t val){
 }
 
 word_t env_call(Level level){
-  switch (level)
-  {
-  case U:
-    cpu.level = S;
-    return 8;
-  case S:
-    cpu.level = M;
-    return 9;
-  case M:
-    cpu.level = M;
-    return 11;
-  }
-  return level;
+  // switch (level)
+  // {
+  // case U:
+  //   cpu.level = S;
+  //   return 8;
+  // case S:
+  //   cpu.level = M;
+  //   return 9;
+  // case M:
+  //   cpu.level = M;
+  //   return 11;
+  // }
+  // return level;
+  return 8;
 }
 
 
