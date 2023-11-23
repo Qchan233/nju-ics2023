@@ -11,7 +11,7 @@
 
 size_t ramdisk_read(void *buf, size_t offset, size_t len);
 size_t ramdisk_write(const void *buf, size_t offset, size_t len);
-size_t ramdisk_copy(const void *buf, size_t offset, size_t len);
+size_t ramdisk_copy(void *buf, size_t offset, size_t len);
 
 static uintptr_t loader(PCB *pcb, const char *filename) {
   // TODO();
