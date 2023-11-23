@@ -150,7 +150,7 @@ install: app
 	@mkdir -p $(NAVY_HOME)/fsimg/bin
 	@cp $(APP) $(NAVY_HOME)/fsimg/bin/$(NAME)
 
-.PHONY: install
+.PHONY: install file-test
 
 ### Clean a single project (remove `build/`)
 clean:
