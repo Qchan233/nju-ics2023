@@ -36,6 +36,7 @@ char* itoa(int num, char* str, int base)
     // only with base 10. Otherwise numbers are
     // considered unsigned.
     if (num < 0 && base == 10) {
+      putstr("here");
       if (num == INT32_MIN){
         strcpy(str, "-2147483648");
         return str;
