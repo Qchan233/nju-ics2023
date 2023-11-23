@@ -37,7 +37,6 @@ size_t *open_offsets;
 
 void init_fs() {
   open_offsets = (size_t *)malloc(sizeof(size_t) * sizeof(file_table) / sizeof(file_table[0]));
-  // TODO: initialize the size of /dev/fb
 }
 
 int fs_close(int fd){
