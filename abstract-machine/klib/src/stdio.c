@@ -45,10 +45,6 @@ char* itoa(int num, char* str, int base)
     }
 
     
-    // if (base == 16){
-    //   printf("itoa: %d\n", num);
-    // }
-    // Process individual digits
     while (num != 0) {
         int rem = ((unsigned int) num) % base;
         str[i++] = index[rem];
@@ -140,6 +136,7 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
         format_length = 0;
         break;
       case 'p':
+      case 'x':
         unsigned int value2 = va_arg(ap, int);
         itoa(value2, buffer, 16);
         dlen = strlen(buffer);
