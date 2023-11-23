@@ -45,7 +45,6 @@ char* itoa(int num, char* str, int base)
     }
     // Process individual digits
     while (num != 0) {
-        putstr("num = ");
         int rem = num % base;
         str[i++] = index[rem];
         num = num / base;
@@ -56,7 +55,7 @@ char* itoa(int num, char* str, int base)
         str[i++] = '-';
  
     str[i] = '\0'; // Append string terminator
- 
+    putstr(str);
     // Reverse the string
     reverse(str, i);
  
