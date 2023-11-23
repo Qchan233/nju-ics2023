@@ -63,9 +63,7 @@ size_t fs_read(int fd, void *buf, size_t len){
 }
 
 size_t fs_write(int fd, void *buf, size_t len){
-  if (open_offsets[fd] <= file_table[fd].disk_offset + file_table[fd].size){
-    printf("file_offsets= %d\n", open_offsets[fd]);
-  }
+  assert(open_offsets[fd] <= file_table[fd].disk_offset + file_table[fd].size);
   ramdisk_write(buf, open_offsets[fd], len);
   open_offsets[fd] += len;
   return len;
