@@ -26,8 +26,8 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   fs_read(fd, &ehdr, sizeof(Elf_Ehdr));
   Elf_Phdr phdr[ehdr.e_phnum];
   fs_lseek(fd, ehdr.e_phoff, 0);
-  fs_read(fd, phdr, sizeof(Elf_Phdr) * ehdr.e_phnum);
-  // ramdisk_read(phdr, ehdr.e_phoff, sizeof(Elf_Phdr) * ehdr.e_phnum);
+  // fs_read(fd, phdr, sizeof(Elf_Phdr) * ehdr.e_phnum);
+  ramdisk_read(phdr, ehdr.e_phoff, sizeof(Elf_Phdr) * ehdr.e_phnum);
   int i;
   for(i=0;i<ehdr.e_phnum;i++){
     Elf_Phdr current = phdr[i];
