@@ -43,13 +43,14 @@ char* itoa(int num, char* str, int base)
         isNegative = true;
         num = -num;
     }
+
     
     // if (base == 16){
     //   printf("itoa: %d\n", num);
     // }
     // Process individual digits
     while (num != 0) {
-        int rem = num % base;
+        int rem = ((unsigned int) num) % base;
         str[i++] = index[rem];
         num = num / base;
     }
@@ -140,7 +141,7 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
         break;
       case 'p':
         unsigned int value2 = va_arg(ap, int);
-        itoa(value2, buffer, 2);
+        itoa(value2, buffer, 16);
         dlen = strlen(buffer);
         while(format_length > dlen){
           format_length--;
