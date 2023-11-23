@@ -22,7 +22,8 @@ int fs_close(int fd);
 static uintptr_t loader(PCB *pcb, const char *filename) {
   int fd = fs_open(filename, 0, 0);
   Elf_Ehdr ehdr;
-  fs_read(fd, &ehdr, sizeof(Elf_Ehdr));
+  // fs_read(fd, &ehdr, sizeof(Elf_Ehdr));
+  ramdisk_read(&ehdr, 48352, sizeof(Elf_Ehdr));
   Elf_Phdr phdr[ehdr.e_phnum];
   fs_lseek(fd, ehdr.e_phoff, 0);
   // fs_read(fd, phdr, sizeof(Elf_Phdr) * ehdr.e_phnum);
