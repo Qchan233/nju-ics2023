@@ -23,7 +23,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   int fd = fs_open(filename, 0, 0);
   Elf_Ehdr ehdr;
   // fs_read(fd, &ehdr, sizeof(Elf_Ehdr));
-  ramdisk_read(&ehdr, 48352, sizeof(Elf_Ehdr));
+  ramdisk_read(&ehdr, 483548, sizeof(Elf_Ehdr));
   if (memcmp(ehdr.e_ident, ELFMAG, SELFMAG) != 0) {
     panic("Invalid magical number\n");
     return 1;
@@ -31,7 +31,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   Elf_Phdr phdr[ehdr.e_phnum];
   fs_lseek(fd, ehdr.e_phoff, 0);
   // fs_read(fd, phdr, sizeof(Elf_Phdr) * ehdr.e_phnum);
-  ramdisk_read(phdr, 48352 + ehdr.e_phoff, sizeof(Elf_Phdr) * ehdr.e_phnum);
+  ramdisk_read(phdr, 48348 + ehdr.e_phoff, sizeof(Elf_Phdr) * ehdr.e_phnum);
   int i;
   for(i=0;i<ehdr.e_phnum;i++){
     Elf_Phdr current = phdr[i];
