@@ -53,12 +53,11 @@ char* itoa(int num, char* str, int base)
     // If number is negative, append '-'
     if (isNegative)
         str[i++] = '-';
- 
+    putstr(str);
+    putch('\n');
     str[i] = '\0'; // Append string terminator
     // Reverse the string
     reverse(str, i);
-    putstr(str);
-    putch('\n');
  
     return str;
 }
