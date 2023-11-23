@@ -76,7 +76,7 @@ size_t fs_write(int fd, void *buf, size_t len){
 size_t fs_lseek(int fd, size_t offset, int whence){
   switch (whence){
     case SEEK_SET:
-      open_offsets[fd] = 0;
+      open_offsets[fd] = offset;
       break;
     case SEEK_CUR:
       open_offsets[fd] += offset;
