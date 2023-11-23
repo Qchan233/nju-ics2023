@@ -11,7 +11,6 @@
 
 size_t ramdisk_read(void *buf, size_t offset, size_t len);
 size_t ramdisk_write(const void *buf, size_t offset, size_t len);
-size_t ramdisk_copy(const void *buf, size_t offset, size_t len);
 
 static uintptr_t loader(PCB *pcb, const char *filename) {
   // TODO();
@@ -24,7 +23,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     Elf_Phdr current = phdr[i];
     if (current.p_type == PT_LOAD){
       void * dst = (void *) current.p_vaddr;
-      ramdisk_copy(dst, current.p_offset, current.p_filesz);
+      ramdisk_write(dst, current.p_offset, current.p_filesz);
       memset((void *)(current.p_vaddr + current.p_filesz), 0, current.p_memsz - current.p_filesz);
     }
   }

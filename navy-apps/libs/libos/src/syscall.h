@@ -1,21 +1,27 @@
 #ifndef __SYSCALL_H__
 #define __SYSCALL_H__
 
-#define SYS_CALL(_) \
-_(exit) _(yield) _(open) _(read) _(write) _(kill) _(getpid) _(close) \
-_(lseek) _(brk) _(fstat) _(time) _(signal) _(execve) _(fork) _(link) \
-_(unlink) _(wait) _(times) _(gettimeofday)
-
 enum {
-#define SYS(name) SYS_##name,
-  SYS_CALL(SYS)
+  SYS_exit,
+  SYS_yield,
+  SYS_open,
+  SYS_read,
+  SYS_write,
+  SYS_kill,
+  SYS_getpid,
+  SYS_close,
+  SYS_lseek,
+  SYS_brk,
+  SYS_fstat,
+  SYS_time,
+  SYS_signal,
+  SYS_execve,
+  SYS_fork,
+  SYS_link,
+  SYS_unlink,
+  SYS_wait,
+  SYS_times,
+  SYS_gettimeofday
 };
-#undef SYS
-
-char *sysname[SYS_gettimeofday + 1] = {
-#define SYS(name) #name,
-  SYS_CALL(SYS)
-};
-#undef SYS
 
 #endif
