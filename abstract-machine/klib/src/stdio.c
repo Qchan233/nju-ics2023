@@ -23,7 +23,6 @@ char* itoa(int num, char* str, int base)
     char* index = "0123456789ABCDEF";
     int i = 0;
     bool isNegative = false;
-
  
     /* Handle 0 explicitly, otherwise empty string is
      * printed for 0 */
@@ -45,9 +44,9 @@ char* itoa(int num, char* str, int base)
         num = -num;
     }
     
-    if (base == 16){
-      printf("itoa: %d\n", num);
-    }
+    // if (base == 16){
+    //   printf("itoa: %d\n", num);
+    // }
     // Process individual digits
     while (num != 0) {
         int rem = num % base;
@@ -120,7 +119,8 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
         return out_count;    // Consider the format is not complete and not write %
       }
     
-      unsigned int format_length = read_int(&fmt[fmt_count], &fmt_count);
+      // unsigned int format_length = read_int(&fmt[fmt_count], &fmt_count);
+      unsigned int format_length = 0;
 
       size_t dlen = 0;
       char pad = '0';
