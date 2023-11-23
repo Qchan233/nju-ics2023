@@ -45,7 +45,7 @@ char* itoa(int num, char* str, int base)
     // Process individual digits
     while (num != 0) {
         int rem = num % base;
-        str[i++] = (rem > 9) ? (rem - 10) + 'A' : rem + '0';
+        str[i++] = (rem > 9) ? (rem - 10) + 'a' : rem + '0';
         num = num / base;
     }
  
@@ -119,10 +119,10 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
 
       size_t dlen = 0;
       char pad = '0';
+      char buffer[16];
       switch (current = fmt[fmt_count++])
       {
       case 'd':
-        char buffer[16];
         int value = va_arg(ap, int);
         itoa(value, buffer, 10);
         dlen = strlen(buffer);
@@ -134,15 +134,14 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
         format_length = 0;
         break;
       case 'p':
-        char buffer2[16];
         unsigned int value2 = va_arg(ap, unsigned int);
-        itoa(value2, buffer2, 16);
-        dlen = strlen(buffer2);
+        itoa(value2, buffer, 16);
+        dlen = strlen(buffer);
         while(format_length > dlen){
           format_length--;
           out[out_count++] = pad;
         }
-        strcpy(out + out_count, buffer2);
+        strcpy(out + out_count, buffer);
         format_length = 0;
         break;
       case 's':
