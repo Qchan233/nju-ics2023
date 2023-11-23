@@ -83,6 +83,7 @@ size_t fs_lseek(int fd, size_t offset, int whence){
   }
 
   if (open_offsets[fd] > file_table[fd].disk_offset + file_table[fd].size){
+    printf("%d\n", whence);
     printf("file_offsets= %d\n", open_offsets[fd]);
     panic("Exceed file size: %d", file_table[fd].size);
   }
