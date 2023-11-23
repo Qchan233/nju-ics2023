@@ -76,7 +76,7 @@ size_t fs_write(int fd, void *buf, size_t len){
 size_t fs_lseek(int fd, size_t offset, int whence){
   switch (whence){
     case SEEK_SET:
-      open_offsets[fd] = offset;
+      open_offsets[fd] = file_table[fd].disk_offset + offset;
       break;
     case SEEK_CUR:
       open_offsets[fd] += offset;
