@@ -8,9 +8,9 @@ void do_syscall(Context *c) {
   a[1] = c->GPR2;
   a[2] = c->GPR3;
   a[3] = c->GPR4;
-#ifdef CONFIG_STRACE
+// #ifdef CONFIG_STRACE
   Log("System Call: %s", sysname[a[0]]);
-#endif
+// #endif
 
   switch (a[0]) {
     case SYS_yield: yield(); break;
