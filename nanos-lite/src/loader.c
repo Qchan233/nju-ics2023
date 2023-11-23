@@ -24,6 +24,10 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   Elf_Ehdr ehdr;
   // fs_read(fd, &ehdr, sizeof(Elf_Ehdr));
   ramdisk_read(&ehdr, 77448, sizeof(Elf_Ehdr));
+  if (memcmp(ehdr.e_ident, ELFMAG, SELFMAG) != 0) {
+    printf("Invalid magical number\n");
+    return 1;
+  }
   Elf_Phdr phdr[ehdr.e_phnum];
   fs_lseek(fd, ehdr.e_phoff, 0);
   // fs_read(fd, phdr, sizeof(Elf_Phdr) * ehdr.e_phnum);
