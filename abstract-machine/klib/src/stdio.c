@@ -23,6 +23,10 @@ char* itoa(int num, char* str, int base)
     char* index = "0123456789ABCDEF";
     int i = 0;
     bool isNegative = false;
+
+    if (base == 16){
+      printf("itoa: %d\n", num);
+    }
  
     /* Handle 0 explicitly, otherwise empty string is
      * printed for 0 */
@@ -55,8 +59,6 @@ char* itoa(int num, char* str, int base)
         str[i++] = '-';
  
     str[i] = '\0'; // Append string terminator
-    putstr(str);
-    putstr("\n");
     // Reverse the string
     reverse(str, i);
  
