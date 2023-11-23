@@ -58,12 +58,18 @@ int fs_open(const char *pathname, int flags, int mode){
 size_t fs_read(int fd, void *buf, size_t len){
   ramdisk_read(buf, open_offsets[fd], len);
   open_offsets[fd] += len;
+  if (open_offsets[fd] > file_table[fd].disk_offset + file_table[fd].size){
+    printf("file_offsets= %d\n", open_offsets[fd]);
+  }
   return len;
 }
 
 size_t fs_write(int fd, void *buf, size_t len){
   ramdisk_write(buf, open_offsets[fd], len);
   open_offsets[fd] += len;
+  if (open_offsets[fd] > file_table[fd].disk_offset + file_table[fd].size){
+    printf("file_offsets= %d\n", open_offsets[fd]);
+  }
   return len;
 }
 
