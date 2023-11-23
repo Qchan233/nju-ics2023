@@ -143,7 +143,6 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
           out[out_count++] = pad;
         }
         strcpy(out + out_count, buffer);
-        putstr(buffer);
         format_length = 0;
         break;
       case 's':
