@@ -141,6 +141,7 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
           format_length--;
           out[out_count++] = pad;
         }
+        putstr(buffer);
         strcpy(out + out_count, buffer);
         format_length = 0;
         break;
