@@ -23,7 +23,6 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   int fd = fs_open(filename, 0, 0);
   Elf_Ehdr ehdr;
   fs_read(fd, &ehdr, sizeof(Elf_Ehdr));
-  ramdisk_read(&ehdr, 77448, sizeof(Elf_Ehdr));
   if (memcmp(ehdr.e_ident, ELFMAG, SELFMAG) != 0) {
     panic("Invalid magical number\n");
     return 1;
