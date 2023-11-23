@@ -37,10 +37,6 @@ size_t *open_offsets;
 
 void init_fs() {
   open_offsets = (size_t *)malloc(sizeof(size_t) * sizeof(file_table) / sizeof(file_table[0]));
-  int i;
-  for (i = 0; i < sizeof(file_table) / sizeof(file_table[0]); i++){
-    open_offsets[i] = file_table[i].disk_offset;
-  }
   // TODO: initialize the size of /dev/fb
 }
 
@@ -52,7 +48,7 @@ int fs_open(const char *pathname, int flags, int mode){
   int i;
   for (i = 0; i < sizeof(file_table) / sizeof(file_table[0]); i++){
     if (strcmp(pathname, file_table[i].name) == 0){
-      open_offsets[i] = 0;
+      open_offsets[i] = file_table[i].disk_offset;
       return i;
     }
   }
