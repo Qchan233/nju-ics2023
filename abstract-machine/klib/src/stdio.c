@@ -54,6 +54,7 @@ char* itoa(int num, char* str, int base)
         putch(index[rem]);
         num = num / base;
     }
+    putch('\n');
  
     // If number is negative, append '-'
     if (isNegative)
