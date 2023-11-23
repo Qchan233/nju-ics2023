@@ -79,13 +79,13 @@ void *_sbrk(intptr_t increment) {
     initialized = true;
     program_break = &end;
   }
-  char* new_break = 
-  _syscall_(SYS_brk, increment, 0, 0);
-  // if (GPRx < 0){
-  //   return (void *)-1;
-  // }
-  program_break += increment;
-  return program_break - increment;
+  char* prev_break = program_break;
+  program_break = program_break + (int) increment;
+  intptr_t result =  _syscall_(SYS_brk, (intptr_t) program_break, 0, 0);
+  if ((int) result < 0){
+    return (void *)-1;
+  }
+  return (void *) prev_break;
 }
 
 int _read(int fd, void *buf, size_t count) {
