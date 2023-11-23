@@ -24,9 +24,6 @@ char* itoa(int num, char* str, int base)
     int i = 0;
     bool isNegative = false;
 
-    // if (base == 16){
-    //   printf("itoa: %d\n", num);
-    // }
  
     /* Handle 0 explicitly, otherwise empty string is
      * printed for 0 */
@@ -47,14 +44,16 @@ char* itoa(int num, char* str, int base)
         isNegative = true;
         num = -num;
     }
+    
+    if (base == 16){
+      printf("itoa: %d\n", num);
+    }
     // Process individual digits
     while (num != 0) {
         int rem = num % base;
         str[i++] = index[rem];
-        putch(index[rem]);
         num = num / base;
     }
-    putch('\n');
  
     // If number is negative, append '-'
     if (isNegative)
