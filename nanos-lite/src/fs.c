@@ -76,14 +76,14 @@ size_t fs_lseek(int fd, size_t offset, int whence){
       open_offsets[fd] += offset;
       break;
     case SEEK_END:
-      open_offsets[fd] = file_table[fd].size + offset;
+      open_offsets[fd] = file_table[fd].disk_offset + offset;
       break;
     default:
       panic("Invalid whence: %d", whence);
   }
 
   if (open_offsets[fd] > file_table[fd].size){
-    // panic("Exceed file size: %d", file_table[fd].size);
+    panic("Exceed file size: %d", file_table[fd].size);
   }
   return open_offsets[fd];
 }
