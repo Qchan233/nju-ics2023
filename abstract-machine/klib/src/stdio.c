@@ -55,10 +55,10 @@ char* itoa(int num, char* str, int base)
         str[i++] = '-';
  
     str[i] = '\0'; // Append string terminator
-    putstr(str);
-    putstr("\n");
     // Reverse the string
     reverse(str, i);
+    putstr(str);
+    putch('\n');
  
     return str;
 }
