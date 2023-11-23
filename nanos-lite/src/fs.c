@@ -82,8 +82,9 @@ size_t fs_lseek(int fd, size_t offset, int whence){
       panic("Invalid whence: %d", whence);
   }
 
-  // if (open_offsets[fd] > file_table[fd].size){
-  //   panic("Exceed file size: %d", file_table[fd].size);
-  // }
+  if (open_offsets[fd] > file_table[fd].size){
+    // panic("Exceed file size: %d", file_table[fd].size);
+    printf("Exceed file size: %d", file_table[fd].size);
+  }
   return open_offsets[fd];
 }
