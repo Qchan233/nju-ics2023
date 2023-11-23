@@ -20,6 +20,7 @@ void reverse(char str[], int length)
 
 char* itoa(int num, char* str, int base)
 {
+    char* index = "0123456789ABCDEF";
     int i = 0;
     bool isNegative = false;
  
@@ -45,7 +46,7 @@ char* itoa(int num, char* str, int base)
     // Process individual digits
     while (num != 0) {
         int rem = num % base;
-        str[i++] = (rem > 9) ? (rem - 10) + 'a' : rem + '0';
+        str[i++] = index[rem];
         num = num / base;
     }
  
@@ -141,7 +142,6 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
           format_length--;
           out[out_count++] = pad;
         }
-        putstr(buffer);
         strcpy(out + out_count, buffer);
         format_length = 0;
         break;
