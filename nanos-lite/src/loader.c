@@ -25,12 +25,13 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   fs_read(fd, &ehdr, sizeof(Elf_Ehdr));
   Elf_Phdr phdr[ehdr.e_phnum];
   fs_lseek(fd, ehdr.e_phoff, 0);
-  // fs_read(fd, phdr, sizeof(Elf_Phdr) * ehdr.e_phnum);
+  fs_read(fd, phdr, sizeof(Elf_Phdr) * ehdr.e_phnum);
   int i;
   for(i=0;i<ehdr.e_phnum;i++){
     Elf_Phdr current = phdr[i];
     if (current.p_type == PT_LOAD){
       void * dst = (void *) current.p_vaddr;
+      putstr("Loading program segment");
       ramdisk_copy(dst, current.p_offset, current.p_filesz);
       memset((void *)(current.p_vaddr + current.p_filesz), 0, current.p_memsz - current.p_filesz);
     }
