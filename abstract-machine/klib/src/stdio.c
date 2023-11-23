@@ -136,7 +136,7 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
         format_length = 0;
         break;
       case 'p':
-        unsigned int value2 = va_arg(ap, unsigned int);
+        unsigned int value2 = va_arg(ap, int);
         itoa(value2, buffer, 16);
         dlen = strlen(buffer);
         while(format_length > dlen){
