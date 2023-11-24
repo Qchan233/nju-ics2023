@@ -35,7 +35,8 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     Elf_Phdr current = phdr[i];
     if (current.p_type == PT_LOAD){
       void * dst = (void *) current.p_vaddr;
-      ramdisk_copy(dst, current.p_offset, current.p_filesz);
+      fs_lseek(fd, current.p_offset, 0);
+      fs_read(fd, dst, current.p_filesz);
       memset((void *)(current.p_vaddr + current.p_filesz), 0, current.p_memsz - current.p_filesz);
     }
   }
