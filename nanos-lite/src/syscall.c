@@ -8,15 +8,24 @@ size_t fs_write(int fd, const void *buf, size_t len);
 size_t fs_lseek(int fd, size_t offset, int whence);
 int fs_close(int fd);
 
+#define SYS_CALL(_) \
+_(exit) _(yield) _(open) _(read) _(write) _(kill) _(getpid) _(close) \
+_(lseek) _(brk) _(fstat) _(time) _(signal) _(execve) _(fork) _(link) \
+_(unlink) _(wait) _(times) _(gettimeofday)
+
+char *sysname[SYS_gettimeofday + 1] = {
+#define SYS(name) #name,
+  SYS_CALL(SYS)
+};
+#undef SYS
+
 void do_syscall(Context *c) {
   uintptr_t a[4];
   a[0] = c->GPR1;
   a[1] = c->GPR2;
   a[2] = c->GPR3;
   a[3] = c->GPR4;
-#ifdef CONFIG_STRACE
   Log("System Call: %s", sysname[a[0]]);
-#endif
 
   switch (a[0]) {
     case SYS_exit: halt(a[1]); break;
