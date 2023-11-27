@@ -63,7 +63,7 @@ void do_syscall(Context *c) {
     case SYS_lseek: c->GPRx = fs_lseek((int) a[1], (size_t) a[2], (int) a[3]); break;
     case SYS_gettimeofday: 
         struct timeval *tv = (struct timeval *)a[1];
-        tv->tv_usec = io_read(AM_TIMER_UPTIME).us % 86400000000;
+        tv->tv_usec = io_read(AM_TIMER_UPTIME).us;
         tv->tv_sec = tv->tv_usec / 1000000;
        c->GPRx = 0; 
        break;
