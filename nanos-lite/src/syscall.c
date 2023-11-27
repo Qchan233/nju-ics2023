@@ -22,6 +22,7 @@ char *sysname[SYS_gettimeofday + 1] = {
 typedef size_t (*ReadFn) (void *buf, size_t offset, size_t len);
 typedef size_t (*WriteFn) (const void *buf, size_t offset, size_t len);
 WriteFn get_write_fn(int fd);
+ReadFn get_read_fn(int fd);
 
 void do_syscall(Context *c) {
   uintptr_t a[4];
@@ -47,18 +48,27 @@ void do_syscall(Context *c) {
       // else{
       //   c->GPRx = fs_write(fd, (void *)a[2], (size_t)a[3]);
       // }
-      WriteFn fn = get_write_fn(a[1]);
-      if (fn == NULL){
+      WriteFn wfn = get_write_fn(a[1]);
+      if (wfn == NULL){
         c->GPRx = fs_write(a[1], (void *)a[2], (size_t)a[3]);
       }
       else{
-        c->GPRx = get_write_fn(a[1])((void *)a[2], 0, a[3]);
+        c->GPRx = wfn((void *)a[2], 0, a[3]);
       }
     break;
     case SYS_brk:
       c->GPRx = 0;
       break;
-    case SYS_read: printf("read"); c->GPRx = fs_read((int) a[1], (void *)a[2], (size_t)a[3]); break;
+    case SYS_read: 
+      ReadFn rfn = get_read_fn(a[1]);
+      if (rfn == NULL){
+        c->GPRx = fs_read((int) a[1], (void *)a[2], (size_t)a[3]);
+      }
+      else{
+        c->GPRx = rfn((void *)a[2], 0, a[3]);
+      }
+      break;
+
     case SYS_close: c->GPRx = fs_close((int) a[1]); break;
     case SYS_lseek: c->GPRx = fs_lseek((int) a[1], (size_t) a[2], (int) a[3]); break;
     case SYS_gettimeofday: 

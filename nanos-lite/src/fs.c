@@ -41,6 +41,10 @@ WriteFn get_write_fn(int fd){
   return file_table[fd].write;
 }
 
+ReadFn get_read_fn(int fd){
+  return file_table[fd].read;
+}
+
 size_t *open_offsets;
 
 void init_fs() {
