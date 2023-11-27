@@ -13,7 +13,7 @@ int main() {
       gettimeofday(&tv_current, NULL);
     }while (tv_current.tv_sec - tv_prev.tv_sec < 1);
     gettimeofday(&tv_prev, NULL);
-    printf("1 sec passed\n");
+    printf("%d secs passed\n", tv_current.tv_sec);
   }
   
   return 0;
