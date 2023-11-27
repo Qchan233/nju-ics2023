@@ -35,9 +35,6 @@ Finfo file_table[] __attribute__((used)) = {
 };
 
 WriteFn get_write_fn(int fd){
-  // if (file_table[fd].write == NULL){
-  //   return 
-  // }
   return file_table[fd].write;
 }
 
