@@ -3,9 +3,6 @@
 #include <NDL.h>
 #include <sys/time.h>
 
-uint32_t NDL_GetTicks();
-int NDL_Init(uint32_t flags);
-
 int main() {
   uint32_t tv_prev;
   uint32_t tv_current;
