@@ -46,7 +46,13 @@ void do_syscall(Context *c) {
       // else{
       //   c->GPRx = fs_write(fd, (void *)a[2], (size_t)a[3]);
       // }
-      c->GPRx = get_write_fn(a[1])((void *)a[2], 0, a[3]);
+      WriteFn fn = get_write_fn(a[1]);
+      if (fn == NULL){
+        c->GPRx = fs_write(a[1], (void *)a[2], (size_t)a[3]);
+      }
+      else{
+        c->GPRx = get_write_fn(a[1])((void *)a[2], 0, a[3]);
+      }
     break;
     case SYS_brk:
       c->GPRx = 0;
