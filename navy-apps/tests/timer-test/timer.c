@@ -5,12 +5,14 @@
 int main() {
   struct timeval tv_prev;
   struct timeval tv_current;
+  printf("Starting timer-test\n");
   gettimeofday(&tv_prev, NULL);
   while (1)
   {
     do{
-      gettimeofday(&tv_current, NULL); 
+      gettimeofday(&tv_current, NULL);
     }while (tv_current.tv_sec - tv_prev.tv_sec < 1);
+    gettimeofday(&tv_prev, NULL);
     printf("1 sec passed\n");
   }
   
