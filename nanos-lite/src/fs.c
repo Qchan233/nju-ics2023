@@ -49,8 +49,8 @@ ReadFn get_read_fn(int fd){
 }
 
 size_t *open_offsets;
-static int screen_width;
-static int screen_height;
+int screen_width;
+int screen_height;
 void init_fs() {
   open_offsets = (size_t *)malloc(sizeof(size_t) * sizeof(file_table) / sizeof(file_table[0]));
   int buf[2];

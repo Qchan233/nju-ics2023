@@ -45,8 +45,14 @@ size_t dispinfo_read(void *buf, size_t offset, size_t len) {
   memcpy(buf + sizeof(int), &h, sizeof(int));
   return sizeof(int) * 2;
 }
+extern int screen_height;
+extern int screen_width;
 
 size_t fb_write(const void *buf, size_t offset, size_t len) {
+  int y = offset / screen_width;
+  int x = offset % screen_width;
+  void* buf2 = (void*)buf;
+  io_write(AM_GPU_FBDRAW, x, y, buf2, len / sizeof(uint32_t), 1, true);
   return 0;
 }
 
