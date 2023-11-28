@@ -24,6 +24,8 @@ typedef size_t (*WriteFn) (const void *buf, size_t offset, size_t len);
 WriteFn get_write_fn(int fd);
 ReadFn get_read_fn(int fd);
 
+extern size_t *open_offsets;
+
 void do_syscall(Context *c) {
   uintptr_t a[4];
   a[0] = c->GPR1;
@@ -53,7 +55,7 @@ void do_syscall(Context *c) {
         c->GPRx = fs_write(a[1], (void *)a[2], (size_t)a[3]);
       }
       else{
-        c->GPRx = wfn((void *)a[2], 0, a[3]);
+        c->GPRx = wfn((void *)a[2], open_offsets[a[1]], a[3]);
       }
     break;
     case SYS_brk:
