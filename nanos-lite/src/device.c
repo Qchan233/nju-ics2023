@@ -36,6 +36,7 @@ size_t events_read(void *buf, size_t offset, size_t len) {
 }
 
 size_t dispinfo_read(void *buf, size_t offset, size_t len) {
+  printf("dispinfo_read\n");
   if (len < 2 * sizeof(int)){
     return 0;
   }
