@@ -50,8 +50,8 @@ extern int screen_width;
 
 size_t fb_write(const void *buf, size_t offset, size_t len) {
   int y = (offset / 4) / screen_width;
-  printf("y: %d\n", y);
   int x = (offset / 4) % screen_width;
+  printf("x:%d y: %d\n",x, y);
   void* line_buf = (void*)buf;
   io_write(AM_GPU_FBDRAW, x, y, line_buf, len / sizeof(uint32_t), 1, true);
   return 0;
