@@ -39,8 +39,8 @@ size_t dispinfo_read(void *buf, size_t offset, size_t len) {
   if (len < 2 * sizeof(int)){
     return 0;
   }
-  int w = io_read(AM_GPU_CONFIG).width;
-  int h = io_read(AM_GPU_CONFIG).height;
+  AM_GPU_CONFIG_T info = io_read(AM_GPU_CONFIG);
+  int w = info.width, h = info.height;
   printf("dispinfo_read: w = %d, h = %d\n", w, h);
   memcpy(buf, &w, sizeof(int));
   memcpy(buf + sizeof(int), &h, sizeof(int));
