@@ -49,7 +49,7 @@ extern int screen_height;
 extern int screen_width;
 
 size_t fb_write(const void *buf, size_t offset, size_t len) {
-  // printf("fb_write: offset = %d, len = %d\n", offset, len);
+  printf("fb_write: offset = %d, len = %d\n", offset, len);
   int y = offset / screen_width;
   int x = offset % screen_width;
   void* line_buf = (void*)buf;
