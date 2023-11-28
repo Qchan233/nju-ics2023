@@ -36,7 +36,6 @@ size_t events_read(void *buf, size_t offset, size_t len) {
 }
 
 size_t dispinfo_read(void *buf, size_t offset, size_t len) {
-  printf("dispinfo_read\n");
   if (len < 2 * sizeof(int)){
     return 0;
   }
@@ -44,6 +43,7 @@ size_t dispinfo_read(void *buf, size_t offset, size_t len) {
   int h = io_read(AM_GPU_CONFIG).height;
   memcpy(buf, &w, sizeof(int));
   memcpy(buf + sizeof(int), &h, sizeof(int));
+  printf("dispinfo_read: w = %d, h = %d\n", w, h);
   return sizeof(int) * 2;
 }
 
