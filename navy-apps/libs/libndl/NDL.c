@@ -42,7 +42,7 @@ void NDL_OpenCanvas(int *w, int *h) {
   }
   int fd = open("/proc/dispinfo", 0, 0);
   int* buf;
-  read(fd, &buf, sizeof(buf));
+  read(fd, buf, 2 * sizeof(int));
   *w = buf[0];
   *h = buf[1];
 }
