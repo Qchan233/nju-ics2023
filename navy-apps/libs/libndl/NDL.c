@@ -8,6 +8,7 @@
 static int evtdev = -1;
 static int fbdev = -1;
 static int screen_w = 0, screen_h = 0;
+static int x_offset = 0, y_offset = 0;
 
 uint32_t NDL_GetTicks() {
   struct timeval tv;
@@ -44,11 +45,18 @@ void NDL_OpenCanvas(int *w, int *h) {
   int buf[2];
   read(fd, buf, 2 * sizeof(int));
   screen_w = buf[0]; screen_h = buf[1];
+  if (*w == 0) *w = screen_w;
+  if (*h == 0) *h = screen_h;
+  // place canvas in the middle
+  x_offset = (screen_w - *w) / 2;
+  y_offset = (screen_h - *h) / 2;
 }
 
 void NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
   int i;
   int fd = open("/dev/fb", 0, 0);
+  x += x_offset;
+  y += y_offset;
   for (i = 0; i < h; i++){
     int result = lseek(fd, (y + i) * screen_w * sizeof(uint32_t) + x * sizeof(uint32_t), SEEK_SET);
     // printf("result: %d\n", result);
