@@ -67,7 +67,7 @@ void do_syscall(Context *c) {
         c->GPRx = fs_read((int) a[1], (void *)a[2], (size_t)a[3]);
       }
       else{
-        c->GPRx = rfn((void *)a[2], 0, a[3]);
+        c->GPRx = rfn((void *)a[2], open_offsets[a[1]], a[3]);
       }
       break;
 
