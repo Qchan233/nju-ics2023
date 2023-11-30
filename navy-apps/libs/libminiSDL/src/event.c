@@ -20,6 +20,7 @@ int SDL_PollEvent(SDL_Event *ev) {
 int SDL_WaitEvent(SDL_Event *event) {
   char buf[16];
   while(NDL_PollEvent(&buf, 16) == 0);
+  printf("Get Event");
   switch (buf[1])
     {
     case 'd':
@@ -31,7 +32,6 @@ int SDL_WaitEvent(SDL_Event *event) {
     default:
       break;
     }
-    printf("Get Event");
     int i;
     for (i=0; i < sizeof(keyname) / sizeof(char*); i++){
       if(strcmp(buf+3, keyname[i])){
