@@ -20,14 +20,15 @@ int SDL_PollEvent(SDL_Event *ev) {
 int SDL_WaitEvent(SDL_Event *event) {
   char buf[16];
   while(NDL_PollEvent(&buf, 16) == 0);
-  printf("Get Event");
   switch (buf[1])
     {
     case 'd':
       event->type = SDL_KEYDOWN;
+      printf("Keydown\n");
       break;
     case 'u':
       event->type = SDL_KEYUP;
+      printf("Keyup\n");
       break;
     default:
       break;
