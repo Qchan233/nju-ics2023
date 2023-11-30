@@ -26,11 +26,19 @@ int SDL_WaitEvent(SDL_Event *event) {
       break;
     case 'u':
       event->type = SDL_KEYUP;
+      break;
     default:
       break;
     }
+    int i;
+    for (i=0; i < sizeof(keyname) / sizeof(char*)){
+      if(strcmp(buf+3, keyname[i])){
+        event.key.keysym.sym = i;
+        return 1;
+      }
+    }
   }
-  return 1;
+  return 0;
 }
 
 int SDL_PeepEvents(SDL_Event *ev, int numevents, int action, uint32_t mask) {
