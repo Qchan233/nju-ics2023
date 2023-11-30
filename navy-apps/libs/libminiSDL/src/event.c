@@ -31,6 +31,7 @@ int SDL_WaitEvent(SDL_Event *event) {
     default:
       break;
     }
+    printf("Get Event");
     int i;
     for (i=0; i < sizeof(keyname) / sizeof(char*); i++){
       if(strcmp(buf+3, keyname[i])){
