@@ -20,8 +20,8 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
     return;
   }
   
-  for(i=0;i<dstrect->h;i++){
-    for(j=0;j<dstrect->w;j++){
+  for(i=0;i<srcrect->h;i++){
+    for(j=0;j<srcrect->w;j++){
        dstpixel[(dstrect->y+i)*dst->w + (dstrect->x+j)] = srcpixel[(srcrect->y+i)*src->w + (srcrect->x+j)];
     }
   }
