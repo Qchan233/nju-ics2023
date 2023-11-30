@@ -19,8 +19,7 @@ int SDL_PollEvent(SDL_Event *ev) {
 
 int SDL_WaitEvent(SDL_Event *event) {
   char buf[16];
-  while(NDL_PollEvent(&buf, 0) == 0){
-  }    
+  while(NDL_PollEvent(&buf, 0) == 0);
   switch (buf[1])
     {
     case 'd':
