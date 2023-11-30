@@ -19,7 +19,6 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
     }
     return;
   }
-  printf("1\n");
   
   for(i=0;i<srcrect->h;i++){
     for(j=0;j<srcrect->w;j++){
