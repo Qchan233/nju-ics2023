@@ -20,6 +20,7 @@ int SDL_PollEvent(SDL_Event *ev) {
 int SDL_WaitEvent(SDL_Event *event) {
   char buf[16];
   while(NDL_PollEvent(&buf, 16) == 0);
+  printf("%s\n", buf);
   switch (buf[1])
     {
     case 'd':
