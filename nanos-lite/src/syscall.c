@@ -32,7 +32,7 @@ void do_syscall(Context *c) {
   a[1] = c->GPR2;
   a[2] = c->GPR3;
   a[3] = c->GPR4;
-  // Log("System Call: %s", sysname[a[0]]);
+  Log("System Call: %s", sysname[a[0]]);
 
   switch (a[0]) {
     case SYS_exit: halt(a[1]); break;
