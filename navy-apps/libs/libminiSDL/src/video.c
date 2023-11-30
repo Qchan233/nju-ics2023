@@ -19,6 +19,7 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
     }
     return;
   }
+  printf("1\n");
   
   for(i=0;i<srcrect->h;i++){
     for(j=0;j<srcrect->w;j++){
@@ -50,11 +51,10 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
 
 void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
   if(x==0&&y==0&w==0&h==0){
-  printf("x: %d, y: %d, w: %d, h: %d\n", x, y, w, h);
-    int screnn_h = 0;
+    int screen_h = 0;
     int screen_w = 0;
-    NDL_OpenCanvas(&screen_w, &screnn_h);
-    NDL_DrawRect(s->pixels, x, y, screen_w, screnn_h);
+    NDL_OpenCanvas(&screen_w, &screen_h);
+    NDL_DrawRect(s->pixels, x, y, screen_w, screen_h);
     return;
   }
   NDL_DrawRect(s->pixels, x, y, w, h);
