@@ -25,7 +25,7 @@ int SDL_PollEvent(SDL_Event *ev) {
       printf("down");
       break;
     case 'u':
-      event->type = SDL_KEYUP;
+      ev->type = SDL_KEYUP;
       break;
     default:
       break;
