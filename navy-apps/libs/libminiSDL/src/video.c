@@ -14,12 +14,12 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
   if (srcrect == NULL){
     for(i=0;i<src->h;i++){
       for(j=0;j<src->w;j++){
-        printf("1\n");
         dstpixel[(dstrect->y+i)*dst->w + (dstrect->x+j)] = srcpixel[i*src->w + j];
       }
     }
     return;
   }
+  printf("1\n");
   
   for(i=0;i<srcrect->h;i++){
     for(j=0;j<srcrect->w;j++){
