@@ -54,8 +54,8 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
     int screen_w = 0;
     NDL_OpenCanvas(&screen_w, &screnn_h);
     NDL_DrawRect(s->pixels, x, y, screen_w, screnn_h);
+    return;
   }
-  printf("x:%d y:%d w:%d h:%d\n",x,y,w,h);
   NDL_DrawRect(s->pixels, x, y, w, h);
 }
 
