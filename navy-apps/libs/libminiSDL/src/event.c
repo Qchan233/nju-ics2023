@@ -14,6 +14,29 @@ int SDL_PushEvent(SDL_Event *ev) {
 }
 
 int SDL_PollEvent(SDL_Event *ev) {
+  char buf[16];
+  if(NDL_PollEvent(&buf, 16) == 0){
+    return 0;
+  }
+  switch (buf[1])
+    {
+    case 'd':
+      event->type = SDL_KEYDOWN;
+      printf("down");
+      break;
+    case 'u':
+      event->type = SDL_KEYUP;
+      break;
+    default:
+      break;
+    }
+    int i;
+    for (i=0; i < sizeof(keyname) / sizeof(char*); i++){
+      if(strcmp(buf+3, keyname[i]) == 0){
+        ev->key.keysym.sym = i;
+        return 1;
+      }
+    }
   return 0;
 }
 
