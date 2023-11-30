@@ -24,6 +24,7 @@ int SDL_WaitEvent(SDL_Event *event) {
     {
     case 'd':
       event->type = SDL_KEYDOWN;
+      printf("down");
       break;
     case 'u':
       event->type = SDL_KEYUP;
@@ -34,7 +35,6 @@ int SDL_WaitEvent(SDL_Event *event) {
     int i;
     for (i=0; i < sizeof(keyname) / sizeof(char*); i++){
       if(strcmp(buf+3, keyname[i]) == 0){
-        printf("%s\n", buf + 3);
         event->key.keysym.sym = i;
         return 1;
       }
