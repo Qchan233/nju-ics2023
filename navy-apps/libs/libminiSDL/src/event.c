@@ -1,5 +1,6 @@
 #include <NDL.h>
 #include <SDL.h>
+#include <string.h>
 
 #define keyname(k) #k,
 
@@ -31,9 +32,9 @@ int SDL_WaitEvent(SDL_Event *event) {
       break;
     }
     int i;
-    for (i=0; i < sizeof(keyname) / sizeof(char*)){
+    for (i=0; i < sizeof(keyname) / sizeof(char*); i++){
       if(strcmp(buf+3, keyname[i])){
-        event.key.keysym.sym = i;
+        event->key.keysym.sym = i;
         return 1;
       }
     }
