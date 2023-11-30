@@ -21,7 +21,7 @@ int SDL_PollEvent(SDL_Event *ev) {
   switch (buf[1])
     {
     case 'd':
-      event->type = SDL_KEYDOWN;
+      ev->type = SDL_KEYDOWN;
       printf("down");
       break;
     case 'u':
