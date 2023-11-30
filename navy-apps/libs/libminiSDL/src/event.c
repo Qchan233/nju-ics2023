@@ -32,9 +32,9 @@ int SDL_WaitEvent(SDL_Event *event) {
       break;
     }
     int i;
-    printf("%s\n", buf);
     for (i=0; i < sizeof(keyname) / sizeof(char*); i++){
       if(strcmp(buf+3, keyname[i])){
+        printf("%s\n", keyname[i]);
         event->key.keysym.sym = i;
         return 1;
       }
