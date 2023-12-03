@@ -58,7 +58,7 @@ void init_fs() {
   screen_width = buf[0];
   screen_height = buf[1];
   file_table[FD_FB].size = screen_width * screen_height * sizeof(uint32_t);
-  printf("screen_width: %d, screen_height: %d\n", screen_width, screen_height);
+  // printf("screen_width: %d, screen_height: %d\n", screen_width, screen_height);
 }
 
 int fs_close(int fd){
