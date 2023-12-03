@@ -22,7 +22,6 @@ int main(int argc, char *argv[]) {
   printf("win_w = %d, win_h = %d\n", win_w, win_h);
 
   term = new Terminal(W, H);
-  printf("W = %d, H = %d\n", W, H);
 
   if (argc < 2) { builtin_sh_run(); }
   else { extern_app_run(argv[1]); }
