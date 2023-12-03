@@ -4,6 +4,7 @@
 #include <string.h>
 #include <stdlib.h>
 
+static int only_once = 0;
 void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_Rect *dstrect) {
   assert(dst && src);
   assert(dst->format->BitsPerPixel == src->format->BitsPerPixel);
@@ -11,9 +12,8 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
   uint32_t* srcpixel = (uint32_t *) src->pixels;
   uint32_t* dstpixel = (uint32_t *) dst->pixels;
 
-  if (srcrect == NULL){
-    printf("dtrect w: %d, h: %d\n", dstrect->w, dstrect->h);
-    printf("src w: %d, h: %d\n", src->w, src->h);
+  if (srcrect == NULL && only_once == 0){
+    only_once = 1;
     for(i=0;i<src->h;i++){
       for(j=0;j<src->w;j++){
         dstpixel[(dstrect->y+i)*dst->w + (dstrect->x+j)] = srcpixel[i*src->w + j];
