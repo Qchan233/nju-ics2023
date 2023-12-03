@@ -8,7 +8,16 @@
 static int evtdev = -1;
 static int fbdev = -1;
 static int screen_w = 0, screen_h = 0;
+static int canvas_w = 0, canvas_h = 0;
 static int x_offset = 0, y_offset = 0;
+
+int get_canvas_w() {
+  return canvas_w;
+}
+
+int get_canvas_h() {
+  return canvas_h;
+}
 
 uint32_t NDL_GetTicks() {
   struct timeval tv;
@@ -47,6 +56,7 @@ void NDL_OpenCanvas(int *w, int *h) {
   if (*w == 0) *w = screen_w;
   if (*h == 0) *h = screen_h;
   // place canvas in the middle
+  canvas_h = *h; canvas_w = *w;
   x_offset = (screen_w - *w) / 2;
   y_offset = (screen_h - *h) / 2;
 }

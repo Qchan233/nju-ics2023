@@ -17,6 +17,8 @@ void NDL_OpenAudio(int freq, int channels, int samples);
 void NDL_CloseAudio();
 int NDL_PlayAudio(void *buf, int len);
 int NDL_QueryAudio();
+int get_canvas_h();
+int get_canvas_w();
 
 #ifdef __cplusplus
 }
