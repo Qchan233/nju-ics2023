@@ -40,12 +40,11 @@ void NDL_OpenCanvas(int *w, int *h) {
     }
     close(fbctl);
   }
-  int fd = open("/proc/dispinfo", 0, 0);
-  int buf[2];
-  read(fd, buf, 2 * sizeof(int));
-  screen_w = buf[0]; screen_h = buf[1];
+
   if (*w == 0) *w = screen_w;
   if (*h == 0) *h = screen_h;
+
+  screen_w = *w; screen_h = *h;
   // place canvas in the middle
   x_offset = (screen_w - *w) / 2;
   y_offset = (screen_h - *h) / 2;
@@ -81,6 +80,10 @@ int NDL_Init(uint32_t flags) {
   if (getenv("NWM_APP")) {
     evtdev = 3;
   }
+  int fd = open("/proc/dispinfo", 0, 0);
+  int buf[2];
+  read(fd, buf, 2 * sizeof(int));
+  screen_w = buf[0]; screen_h = buf[1];
   return 0;
 }
 
