@@ -8,7 +8,7 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
   assert(dst && src);
   assert(dst->format->BitsPerPixel == src->format->BitsPerPixel);
   int i,j,h,w;
-  printf("src->w: %d, src->h: %d\n", src->w, src->h);
+  printf("dstrect: %d %d %d %d\n", dstrect->x, dstrect->y, dstrect->w, dstrect->h);
   uint32_t* srcpixel = (uint32_t *) src->pixels;
   uint32_t* dstpixel = (uint32_t *) dst->pixels;
 
