@@ -50,6 +50,7 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
 }
 
 void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
+  printf("1111\n");
   if(x==0&&y==0&w==0&h==0){
     int w = get_canvas_w();
     int h = get_canvas_h();
