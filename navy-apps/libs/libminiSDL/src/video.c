@@ -102,11 +102,12 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
   if (s->format->BitsPerPixel == 8){
     uint32_t* buf = (uint32_t *)malloc(sizeof(uint32_t)*w*h);
     int i;
-    printf("%p\n", buf);
+    // printf("%p\n", buf);
     for (i = 0; i < w*h; i++)
     {
       buf[i] = s->format->palette->colors[s->pixels[i]].val;
     }
+    printf("Copyed\n");
     if(x==0&&y==0&w==0&h==0){
       int w = get_canvas_w();
       int h = get_canvas_h();
