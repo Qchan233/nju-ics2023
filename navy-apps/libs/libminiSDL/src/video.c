@@ -123,6 +123,7 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
       buf[i] = s->format->palette->colors[s->pixels[i]].val;
     }
     if(x==0&&y==0&w==0&h==0){
+      printf("Update\n");
       w = get_canvas_w();
       h = get_canvas_h();
       printf("%d %d\n", w, h);
