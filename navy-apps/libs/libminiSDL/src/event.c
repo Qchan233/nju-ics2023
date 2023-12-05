@@ -46,7 +46,6 @@ int SDL_WaitEvent(SDL_Event *event) {
     {
     case 'd':
       event->type = SDL_KEYDOWN;
-      printf("down");
       break;
     case 'u':
       event->type = SDL_KEYUP;

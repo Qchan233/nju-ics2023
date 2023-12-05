@@ -114,7 +114,6 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
 }
 
 void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
-  printf("SDL_UpdateRect\n");
   if (s->format->BitsPerPixel == 8){
     uint32_t* buf = (uint32_t *)malloc(sizeof(uint32_t)*w*h);
     int i;
@@ -133,7 +132,6 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
     }
     NDL_DrawRect(buf, x, y, w, h);
     free(buf);
-    printf("SDL_UpdateRect finished\n");
     return;
   }
   else{
