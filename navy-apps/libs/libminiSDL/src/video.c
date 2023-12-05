@@ -5,7 +5,6 @@
 #include <stdlib.h>
 
 void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_Rect *dstrect) {
-  printf("SDL_BlitSurface\n");
   assert(dst && src);
   assert(dst->format->BitsPerPixel == src->format->BitsPerPixel);
   int i,j,h,w;
@@ -71,28 +70,45 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 }
 
 void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
-  printf("SDL_FillRect\n");
   int i,j;
 
-  uint32_t* pixel;
   if (dst->format->BitsPerPixel == 8){
-    color = dst->format->palette->colors[color].val;
-  }
-   
-  if (dstrect == NULL){
-    for (i = 0; i < dst->h; i++)
-    {
-      for (j = 0; j < dst->w; j++)
+    uint8_t* pixel;
+    if (dstrect == NULL){
+      for (i = 0; i < dst->h; i++)
       {
-        pixel[i * dst->w + j] = color;
+        for (j = 0; j < dst->w; j++)
+        {
+          pixel[i * dst->w + j] = (uint8_t) color;
+        }
+      }
+      return;
+    }
+
+    for(i=0;i<dstrect->h;i++){
+      for(j=0;j<dstrect->w;j++){
+        pixel[(dstrect->y+i)*dst->w + (dstrect->x+j)] = color;
       }
     }
     return;
   }
+  else{
+    uint32_t* pixel;
+    if (dstrect == NULL){
+      for (i = 0; i < dst->h; i++)
+      {
+        for (j = 0; j < dst->w; j++)
+        {
+          pixel[i * dst->w + j] = color;
+        }
+      }
+      return;
+    }
 
-  for(i=0;i<dstrect->h;i++){
-    for(j=0;j<dstrect->w;j++){
-      pixel[(dstrect->y+i)*dst->w + (dstrect->x+j)] = color;
+    for(i=0;i<dstrect->h;i++){
+      for(j=0;j<dstrect->w;j++){
+        pixel[(dstrect->y+i)*dst->w + (dstrect->x+j)] = color;
+      }
     }
   }
 }
@@ -102,7 +118,6 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
   if (s->format->BitsPerPixel == 8){
     uint32_t* buf = (uint32_t *)malloc(sizeof(uint32_t)*w*h);
     int i;
-    // printf("%p\n", buf);
     for (i = 0; i < w*h; i++)
     {
       buf[i] = s->format->palette->colors[s->pixels[i]].val;
