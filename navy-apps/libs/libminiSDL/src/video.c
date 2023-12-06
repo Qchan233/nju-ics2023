@@ -125,13 +125,12 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
     if(x==0&&y==0&w==0&h==0){
       w = get_canvas_w();
       h = get_canvas_h();
-      printf("%d %d\n", w, h);
       NDL_DrawRect(buf, x, y, w, h);
       free(buf);
       return;
     }
-    printf("%p\n", buf);
     NDL_DrawRect(buf, x, y, w, h);
+    printf("drawn\n");
     free(buf);
     return;
   }
