@@ -17,7 +17,7 @@ uint8_t keystates[83];
 int SDL_PollEvent(SDL_Event *ev) {
   char buf[16];
   if(NDL_PollEvent(&buf, 16) == 0){
-    memset(keystates, 0, sizeof(keystates));
+    // memset(keystates, 0, sizeof(keystates));
     return 0;
   }
 
