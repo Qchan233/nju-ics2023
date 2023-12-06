@@ -19,6 +19,9 @@ int SDL_PollEvent(SDL_Event *ev) {
   if(NDL_PollEvent(&buf, 16) == 0){
     return 0;
   }
+  if (NDL_PollEvent(&buf, 16) == 1){
+    memset(keystates, 0, sizeof(keystates));
+  }
   switch (buf[1])
     {
     case 'd':
