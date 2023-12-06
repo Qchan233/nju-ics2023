@@ -130,8 +130,8 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
       return;
     }
     NDL_DrawRect(buf, x, y, w, h);
-    printf("drawn\n");
     free(buf);
+    printf("freed");
     return;
   }
   else{
