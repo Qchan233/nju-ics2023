@@ -122,7 +122,7 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
       buf[i] = s->format->palette->colors[s->pixels[i]].val;
     }
     printf("%d %d %d %d\n", x, y, w, h);
-    if(x==0&&y==0&w==0&h==0){
+    if(x==0&&y==0&&w==0&&h==0){
       w = get_canvas_w();
       h = get_canvas_h();
       NDL_DrawRect(buf, x, y, w, h);
@@ -131,7 +131,6 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
     }
     NDL_DrawRect(buf, x, y, w, h);
     free(buf);
-    printf("freed");
     return;
   }
   else{
