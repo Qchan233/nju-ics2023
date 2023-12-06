@@ -38,7 +38,7 @@ void do_syscall(Context *c) {
   // printf("syscall %s\n", sysname[a[0]]);
 
   switch (a[0]) {
-    case SYS_exit: naive_uload(NULL, "bin/nterm"); break;
+    case SYS_exit: naive_uload(NULL, "/bin/nterm"); break;
     case SYS_open: c->GPRx = fs_open((char *)a[1], (int) a[2], (int) a[3]); break;
     case SYS_write:
       // int fd = (int) a[1];
