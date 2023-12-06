@@ -7,6 +7,7 @@
 void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_Rect *dstrect) {
   assert(dst && src);
   assert(dst->format->BitsPerPixel == src->format->BitsPerPixel);
+  printf("Blit Surface\n");
   int i,j,h,w;
   if (src->format->BitsPerPixel == 8){
     uint8_t* srcpixel = (uint8_t *) src->pixels;
@@ -70,7 +71,6 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 }
 
 void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
-  printf("FillRect\n");
   int i,j;
 
   if (dst->format->BitsPerPixel == 8){
