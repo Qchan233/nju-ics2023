@@ -23,7 +23,9 @@ static void sh_prompt() {
 }
 
 static void sh_handle_cmd(const char *cmd) {
-  printf("command: %s\n", cmd);
+  char* cmd_copy = strdup(cmd);
+  char *binary = strtok(cmd_copy, " ");
+  execve(binary, NULL, NULL);
 }
 
 void builtin_sh_run() {
