@@ -27,7 +27,7 @@ static void sh_handle_cmd(const char *cmd) {
   cmd_copy[strcspn(cmd_copy, "\n")] = 0;
   char *binary = strtok(cmd_copy, " ");
 
-  execve(binary, NULL, NULL);
+  execvp(binary, NULL);
 }
 
 void builtin_sh_run() {
