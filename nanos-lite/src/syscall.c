@@ -35,7 +35,7 @@ void do_syscall(Context *c) {
   a[2] = c->GPR3;
   a[3] = c->GPR4;
 
-  printf("syscall %s\n", sysname[a[0]]);
+  // printf("syscall %s\n", sysname[a[0]]);
 
   switch (a[0]) {
     case SYS_exit: naive_uload(NULL, "/bin/nterm"); break;
@@ -76,7 +76,7 @@ void do_syscall(Context *c) {
 
     case SYS_close: c->GPRx = fs_close((int) a[1]); break;
     case SYS_lseek: c->GPRx = fs_lseek((int) a[1], (size_t) a[2], (int) a[3]); break;
-    case SYS_execve: naive_uload(NULL, (char *)a[1]); break;
+    case SYS_execve: printf("%s", (char *)a[1]); naive_uload(NULL, (char *)a[1]); break;
     case SYS_gettimeofday: 
         struct timeval *tv = (struct timeval *)a[1];
         tv->tv_usec = io_read(AM_TIMER_UPTIME).us;
