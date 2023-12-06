@@ -58,6 +58,7 @@ int SDL_WaitEvent(SDL_Event *event) {
     int i;
     for (i=0; i < sizeof(keyname) / sizeof(char*); i++){
       if(strcmp(buf+3, keyname[i]) == 0){
+        keystates[i] = event->type == SDL_KEYDOWN ? 1 : 0;
         event->key.keysym.sym = i;
         return 1;
       }
