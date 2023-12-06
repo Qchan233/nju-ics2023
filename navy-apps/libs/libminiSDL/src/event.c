@@ -14,7 +14,6 @@ int SDL_PushEvent(SDL_Event *ev) {
 }
 
 int SDL_PollEvent(SDL_Event *ev) {
-  printf("SDL_PollEvent\n");
   char buf[16];
   if(NDL_PollEvent(&buf, 16) == 0){
     return 0;
