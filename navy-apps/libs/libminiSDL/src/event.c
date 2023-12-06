@@ -15,7 +15,7 @@ int SDL_PushEvent(SDL_Event *ev) {
 
 int SDL_PollEvent(SDL_Event *ev) {
   char buf[16];
-  if(NDL_PollEvent(&buf, 16) < 3){
+  if(NDL_PollEvent(&buf, 16) == 0){
     return 0;
   }
   switch (buf[1])
