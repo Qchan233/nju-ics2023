@@ -22,7 +22,7 @@ int get_canvas_h() {
 uint32_t NDL_GetTicks() {
   struct timeval tv;
   gettimeofday(&tv, NULL);
-  return tv.tv_sec;
+  return tv.tv_usec / 1000;
 }
 
 int NDL_PollEvent(char *buf, int len) {
