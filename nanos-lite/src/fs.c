@@ -67,10 +67,10 @@ int fs_close(int fd){
 
 int fs_open(const char *pathname, int flags, int mode){
   int i;
-  printf("%s\n", pathname);
   for (i = 0; i < sizeof(file_table) / sizeof(file_table[0]); i++){
     // printf("file_table[%d].name: %s\n", i, file_table[i].name);
     if (strcmp(pathname, file_table[i].name) == 0){
+      printf("open %s\n", pathname);
       open_offsets[i] = file_table[i].disk_offset;
       return i;
     }
