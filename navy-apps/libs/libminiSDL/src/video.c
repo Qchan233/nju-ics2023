@@ -7,7 +7,6 @@
 void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_Rect *dstrect) {
   assert(dst && src);
   assert(dst->format->BitsPerPixel == src->format->BitsPerPixel);
-  printf("Blit Surface\n");
   int i,j,h,w;
   if (src->format->BitsPerPixel == 8){
     uint8_t* srcpixel = (uint8_t *) src->pixels;
@@ -116,6 +115,10 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
 
 void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
   if (s->format->BitsPerPixel == 8){
+    if(x==0&&y==0&&w==0&&h==0){
+      w = get_canvas_w();
+      h = get_canvas_h();
+    }
     uint32_t* buf = (uint32_t *)malloc(sizeof(uint32_t)*w*h);
     int i;
     for (i = 0; i < w*h; i++)
@@ -124,8 +127,6 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
     }
     // printf("%d %d %d %d\n", x, y, w, h);
     if(x==0&&y==0&&w==0&&h==0){
-      w = get_canvas_w();
-      h = get_canvas_h();
       NDL_DrawRect(buf, x, y, w, h);
       free(buf);
       return;
