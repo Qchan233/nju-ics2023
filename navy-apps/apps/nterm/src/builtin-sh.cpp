@@ -24,7 +24,9 @@ static void sh_prompt() {
 
 static void sh_handle_cmd(const char *cmd) {
   char* cmd_copy = strdup(cmd);
+  cmd_copy[strcspn(cmd_copy, "\n")] = 0;
   char *binary = strtok(cmd_copy, " ");
+
   execve(binary, NULL, NULL);
 }
 
