@@ -12,12 +12,10 @@ static int canvas_w = 0, canvas_h = 0;
 static int x_offset = 0, y_offset = 0;
 
 int get_canvas_w() {
-  printf("get_canvas_w: %d\n", canvas_w);
   return canvas_w;
 }
 
 int get_canvas_h() {
-  printf("get_canvas_h: %d\n", canvas_h);
   return canvas_h;
 }
 
