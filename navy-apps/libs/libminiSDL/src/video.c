@@ -31,7 +31,7 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
       }
       return;
     }
-    printf("%d %d %d %d\n", src->w, src->h, src->w, src->h);
+    printf("%d %d %d %d\n", src->w, src->h, srcrect->w, srcrect->h);
     for(i=0;i<srcrect->h;i++){
       for(j=0;j<srcrect->w;j++){
         dstpixel[(dsty+i)*dst->w + (dstx+j)] = srcpixel[(srcrect->y+i)*src->w + (srcrect->x+j)];
