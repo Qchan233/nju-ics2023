@@ -124,8 +124,8 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
     int i;
     for (i = 0; i < w*h; i++)
     {
-      uint32_t color = s->format->palette->colors[s->pixels[i]].val;
-      buf[i] = (color >> 8) & 0xFFFFFF;
+      SDL_Color color = s->format->palette->colors[s->pixels[i]];
+      buf[i] =  (color.r << 16) | (color.g << 8) | color.b;
     }
     // printf("%d %d %d %d\n", x, y, w, h);
     if(x==0&&y==0&&w==0&&h==0){
