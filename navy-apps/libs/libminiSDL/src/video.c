@@ -4,36 +4,15 @@
 #include <string.h>
 #include <stdlib.h>
 
-void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_Rect *dstrect) {
-  assert(dst && src);
-  assert(dst->format->BitsPerPixel == src->format->BitsPerPixel);
+void BlitSurfaceUnchecked(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_Rect *dstrect) {
   int i,j,h,w;
   if (src->format->BitsPerPixel == 8){
     uint8_t* srcpixel = (uint8_t *) src->pixels;
     uint8_t* dstpixel = (uint8_t *) dst->pixels;
 
-    int dstx,dsty;
-    if (dstrect == NULL){
-      dstx = 0;
-      dsty = 0;
-    }
-    else{
-      dstx = dstrect->x;
-      dsty = dstrect->y;
-    }
-
-    if (srcrect == NULL){
-      for(i=0;i<src->h;i++){
-        for(j=0;j<src->w;j++){
-          dstpixel[(dsty+i)*dst->w + (dstx+j)] = srcpixel[i*src->w + j];
-        }
-      }
-      return;
-    }
-    // printf("%d %d %d %d\n", srcrect->x, srcrect->y, dstrect->w, dstrect->h);
     for(i=0;i<srcrect->h;i++){
       for(j=0;j<srcrect->w;j++){
-        dstpixel[(dsty+i)*dst->w + (dstx+j)] = srcpixel[(srcrect->y+i)*src->w + (srcrect->x+j)];
+        dstpixel[(dstrect->y+i)*dst->w + (dstrect->x+j)] = srcpixel[(srcrect->y+i)*src->w + (srcrect->x+j)];
       }
     }
   }
@@ -67,6 +46,32 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
     }
   }
 
+}
+
+void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_Rect *dstrect) {
+  assert(dst && src);
+  assert(dst->format->BitsPerPixel == src->format->BitsPerPixel);
+    SDL_Rect fulldst;
+    int srcx, srcy, w, h;
+
+    /* If the destination rectangle is NULL, use the entire dest surface */
+    if (!dstrect) {
+        fulldst.x = fulldst.y = 0;
+        fulldst.w = dst->w;
+        fulldst.h = dst->h;
+        dstrect = &fulldst;
+    }
+
+    if (w > 0 && h > 0) {
+        SDL_Rect sr;
+        sr.x = srcx;
+        sr.y = srcy;
+        sr.w = dstrect->w = w;
+        sr.h = dstrect->h = h;
+        SDL_BlitSurfaceUnchecked(src, &sr, dst, dstrect);
+    }
+    dstrect->w = dstrect->h = 0;
+    return;
 }
 
 void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
