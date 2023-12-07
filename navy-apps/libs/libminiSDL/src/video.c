@@ -31,10 +31,10 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
       }
       return;
     }
-    // printf("%d %d %d %d\n", srcrect->x, srcrect->y, dstrect->w, dstrect->h);
+    printf("%d %d %d %d\n", src->w, src->h, dstrect->w, dstrect->h);
     for(i=0;i<srcrect->h;i++){
       for(j=0;j<srcrect->w;j++){
-        dstpixel[(dsty+i)*dst->w + (dstx+j)] = srcpixel[(i)*src->w + (j)];
+        dstpixel[(dsty+i)*dst->w + (dstx+j)] = srcpixel[(srcrect->y+i)*src->w + (srcrect->x+j)];
       }
     }
   }
@@ -115,7 +115,6 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
 }
 
 void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
-  printf("%d %d %d %d\n",x,y,w,h);
   if (s->format->BitsPerPixel == 8){
     if(x==0&&y==0&&w==0&&h==0){
       w = get_canvas_w();
