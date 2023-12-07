@@ -4,7 +4,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-
+void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h);
 void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_Rect *dstrect) {
   assert(dst && src);
   assert(dst->format->BitsPerPixel == src->format->BitsPerPixel);
@@ -31,11 +31,12 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
     }
     // printf("src:%d %d %d %d\n", srcrect->w, srcrect->h, srcrect->x, srcrect->y);
     // printf("dst:%d %d %d %d\n", dstrect->w, dstrect->h, dstrect->x, dstrect->y);
-    for(i=0;i<srcrect->h;i++){
-      for(j=0;j<srcrect->w;j++){
-        dst->pixels[(dsty+i)*dst->w + (dstx+j)] = src->pixels[(srcrect->y+i)*src->w + (srcrect->x+j)];
-      }
-    }
+    // for(i=0;i<srcrect->h;i++){
+    //   for(j=0;j<srcrect->w;j++){
+    //     dst->pixels[(dsty+i)*dst->w + (dstx+j)] = src->pixels[(srcrect->y+i)*src->w + (srcrect->x+j)];
+    //   }
+    // }
+    SDL_UpdateRect(src, srcrect->x, srcrect->y, srcrect->w, srcrect->h);
   }
   else{
     uint32_t* srcpixel = (uint32_t *) src->pixels;
