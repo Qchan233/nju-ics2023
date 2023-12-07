@@ -123,11 +123,13 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
       h = get_canvas_h();
     }
     uint32_t* buf = (uint32_t *)malloc(sizeof(uint32_t)*w*h);
-    int i;
-    for (i = 0; i < w*h; i++)
+    int i,j;
+    for (i = 0; i < h; i++)
     {
-      SDL_Color color = s->format->palette->colors[s->pixels[i]];
-      buf[i] = color.a << 24 |  (color.r << 16) | (color.g << 8) | color.b;
+      for (j = 0; j < w; j++){
+        SDL_Color color = s->format->palette->colors[s->pixels[(y+i)*w + x+j]];
+        buf[i*w+j] = color.a << 24 |  (color.r << 16) | (color.g << 8) | color.b;
+      }
     }
     // printf("%d %d %d %d\n", x, y, w, h);
     if(x==0&&y==0&&w==0&&h==0){
