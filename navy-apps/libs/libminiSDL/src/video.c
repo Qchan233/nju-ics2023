@@ -10,8 +10,6 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
   assert(dst->format->BitsPerPixel == src->format->BitsPerPixel);
   int i,j,h,w;
   if (src->format->BitsPerPixel == 8){
-    uint8_t* srcpixel = (uint8_t *) src->pixels;
-    uint8_t* dstpixel = (uint8_t *) dst->pixels;
 
     int dstx,dsty;
     if (dstrect == NULL){
@@ -26,15 +24,15 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
     if (srcrect == NULL){
       for(i=0;i<src->h;i++){
         for(j=0;j<src->w;j++){
-          dstpixel[(dsty+i)*dst->w + (dstx+j)] = srcpixel[i*src->w + j];
+          dst->pixels[(dsty+i)*dst->w + (dstx+j)] = src->pixels[i*src->w + j];
         }
       }
       return;
     }
-    printf("%d %d %d %d\n", src->w, src->h, srcrect->w, srcrect->h);
+    // printf("%d %d %d %d\n", src->w, src->h, srcrect->w, srcrect->h);
     for(i=0;i<srcrect->h;i++){
       for(j=0;j<srcrect->w;j++){
-        dstpixel[(dsty+i)*dst->w + (dstx+j)] = srcpixel[(srcrect->y+i)*src->w + (srcrect->x+j)];
+        dst->pixels[(dsty+i)*dst->w + (dstx+j)] = src->pixels[(srcrect->y+i)*src->w + (srcrect->x+j)];
       }
     }
   }
