@@ -126,9 +126,10 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
     int i,j;
     for (i = 0; i < h; i++)
     {
-      for (j = 0; j < w; j++){
-        SDL_Color color = s->format->palette->colors[s->pixels[(y+i)*w + x+j]];
-        buf[i*w+j] = color.a << 24 |  (color.r << 16) | (color.g << 8) | color.b;
+      for (j = 0; j < w; j++)
+      {
+        SDL_Color color = s->format->palette->colors[s->pixels[(y+i)*s->w + x+j]];
+        buf[i*w+j] = color.a << 24 | (color.r << 16) | (color.g << 8) | color.b;
       }
     }
     // printf("%d %d %d %d\n", x, y, w, h);
