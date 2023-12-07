@@ -4,9 +4,9 @@
 #include <string.h>
 #include <stdlib.h>
 
-static inline uint32_t translate_color(SDL_Color *color){
-  return (color->a << 24) | (color->r << 16) | (color->g << 8) | color->b;
-}
+// static inline uint32_t translate_color(SDL_Color *color){
+//   return (color->a << 24) | (color->r << 16) | (color->g << 8) | color->b;
+// }
 
 void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_Rect *dstrect) {
   assert(dst && src);
@@ -117,74 +117,36 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
 }
 
 void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
-  // if (s->format->BitsPerPixel == 8){
-  //   if(w==0&&h==0){
-  //     w = get_canvas_w();
-  //     h = get_canvas_h();
-  //   }
-  //   uint32_t* buf = (uint32_t *)malloc(sizeof(uint32_t)*w*h);
-  //   int i;
-  //   for (i = 0; i < w*h; i++)
-  //   {
-  //     SDL_Color color = s->format->palette->colors[s->pixels[i]];
-  //     buf[i] =  (color.r << 16) | (color.g << 8) | color.b;
-  //   }
-  //   // printf("%d %d %d %d\n", x, y, w, h);
-  //   if(x==0&&y==0&&w==0&&h==0){
-  //     NDL_DrawRect(buf, x, y, w, h);
-  //     free(buf);
-  //     return;
-  //   }
-  //   NDL_DrawRect(buf, x, y, w, h);
-  //   free(buf);
-  //   return;
-  // }
-  // else{
-  //   if(x==0&&y==0&w==0&h==0){
-  //     int w = get_canvas_w();
-  //     int h = get_canvas_h();
-  //     NDL_DrawRect(s->pixels, x, y, w, h);
-  //     return;
-  //   }
-  //   NDL_DrawRect(s->pixels, x, y, w, h);
-  // }
-  if (s->format->BitsPerPixel == 32){
-    if (w == 0 && h == 0 && x ==0 && y == 0){
-      //printf("%d %d\n", s->w, s->h);
-      NDL_DrawRect((uint32_t *)s->pixels, 0, 0, s->w, s->h);
-      return ;
+  if (s->format->BitsPerPixel == 8){
+    if(w==0&&h==0){
+      w = get_canvas_w();
+      h = get_canvas_h();
     }
-    
-    uint32_t *pixels = malloc(w * h * sizeof(uint32_t));
-    assert(pixels);
-    uint32_t *src = (uint32_t *)s->pixels;
-    for (int i = 0; i < h; ++i){
-      memcpy(&pixels[i * w], &src[(y + i) * s->w + x], sizeof(uint32_t) * w);
+    uint32_t* buf = (uint32_t *)malloc(sizeof(uint32_t)*w*h);
+    int i;
+    for (i = 0; i < w*h; i++)
+    {
+      SDL_Color color = s->format->palette->colors[s->pixels[i]];
+      buf[i] = color.a << 24 |  (color.r << 16) | (color.g << 8) | color.b;
     }
-    NDL_DrawRect(pixels, x, y, w, h);
-
-    free(pixels);
-  }else if(s->format->BitsPerPixel == 8){
-    if (w == 0 && h == 0 && x ==0 && y == 0){
-      w = s->w; h = s->h;
-      x = 0;    y = 0;
+    // printf("%d %d %d %d\n", x, y, w, h);
+    if(x==0&&y==0&&w==0&&h==0){
+      NDL_DrawRect(buf, x, y, w, h);
+      free(buf);
+      return;
     }
-
-    uint32_t *pixels = malloc(w * h * sizeof(uint32_t));
-    assert(pixels);
-    uint8_t *src = (uint8_t *)s->pixels;
-
-    for (int i = 0; i < h; ++i){
-      for (int j = 0; j < w; ++j){
-        pixels[i * w + j] = translate_color(&s->format->palette->colors[src[(y + i) * s->w + x + j]]);
-        //pixels[i * w + j] = s->format->palette->colors[src[(y + i) * s->w + x + j]].val;
-      }
+    NDL_DrawRect(buf, x, y, w, h);
+    free(buf);
+    return;
+  }
+  else{
+    if(x==0&&y==0&w==0&h==0){
+      int w = get_canvas_w();
+      int h = get_canvas_h();
+      NDL_DrawRect(s->pixels, x, y, w, h);
+      return;
     }
-    NDL_DrawRect(pixels, x, y, w, h);
-
-    free(pixels);
-  }else {
-    assert(0);
+    NDL_DrawRect(s->pixels, x, y, w, h);
   }
 }
 
