@@ -27,6 +27,7 @@ int SDL_PollEvent(SDL_Event *ev) {
       break;
     case 'u':
       ev->type = SDL_KEYUP;
+      printf("key up\n");
       break;
     default:
       break;
@@ -52,6 +53,7 @@ int SDL_WaitEvent(SDL_Event *event) {
       break;
     case 'u':
       event->type = SDL_KEYUP;
+      printf("key up\n");
       break;
     default:
       break;
