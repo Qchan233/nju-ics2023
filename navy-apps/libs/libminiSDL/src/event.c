@@ -75,5 +75,16 @@ uint8_t* SDL_GetKeyState(int *numkeys) {
   if (numkeys != NULL){
     *numkeys = 83;
   }
+  char buf[16];
+  if(NDL_PollEvent(&buf, 16) == 0){
+    return 0;
+  }
+  int i;
+  for (i=0; i < sizeof(keyname) / sizeof(char*); i++){
+    if(strcmp(buf+3, keyname[i]) == 0){
+      keystates[i] = buf[1] == 'd' ? 1 : 0;
+      return 1;
+    }
+  }
   return keystates;
 }
