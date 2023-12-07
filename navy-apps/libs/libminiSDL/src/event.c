@@ -20,6 +20,10 @@ int SDL_PollEvent(SDL_Event *ev) {
     return 0;
   }
 
+  if (ev == NULL){
+    return 1;
+  }
+
   switch (buf[1])
     {
     case 'd':
@@ -32,9 +36,6 @@ int SDL_PollEvent(SDL_Event *ev) {
       break;
     }
     int i;
-    if (ev == NULL){
-      return 1;
-    }
     for (i=0; i < sizeof(keyname) / sizeof(char*); i++){
       if(strcmp(buf+3, keyname[i]) == 0){
         ev->key.keysym.sym = i;
