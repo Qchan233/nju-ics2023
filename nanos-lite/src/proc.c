@@ -1,7 +1,7 @@
 #include <proc.h>
 
 #define MAX_NR_PROC 4
-void naive_uload(PCB *pcb, const char *filename) ;
+void naive_uload(PCB *pcb, const char *filename);
 static PCB pcb[MAX_NR_PROC] __attribute__((used)) = {};
 static PCB pcb_boot = {};
 PCB *current = NULL;
@@ -19,6 +19,10 @@ void hello_fun(void *arg) {
   }
 }
 
+Context *context_kload(PCB* thispcb, void (*func)(void *), void *arg){
+    return kcontext((Area) { pcb[0].stack, pcb[0].stack + STACK_SIZE}, func, arg);
+}
+
 void init_proc() {
   context_kload(&pcb[0], hello_fun, (void*) 0);
   context_kload(&pcb[1], hello_fun, (void*) 1);
@@ -30,5 +34,7 @@ void init_proc() {
 }
 
 Context* schedule(Context *prev) {
-  return NULL;
+  current->cp = prev;
+  current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
+  return current->cp;
 }
