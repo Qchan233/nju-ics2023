@@ -49,6 +49,8 @@ Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
   
   // printf("Entry %p\n", entry);
   context->mepc = (uintptr_t) entry;
+  context->gpr[10] = ((uintptr_t*) arg)[0];
+  context->gpr[11] = ((uintptr_t*) arg)[1];
   return context;
 }
 
