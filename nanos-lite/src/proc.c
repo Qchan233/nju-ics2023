@@ -24,11 +24,11 @@ Context *context_kload(PCB* thispcb, void (*func)(void *), void *arg){
 }
 
 void init_proc() {
+  Log("Initializing processes...");
   context_kload(&pcb[0], hello_fun, (void*) 0);
   context_kload(&pcb[1], hello_fun, (void*) 1);
   switch_boot_pcb();
 
-  Log("Initializing processes...");
   // load program here
   // naive_uload(NULL, "/bin/nterm");
 }
