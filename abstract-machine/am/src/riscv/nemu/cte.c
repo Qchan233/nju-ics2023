@@ -13,7 +13,7 @@ Context* __am_irq_handle(Context *c) {
       case 11:
         c->mepc += 4;
         if (c->GPR1 == -1) {
-          printf("Yield\n");
+          // printf("Yield\n");
           ev.event = EVENT_YIELD;
           break;
         } 
@@ -47,7 +47,7 @@ bool cte_init(Context*(*handler)(Event, Context*)) {
 Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
   Context* context = (kstack.end - sizeof(Context));
   
-  printf("Entry %p\n", entry);
+  // printf("Entry %p\n", entry);
   context->mepc = (uintptr_t) entry;
   return context;
 }
