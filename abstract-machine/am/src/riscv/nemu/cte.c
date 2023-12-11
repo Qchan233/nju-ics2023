@@ -49,7 +49,7 @@ Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
 
   context->mepc = (uintptr_t) entry;
   *((uintptr_t *) kstack.start) = (uintptr_t) context;
-  return *((Context **)kstack.start);
+  return context;
 }
 
 void yield() {
