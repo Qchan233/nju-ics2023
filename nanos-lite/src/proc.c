@@ -27,6 +27,8 @@ void init_proc() {
   Log("Initializing processes...");
   context_kload(&pcb[0], hello_fun, (void*) 0);
   context_kload(&pcb[1], hello_fun, (void*) 1);
+  assert(pcb[0].cp != NULL);
+  assert(pcb[1].cp != NULL);
   switch_boot_pcb();
 
   // load program here
@@ -34,10 +36,6 @@ void init_proc() {
 }
 
 Context* schedule(Context *prev) {
-  if (prev == NULL){
-    printf("Null\n");
-    return pcb[0].cp;
-  }
   current->cp = prev;
   // printf("Schedule\n");
   // printf("%d\n",current == &pcb[1]);
