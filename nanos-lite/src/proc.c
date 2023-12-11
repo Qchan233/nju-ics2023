@@ -35,6 +35,7 @@ void init_proc() {
 
 Context* schedule(Context *prev) {
   if (prev == NULL){
+    printf("Null\n");
     return pcb[0].cp;
   }
   current->cp = prev;
