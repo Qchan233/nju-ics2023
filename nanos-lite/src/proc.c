@@ -19,8 +19,8 @@ void hello_fun(void *arg) {
   }
 }
 
-Context *context_kload(PCB* thispcb, void (*func)(void *), void *arg){
-    return kcontext((Area) { pcb[0].stack, pcb[0].stack + STACK_SIZE}, func, arg);
+void context_kload(PCB* thispcb, void (*func)(void *), void *arg){
+    thispcb->cp = kcontext((Area) { thispcb->stack, thispcb->stack + STACK_SIZE}, func, arg);
 }
 
 void init_proc() {
