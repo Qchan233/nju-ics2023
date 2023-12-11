@@ -34,9 +34,12 @@ void init_proc() {
 }
 
 Context* schedule(Context *prev) {
+  if (prev == NULL){
+    return pcb[0].cp;
+  }
   current->cp = prev;
   // printf("Schedule\n");
-  printf("%d\n",current == &pcb[1]);
+  // printf("%d\n",current == &pcb[1]);
   current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
   return current->cp;
 }
