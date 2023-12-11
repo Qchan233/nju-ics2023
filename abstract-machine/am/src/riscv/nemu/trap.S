@@ -60,6 +60,10 @@ __am_asm_trap:
   mv a0, sp
   jal __am_irq_handle
 
+  # switch stack pointer to the new context
+
+  lw sp, 0(a0)
+
   LOAD t1, OFFSET_STATUS(sp)
   LOAD t2, OFFSET_EPC(sp)
   csrw mstatus, t1
