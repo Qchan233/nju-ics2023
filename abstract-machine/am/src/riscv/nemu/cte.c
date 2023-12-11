@@ -48,8 +48,8 @@ Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
   Context* context = (kstack.end - sizeof(Context));
 
   context->mepc = (uintptr_t) entry;
-  kstack.start = &context;
-  return kstack.end - sizeof(Context);
+  *((uintptr_t *) kstack.start) = (uintptr_t) context;
+  return kstack.start;
 }
 
 void yield() {
