@@ -36,7 +36,7 @@ void init_proc() {
   // context_kload(&pcb[1], hello_fun, (void*) 1);
   context_uload(&pcb[0], "/bin/pal");
   assert(pcb[0].cp != NULL);
-  // assert(pcb[1].cp != NULL);
+  assert(pcb[0].cp != NULL);
   switch_boot_pcb();
 
   // load program here
@@ -44,8 +44,10 @@ void init_proc() {
 }
 
 Context* schedule(Context *prev) {
-  current->cp = prev;
+  // current->cp = prev;
   // current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
   // return current->cp;
-  return pcb[0].cp;
+  current->cp = prev;
+  current = (&pcb[0]);
+  return current->cp;
 }
