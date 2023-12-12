@@ -32,9 +32,9 @@ void context_uload(PCB* thispcb, char* filename){
 
 void init_proc() {
   Log("Initializing processes...");
+  context_uload(&pcb[1], "/bin/pal");
   context_kload(&pcb[0], hello_fun, (void*) 0);
   // context_kload(&pcb[1], hello_fun, (void*) 1);
-  context_uload(&pcb[1], "/bin/pal");
   assert(pcb[0].cp != NULL);
   assert(pcb[1].cp != NULL);
   switch_boot_pcb();
