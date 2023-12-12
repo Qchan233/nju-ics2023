@@ -36,7 +36,7 @@ void init_proc() {
   // context_kload(&pcb[1], hello_fun, (void*) 1);
   context_uload(&pcb[0], "/bin/pal");
   assert(pcb[0].cp != NULL);
-  assert(pcb[1].cp != NULL);
+  // assert(pcb[1].cp != NULL);
   switch_boot_pcb();
 
   // load program here
