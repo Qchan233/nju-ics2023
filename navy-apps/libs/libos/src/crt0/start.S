@@ -1,7 +1,7 @@
 .globl  _start
 _start:
 
-mv sp, a0
+mv sp, a1
 
 #if defined(__ISA_AM_NATIVE__)
 
