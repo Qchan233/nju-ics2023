@@ -8,6 +8,7 @@ void call_main(uintptr_t *args) {
   int argc = (int) *args;
   printf("argc: %d\n",argc);
   char **argv = (char **)(args + 1);
+  printf("%s\n", argv[0]);
   char **envp = (char **)(args + argc + 2);
 
   int i;
