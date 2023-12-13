@@ -13,7 +13,7 @@ void switch_boot_pcb() {
 void hello_fun(void *arg) {
   int j = 1;
   while (1) {
-    Log("Hello World from Nanos-lite with arg '%p' for the %dth time!", (uintptr_t)arg, j);
+    // Log("Hello World from Nanos-lite with arg '%p' for the %dth time!", (uintptr_t)arg, j);
     j ++;
     yield();
   }
@@ -69,6 +69,7 @@ void context_uload(PCB *thispcb, const char *filename, char *const argv[], char 
       stack_ptr--;
     }
     *stack_ptr = narg; 
+    printf("%d\n", narg);
 
     context->GPRx = (uintptr_t ) stack_ptr;
 }
