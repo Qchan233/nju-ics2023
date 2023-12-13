@@ -68,8 +68,9 @@ void context_uload(PCB *thispcb, const char *filename, char *const argv[], char 
       *stack_ptr = (uintptr_t) argbuf[i];
       stack_ptr--;
     }
-    *stack_ptr = narg;
-  
+    *stack_ptr = narg; 
+
+    context->GPRx = (uintptr_t ) stack_ptr;
 }
 #undef BUFSIZE
 
