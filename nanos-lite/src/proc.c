@@ -29,6 +29,7 @@ void context_uload(PCB *thispcb, const char *filename, char *const argv[], char 
     Context* context = ucontext(NULL, (Area) { thispcb->stack, thispcb->stack + STACK_SIZE}, (void*)entry);
     thispcb->cp = context;
 
+    context->GPRx = (uintptr_t) (new_page(8) + 8 * 4096);
     char* stack_top = (char*) context->GPRx;
     int narg = 0;
     int nenv = 0;
@@ -69,7 +70,7 @@ void context_uload(PCB *thispcb, const char *filename, char *const argv[], char 
       stack_ptr--;
     }
     *stack_ptr = narg; 
-    printf("%d\n", narg);
+    // printf("%d\n", narg);
 
     context->GPRx = (uintptr_t ) stack_ptr;
 }

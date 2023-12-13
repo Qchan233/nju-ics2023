@@ -2,8 +2,11 @@
 
 static void *pf = NULL;
 
+#define PAGE_SIZE 4096
 void* new_page(size_t nr_page) {
-  return NULL;
+  void * prev_p = pf;
+  pf += nr_page * PAGE_SIZE;
+  return prev_p;
 }
 
 #ifdef HAS_VME
