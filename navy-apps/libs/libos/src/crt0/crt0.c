@@ -9,6 +9,7 @@ void call_main(uintptr_t *args) {
   printf("argc: %d\n",argc);
   char **argv = (char **)(args + 1);
   printf("arg1: %s\n", argv[0]);
+  printf("arg2==NULL %d\n", argv[1]==NULL);
   char **envp = (char **)(args + argc + 2);
 
   int i;
