@@ -2,7 +2,7 @@
 
 #define MAX_NR_PROC 4
 uintptr_t naive_uload(PCB *pcb, const char *filename);
-static PCB pcb[MAX_NR_PROC] __attribute__((used)) = {};
+/*static*/ PCB pcb[MAX_NR_PROC] __attribute__((used)) = {};
 static PCB pcb_boot = {};
 PCB *current = NULL;
 
@@ -13,7 +13,7 @@ void switch_boot_pcb() {
 void hello_fun(void *arg) {
   int j = 1;
   while (1) {
-    Log("Hello World from Nanos-lite with arg '%p' for the %dth time!", (uintptr_t)arg, j);
+    // Log("Hello World from Nanos-lite with arg '%p' for the %dth time!", (uintptr_t)arg, j);
     j ++;
     yield();
   }
@@ -81,9 +81,9 @@ void init_proc() {
   Log("Initializing processes...");
   context_kload(&pcb[0], hello_fun, (void*) 0);
   // context_kload(&pcb[1], hello_fun, (void*) 1);
-  char* argc[] = {"--skip", NULL};
+  char* argv[] = {"--skip", NULL};
   char* envp[] = {NULL};
-  context_uload(&pcb[1], "/bin/pal", argc, envp);
+  context_uload(&pcb[1], "/bin/exec-test", argv, envp);
   assert(pcb[0].cp != NULL);
   assert(pcb[1].cp != NULL);
   switch_boot_pcb();

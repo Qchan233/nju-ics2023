@@ -25,8 +25,11 @@ typedef size_t (*WriteFn) (const void *buf, size_t offset, size_t len);
 WriteFn get_write_fn(int fd);
 ReadFn get_read_fn(int fd);
 void naive_uload(PCB *pcb, const char *filename);
+void context_uload(PCB *thispcb, const char *filename, char *const argv[], char *const envp[]);
+void switch_boot_pcb();
 
 extern size_t *open_offsets;
+extern PCB pcb[];
 
 void do_syscall(Context *c) {
   uintptr_t a[4];
@@ -78,7 +81,10 @@ void do_syscall(Context *c) {
     case SYS_lseek: c->GPRx = fs_lseek((int) a[1], (size_t) a[2], (int) a[3]); break;
     case SYS_execve: 
       // naive_uload(NULL, (char *)a[1]); break;
-      
+      context_uload(&pcb[1], (char *)a[1], (char **)a[2], (char **)a[3]);
+      switch_boot_pcb();
+      yield();
+      break;
 
     case SYS_gettimeofday: 
         struct timeval *tv = (struct timeval *)a[1];
