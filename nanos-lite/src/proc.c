@@ -81,7 +81,7 @@ void init_proc() {
   Log("Initializing processes...");
   context_kload(&pcb[0], hello_fun, (void*) 0);
   // context_kload(&pcb[1], hello_fun, (void*) 1);
-  char* argv[] = {"--skip", NULL};
+  char* argv[] = {"/bin/exec-test", NULL};
   char* envp[] = {NULL};
   context_uload(&pcb[1], "/bin/exec-test", argv, envp);
   assert(pcb[0].cp != NULL);
