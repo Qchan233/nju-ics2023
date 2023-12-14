@@ -58,7 +58,7 @@ void context_uload(PCB *thispcb, const char *filename, char *const argv[], char 
     *stack_ptr = (uintptr_t) NULL;
     int i;
     for(i=0;i<nenv;i++){
-      *stack_ptr = (uintptr_t) envbuf[i];
+      *stack_ptr = (uintptr_t) envbuf[nenv-i-1];
       stack_ptr--;
     }
 
@@ -66,7 +66,7 @@ void context_uload(PCB *thispcb, const char *filename, char *const argv[], char 
     stack_ptr--;
 
     for(i=0;i<narg;i++){
-      *stack_ptr = (uintptr_t) argbuf[i];
+      *stack_ptr = (uintptr_t) argbuf[narg-i-1];
       stack_ptr--;
     }
     *stack_ptr = narg; 
