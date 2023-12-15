@@ -24,7 +24,7 @@ static void sh_prompt() {
 
 
 #define MAX_ARG_COUNT 16
-char *argv_buf[MAX_ARG_COUNT];
+static char *argv_buf[MAX_ARG_COUNT];
 static void sh_handle_cmd(const char *cmd) {
   char* cmd_copy = strdup(cmd);
   cmd_copy[strcspn(cmd_copy, "\n")] = 0;
