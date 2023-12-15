@@ -48,6 +48,7 @@ void context_uload(PCB *thispcb, const char *filename, char *const argv[], char 
     // printf("arg copied\n");
 if (envp == NULL)  goto envp_end;
     // 复制 envp 到栈上
+    printf("envp: %s\n", envp[0]);
     while(envp[nenv] != NULL){
       strcpy(stack_top, envp[nenv]);
       stack_top -= strlen(envp[nenv]) + 1;
