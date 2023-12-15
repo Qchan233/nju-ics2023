@@ -37,7 +37,7 @@ void context_uload(PCB *thispcb, const char *filename, char *const argv[], char 
     int nenv = 0;
     char* argbuf[BUFSIZE];
     char* envbuf[BUFSIZE];
-    printf("context_uload\n");
+    // printf("context_uload\n");
     printf("arg0: %s\n", argv[0]);
     if (argv[1] != NULL)
       printf("arg1: %s\n", argv[1]);
