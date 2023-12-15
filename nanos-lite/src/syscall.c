@@ -85,6 +85,7 @@ void do_syscall(Context *c) {
       // printf("execve: %s\n", (char *)a[1]);
       printf("argv0: %s\n", ((char **)a[2])[0]);
       printf("argv1: %s\n", ((char **)a[2])[1]);
+      panic("");
       context_uload(&pcb[current_pcb], (char *)a[1], (char **)a[2], (char **)a[3]);
       // printf("uload complete\n", (char *)a[1]);
       switch_boot_pcb();
