@@ -82,8 +82,8 @@ void do_syscall(Context *c) {
     case SYS_lseek: c->GPRx = fs_lseek((int) a[1], (size_t) a[2], (int) a[3]); break;
     case SYS_execve: 
       // naive_uload(NULL, (char *)a[1]); break;
-      printf("arg0=%s\n", ((char **)a[2])[0]);
-      printf("arg1=%s\n", ((char **)a[2])[1]);
+      // printf("arg0=%s\n", ((char **)a[2])[0]);
+      // printf("arg1=%s\n", ((char **)a[2])[1]);
       context_uload(&pcb[current_pcb], (char *)a[1], (char **)a[2], (char **)a[3]);
       switch_boot_pcb();
       yield();
