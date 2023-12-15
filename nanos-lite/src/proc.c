@@ -27,7 +27,12 @@ void context_kload(PCB* thispcb, void (*func)(void *), void *arg){
 #define BUFSIZE 16
 void context_uload(PCB *thispcb, const char *filename, char *const argv[], char *const envp[]){
     printf("filename: %s\n", filename);
-    printf("argv1:%s\n", argv[1]);
+    
+    int id=0;
+    while(argv[id] != NULL){
+      printf("argv[%d]: %s\n", id, argv[id]);
+      id++;
+    }
     uintptr_t entry = naive_uload(thispcb, filename);
     Context* context = ucontext(NULL, (Area) { thispcb->stack, thispcb->stack + STACK_SIZE}, (void*)entry);
     thispcb->cp = context;
