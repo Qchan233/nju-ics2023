@@ -37,7 +37,7 @@ void context_uload(PCB *thispcb, const char *filename, char *const argv[], char 
     char* argbuf[BUFSIZE];
     char* envbuf[BUFSIZE];
 
-    printf("filename: %s\n", filename);
+    // printf("filename: %s\n", filename);
     // 复制 argv 到栈上
     while(argv[narg] != NULL){
       stack_top -= strlen(argv[narg]) + 1;
@@ -72,7 +72,7 @@ envp_end:
       stack_ptr--;
     }
     *stack_ptr = narg; 
-    // printf("%d\n", narg);
+    printf("%d\n", narg);
 
     context->GPRx = (uintptr_t ) stack_ptr;
 }
