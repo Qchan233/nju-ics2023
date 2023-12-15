@@ -46,6 +46,7 @@ void context_uload(PCB *thispcb, const char *filename, char *const argv[], char 
       argbuf[narg] = stack_top;
       narg++;
     }
+    panic("");
     // printf("arg copied\n");
 if (envp == NULL)  goto envp_end;
     // 复制 envp 到栈上
