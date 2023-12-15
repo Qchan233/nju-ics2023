@@ -36,7 +36,7 @@ static void sh_handle_cmd(const char *cmd) {
       token = strtok(NULL, " ");
   }
   argv_buf[argc] = NULL;
-  // free(cmd_copy);
+  free(cmd_copy);
 
   execve(argv_buf[0], argv_buf, NULL);
 }
