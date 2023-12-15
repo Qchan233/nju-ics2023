@@ -24,15 +24,15 @@ static void sh_prompt() {
 
 
 #define MAX_ARG_COUNT 16
+static char *argv_buf[MAX_ARG_COUNT];
 static void sh_handle_cmd(const char *cmd) {
   char* cmd_copy = strdup(cmd);
   cmd_copy[strcspn(cmd_copy, "\n")] = 0;
-  char *argv[MAX_ARG_COUNT];
   // execvp(binary, argv);
   int argc = 0;
   char *token = strtok(cmd_copy, " ");
   while (token != NULL && argc < MAX_ARG_COUNT) {
-      argv[argc++] = strdup(token);
+      argv_buf[argc++] = strdup(token);
       printf("%s\n", token);
       token = strtok(NULL, " ");
   }
