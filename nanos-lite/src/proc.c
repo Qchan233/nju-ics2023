@@ -35,7 +35,7 @@ void context_uload(PCB *thispcb, const char *filename, char *const argv[], char 
     }
 
     uintptr_t entry = naive_uload(thispcb, filename);
-    printf("filename: %s\n", filename);
+    // printf("filename: %s\n", filename);
     Context* context = ucontext(NULL, (Area) { thispcb->stack, thispcb->stack + STACK_SIZE}, (void*)entry);
     thispcb->cp = context;
 
