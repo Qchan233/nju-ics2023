@@ -86,7 +86,7 @@ void init_proc() {
   Log("Initializing processes...");
   context_kload(&pcb[0], hello_fun, (void*) 0);
   // context_kload(&pcb[1], hello_fun, (void*) 1);
-  char* argv[] = {"/bin/exec-test", NULL};
+  char* argv[] = {"/bin/nterm", NULL};
   char* envp[] = {NULL};
   context_uload(&pcb[1], "/bin/nterm", argv, envp);
   current_pcb = 1;
