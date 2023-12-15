@@ -95,6 +95,7 @@ void init_proc() {
 }
 
 Context* schedule(Context *prev) {
+  printf("schedule\n");
   current->cp = prev;
   current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
   current_pcb = (current_pcb == 0 ? 1 : 0);
