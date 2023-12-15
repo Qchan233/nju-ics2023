@@ -39,7 +39,8 @@ void context_uload(PCB *thispcb, const char *filename, char *const argv[], char 
     char* envbuf[BUFSIZE];
 
     printf("arg0: %s\n", argv[0]);
-    printf("arg1: %s\n", argv[1]);
+    if (argv[1] != NULL)
+      printf("arg1: %s\n", argv[1]);
     // printf("filename: %s\n", filename);
     // 复制 argv 到栈上
     while(argv[narg] != NULL){
