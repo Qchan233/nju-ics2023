@@ -30,6 +30,7 @@ void switch_boot_pcb();
 
 extern size_t *open_offsets;
 extern PCB pcb[];
+extern int current_pcb;
 
 void do_syscall(Context *c) {
   uintptr_t a[4];
@@ -82,7 +83,7 @@ void do_syscall(Context *c) {
     case SYS_execve: 
       // naive_uload(NULL, (char *)a[1]); break;
       // printf("execve: %s\n", ((char **)a[2])[1]);
-      context_uload(&pcb[1], (char *)a[1], (char **)a[2], (char **)a[3]);
+      context_uload(&pcb[current_pcb], (char *)a[1], (char **)a[2], (char **)a[3]);
       switch_boot_pcb();
       yield();
       break;
