@@ -33,7 +33,7 @@ static void sh_handle_cmd(const char *cmd) {
   char *token = strtok(cmd_copy, " ");
   while (token != NULL && argc < MAX_ARG_COUNT) {
       argv[argc++] = strdup(token);
-      printf("%s\n", token);
+      // printf("%s\n", token);
       token = strtok(NULL, " ");
   }
 
