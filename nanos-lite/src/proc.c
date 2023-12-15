@@ -55,6 +55,7 @@ if (envp == NULL)  goto envp_end;
       nenv++;
     }
 envp_end:
+    printf("writing stack\n");
     uintptr_t *stack_ptr = (uintptr_t*)((uintptr_t)stack_top & ~0x3);
     stack_ptr--;
 
