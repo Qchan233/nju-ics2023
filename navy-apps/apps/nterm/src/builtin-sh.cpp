@@ -38,8 +38,7 @@ static void sh_handle_cmd(const char *cmd) {
   }
   free(cmd_copy);
 
-  char *test_argv[] = {argv[0], "--skip", NULL};
-  execve(argv[0], test_argv, NULL);
+  execve(argv[0], argv, NULL);
 }
 
 void builtin_sh_run() {
