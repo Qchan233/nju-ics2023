@@ -36,9 +36,9 @@ static void sh_handle_cmd(const char *cmd) {
       printf("%s\n", token);
       token = strtok(NULL, " ");
   }
-  argv[argc] = NULL;
+  argv_buf[argc] = NULL;
 
-  execve(argv[0], argv, NULL);
+  execve(argv_buf[0], argv_buf, NULL);
 }
 
 void builtin_sh_run() {
