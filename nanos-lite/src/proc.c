@@ -41,6 +41,7 @@ void context_uload(PCB *thispcb, const char *filename, char *const argv[], char 
     // 复制 argv 到栈上
     while(argv[narg] != NULL){
       stack_top -= strlen(argv[narg]) + 1;
+      printf("%s\n", argv[narg]);
       strcpy(stack_top, argv[narg]);
       argbuf[narg] = stack_top;
       narg++;
