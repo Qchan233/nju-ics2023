@@ -26,16 +26,18 @@ void context_kload(PCB* thispcb, void (*func)(void *), void *arg){
 
 #define BUFSIZE 16
 void context_uload(PCB *thispcb, const char *filename, char *const argv[], char *const envp[]){
-    printf("filename: %s\n", filename);
+    // printf("filename: %s\n", filename);
     
-    int id=0;
-    while(argv[id] != NULL){
-      printf("argv[%d]: %s\n", id, argv[id]);
-      id++;
-    }
+    // int id=0;
+    // while(argv[id] != NULL){
+    //   printf("argv[%d]: %s\n", id, argv[id]);
+    //   id++;
+    // }
+
     uintptr_t entry = naive_uload(thispcb, filename);
     Context* context = ucontext(NULL, (Area) { thispcb->stack, thispcb->stack + STACK_SIZE}, (void*)entry);
     thispcb->cp = context;
+    printf("filename: %s\n", filename);
 
     context->GPRx = (uintptr_t) (new_page(8) + 8 * 4096);
     char* stack_top = (char*) context->GPRx;
