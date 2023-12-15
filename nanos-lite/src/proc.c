@@ -37,6 +37,7 @@ void context_uload(PCB *thispcb, const char *filename, char *const argv[], char 
     char* argbuf[BUFSIZE];
     char* envbuf[BUFSIZE];
 
+
     // 复制 argv 到栈上
     while(argv[narg] != NULL){
       stack_top -= strlen(argv[narg]) + 1;
@@ -44,7 +45,7 @@ void context_uload(PCB *thispcb, const char *filename, char *const argv[], char 
       argbuf[narg] = stack_top;
       narg++;
     }
-
+if (envp == NULL)  goto envp_end;
     // 复制 envp 到栈上
     while(envp[nenv] != NULL){
       stack_top -= strlen(envp[nenv]) + 1;
@@ -52,7 +53,7 @@ void context_uload(PCB *thispcb, const char *filename, char *const argv[], char 
       envbuf[nenv] = stack_top;
       nenv++;
     }
-    
+envp_end:
     uintptr_t *stack_ptr = (uintptr_t*)((uintptr_t)stack_top & ~0x3);
     stack_ptr--;
 
