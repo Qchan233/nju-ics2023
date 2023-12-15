@@ -38,11 +38,12 @@ void context_uload(PCB *thispcb, const char *filename, char *const argv[], char 
     char* argbuf[BUFSIZE];
     char* envbuf[BUFSIZE];
 
+    printf("arg0: %s\n", argv[0]);
+    printf("arg1: %s\n", argv[1]);
     // printf("filename: %s\n", filename);
     // 复制 argv 到栈上
     while(argv[narg] != NULL){
       stack_top -= strlen(argv[narg]) + 1;
-      printf("%s\n", argv[narg]);
       strcpy(stack_top, argv[narg]);
       argbuf[narg] = stack_top;
       narg++;
@@ -53,7 +54,6 @@ void context_uload(PCB *thispcb, const char *filename, char *const argv[], char 
     else{
       panic("");
     }
-    printf("arg copied\n");
 if (envp == NULL)  goto envp_end;
     // 复制 envp 到栈上
     // printf("envp: %p\n", envp[0]);
