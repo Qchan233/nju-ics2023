@@ -25,6 +25,7 @@ void context_kload(PCB* thispcb, void (*func)(void *), void *arg){
 }
 
 #define BUFSIZE 16
+static int ci = 0;
 void context_uload(PCB *thispcb, const char *filename, char *const argv[], char *const envp[]){
     uintptr_t entry = naive_uload(thispcb, filename);
     Context* context = ucontext(NULL, (Area) { thispcb->stack, thispcb->stack + STACK_SIZE}, (void*)entry);
@@ -46,7 +47,12 @@ void context_uload(PCB *thispcb, const char *filename, char *const argv[], char 
       argbuf[narg] = stack_top;
       narg++;
     }
-    panic("");
+    if (ci == 0){
+      ci = 1;
+    }
+    else{
+      panic("");
+    }
     // printf("arg copied\n");
 if (envp == NULL)  goto envp_end;
     // 复制 envp 到栈上
