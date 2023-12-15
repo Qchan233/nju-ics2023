@@ -36,6 +36,7 @@ static void sh_handle_cmd(const char *cmd) {
       // printf("%s\n", token);
       token = strtok(NULL, " ");
   }
+  argv[argc] = NULL;
 
   execve(argv[0], argv, NULL);
 }
