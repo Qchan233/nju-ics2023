@@ -45,6 +45,7 @@ void context_uload(PCB *thispcb, const char *filename, char *const argv[], char 
       argbuf[narg] = stack_top;
       narg++;
     }
+    printf("arg copied\n");
 if (envp == NULL)  goto envp_end;
     // 复制 envp 到栈上
     while(envp[nenv] != NULL){
@@ -72,7 +73,6 @@ envp_end:
       stack_ptr--;
     }
     *stack_ptr = narg; 
-    printf("%d\n", narg);
 
     context->GPRx = (uintptr_t ) stack_ptr;
 }
