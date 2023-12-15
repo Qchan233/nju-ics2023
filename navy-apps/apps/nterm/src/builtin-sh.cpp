@@ -28,7 +28,8 @@ static void sh_handle_cmd(const char *cmd) {
   char *binary = strtok(cmd_copy, " ");
 
   char *argv[] = {binary, NULL};
-  execvp(binary, argv);
+  // execvp(binary, argv);
+  execve(binary, argv, NULL);
 }
 
 void builtin_sh_run() {
