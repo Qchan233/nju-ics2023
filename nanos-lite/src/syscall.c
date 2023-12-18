@@ -82,7 +82,6 @@ void do_syscall(Context *c) {
         c->GPRx = rfn((void *)a[2], open_offsets[a[1]], a[3]);
       }
       break;
-
     case SYS_close: c->GPRx = fs_close((int) a[1]); break;
     case SYS_lseek: c->GPRx = fs_lseek((int) a[1], (size_t) a[2], (int) a[3]); break;
     case SYS_execve: 
