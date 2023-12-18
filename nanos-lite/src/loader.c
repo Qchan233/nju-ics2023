@@ -45,9 +45,9 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 }
 
 uintptr_t naive_uload(PCB *pcb, const char *filename) {
-  printf("filename: %s\n", filename);
+  // printf("filename: %s\n", filename);
   uintptr_t entry = loader(pcb, filename);
-  printf("filename: %s\n", filename);
+  // printf("filename: %s\n", filename);
   return entry;
 }
 

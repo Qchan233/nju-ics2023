@@ -26,17 +26,11 @@ void context_kload(PCB* thispcb, void (*func)(void *), void *arg){
 
 #define BUFSIZE 16
 void context_uload(PCB *thispcb, const char *filename, char *const argv[], char *const envp[]){
-    printf("filename: %s\n", filename);
-    
-    int id=0;
-    while(argv[id] != NULL){
-      printf("argv[%d]: %s\n", id, argv[id]);
-      id++;
-    }
-
-    uintptr_t entry = naive_uload(thispcb, filename);
     // printf("filename: %s\n", filename);
-    Context* context = ucontext(NULL, (Area) { thispcb->stack, thispcb->stack + STACK_SIZE}, (void*)entry);
+    
+    // uintptr_t entry = naive_uload(thispcb, filename);
+    // printf("filename: %s\n", filename);
+    Context* context = ucontext(NULL, (Area) { thispcb->stack, thispcb->stack + STACK_SIZE}, NULL);
     thispcb->cp = context;
 
     context->GPRx = (uintptr_t) (new_page(8) + 8 * 4096);
@@ -58,7 +52,7 @@ if (envp == NULL)  goto envp_end;
     while(envp[nenv] != NULL){
       strcpy(stack_top, envp[nenv]);
       stack_top -= strlen(envp[nenv]) + 1;
-      printf("%s\n", envp[nenv]);
+      // printf("%s\n", envp[nenv]);
       envbuf[nenv] = stack_top;
       nenv++;
     }
@@ -83,6 +77,8 @@ envp_end:
     *stack_ptr = narg; 
 
     context->GPRx = (uintptr_t ) stack_ptr;
+
+    context->mepc = (uintptr_t) naive_uload(thispcb, filename);
 }
 #undef BUFSIZE
 
