@@ -19,10 +19,5 @@
 
 
 paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
-  printf("sat_val: %d,\n", paddr_read(cpu.satp, 4));
-  // word_t vpn1 = (vaddr >> 22) & 0x3ff;
-  // word_t vpn0 = (vaddr >> 12) & 0x3ff;
-
-  // word_t pte_val = pa
   return MEM_RET_FAIL;
 }
