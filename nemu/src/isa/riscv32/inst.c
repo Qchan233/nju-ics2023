@@ -64,6 +64,8 @@ word_t get_csr_value(word_t csr){
     return cpu.mepc;
   case 0x342:
     return cpu.mcause; 
+  case 0x180:
+    return cpu.satp;
   default:
     return 0;
     break;
@@ -84,6 +86,9 @@ void set_csr_value(word_t csr, word_t val){
     break;
   case 0x342:
     cpu.mcause = val; 
+    break;
+  case 0x180:
+    cpu.satp = val;
     break;
   default:
     return;
