@@ -99,16 +99,16 @@ word_t env_call(Level level){
   switch (level)
   {
   case U:
-    cpu.level = S;
+    // cpu.level = S;
     return 8;
   case S:
-    cpu.level = M;
+    // cpu.level = M;
     return 9;
   case M:
-    cpu.level = M;
+    // cpu.level = M;
     return 11;
   }
-  return level;
+  return 0;
 }
 
 

@@ -18,6 +18,6 @@
 #include <memory/paddr.h>
 
 paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
-  printf("satp value %x\n", cpu.satp); 
+  // printf("satp value %x\n", cpu.satp); 
   return MEM_RET_FAIL;
 }
