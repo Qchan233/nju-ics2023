@@ -17,6 +17,12 @@
 #include <memory/paddr.h>
 #include <memory/vaddr.h>
 
+
 paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
+  word_t vpn1 = (vaddr >> 22) & 0x3ff;
+  word_t vpn0 = (vaddr >> 12) & 0x3ff;
+
+  // word_t pte_val = pa
+  printf("%d,\n", paddr_read(cpu.satp, 4));
   return MEM_RET_FAIL;
 }
