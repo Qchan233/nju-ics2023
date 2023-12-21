@@ -65,6 +65,9 @@ ifeq ($(MAKECMDGOALS),archive)
 LIBS := $(LIB_DEP) # overwrite here to only build and archive the dependent libraries
 endif
 
+## Virtual Memory
+VME=1
+
 ### Files to be linked: object files (`.o`) and libraries (`.a`)
 OBJS      = $(addprefix $(DST_DIR)/, $(addsuffix .o, $(basename $(SRCS))))
 LIBS     := $(sort $(LIBS)) # lazy evaluation ("=") causes infinite recursions
