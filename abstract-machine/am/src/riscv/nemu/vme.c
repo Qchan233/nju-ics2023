@@ -67,7 +67,22 @@ void __am_switch(Context *c) {
 }
 
 void map(AddrSpace *as, void *va, void *pa, int prot) {
-  
+  PTE *pdir = (PTE *)as->ptr;
+  uintptr_t vpn1 = ((uintptr_t) va >> 22) & 0x3ff;
+  uintptr_t vpn0 = ((uintptr_t) va >> 12) & 0x3ff;
+
+  uintptr_t page_addr = 0;
+  if ((pdir[vpn1] & 1) == 0) { //invalid page
+    page_addr = (uintptr_t) pgalloc_usr(PGSIZE);
+    pdir[vpn1] = (PTE) (page_addr >> 12) << 10 | 1; // set valit bit
+  }
+  else{
+    page_addr = (uintptr_t) (pdir[vpn1] & 0xfffffc00) << 2;
+  }
+
+  pdir = (PTE *) page_addr;
+
+  pdir[vpn0] = (PTE) ((uintptr_t) pa >> 12) << 10 | 1; // set valit bit
 }
 
 Context *ucontext(AddrSpace *as, Area kstack, void *entry) {
