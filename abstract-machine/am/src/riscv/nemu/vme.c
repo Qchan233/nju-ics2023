@@ -77,12 +77,12 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
     pdir[vpn1] = (PTE) (page_addr >> 12) << 10 | 1; // set valit bit
   }
   else{
-    page_addr = (uintptr_t) (pdir[vpn1] & 0xfffffc00) << 2;
+    page_addr = (uintptr_t) (pdir[vpn1] & 0xfffff000) << 2;
   }
 
   pdir = (PTE *) page_addr;
 
-  pdir[vpn0] = (PTE) ((uintptr_t) pa >> 11) << 10 | 1; // set valit bit
+  pdir[vpn0] = (PTE) ((uintptr_t) pa >> 12) << 10 | 1; // set valit bit
 }
 
 Context *ucontext(AddrSpace *as, Area kstack, void *entry) {
