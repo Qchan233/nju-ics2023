@@ -23,6 +23,7 @@ int fs_close(int fd);
 
 typedef uintptr_t PTE;
 void set_vm_map(AddrSpace* as, uintptr_t vaddr, size_t len){
+  printf("set_vm_map: %p, %p\n", vaddr, len);
   uintptr_t addr_pos = vaddr;
   PTE *pdir = (PTE *)as->ptr;
   while(len > 0){
@@ -53,7 +54,6 @@ void set_vm_map(AddrSpace* as, uintptr_t vaddr, size_t len){
 }
 
 static uintptr_t loader(PCB *pcb, const char *filename) {
-  printf("call loader\n");
   int fd = fs_open(filename, 0, 0);
   Elf_Ehdr ehdr;
   fs_read(fd, &ehdr, sizeof(Elf_Ehdr));
