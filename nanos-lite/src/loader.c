@@ -50,7 +50,7 @@ void set_vm_map(AddrSpace* as, uintptr_t vaddr, size_t len){
     addr_pos += MIN(page_space, len);
     len -= MIN(page_space, len);
   }
-  printf("Finished set_vm_map\n");
+  // printf("Finished set_vm_map\n");
 
   return;
 }
@@ -72,10 +72,10 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     if (current.p_type == PT_LOAD){
       set_vm_map(&(pcb->as), current.p_vaddr, current.p_memsz);
       void * dst = (void *) current.p_vaddr;
+      printf("success loaded\n");
       fs_lseek(fd, current.p_offset, 0);
       fs_read(fd, dst, current.p_filesz);
       memset((void *)(current.p_vaddr + current.p_filesz), 0, current.p_memsz - current.p_filesz);
-      printf("success loaded\n");
     }
   }
 
