@@ -65,7 +65,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   for(i=0;i<ehdr.e_phnum;i++){
     Elf_Phdr current = phdr[i];
     if (current.p_type == PT_LOAD){
-      set_vm_map(&(pcb->as), current.p_vaddr, current.p_memsz);
+      // set_vm_map(&(pcb->as), current.p_vaddr, current.p_memsz);
       void * dst = (void *) current.p_vaddr;
       fs_lseek(fd, current.p_offset, 0);
       fs_read(fd, dst, current.p_filesz);
