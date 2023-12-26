@@ -28,7 +28,6 @@ void context_kload(PCB* thispcb, void (*func)(void *), void *arg){
 void context_uload(PCB *thispcb, const char *filename, char *const argv[], char *const envp[]){
     protect(&thispcb->as);
     Context* context = ucontext(&thispcb->as, (Area) { thispcb->stack, thispcb->stack + STACK_SIZE}, NULL);
-    printf("Finished ucontext\n");
     thispcb->cp = context;
 
     context->GPRx = (uintptr_t) (new_page(8) + 8 * 4096);
@@ -75,6 +74,7 @@ envp_end:
     *stack_ptr = narg; 
 
     context->GPRx = (uintptr_t ) stack_ptr;
+    printf("Starting to load\n");
 
     context->mepc = (uintptr_t) naive_uload(thispcb, filename);
 }
