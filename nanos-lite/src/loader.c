@@ -23,7 +23,7 @@ int fs_close(int fd);
 
 typedef uintptr_t PTE;
 void set_vm_map(AddrSpace* as, uintptr_t vaddr, size_t len){
-  printf("set_vm_map: %p, %d\n", vaddr, len);
+  // printf("set_vm_map: %p, %d\n", vaddr, len);
   uintptr_t addr_pos = vaddr;
   PTE *pdir = (PTE *)as->ptr;
   while(len > 0){
@@ -42,7 +42,7 @@ void set_vm_map(AddrSpace* as, uintptr_t vaddr, size_t len){
 
     if ((pdir[vpn0] & 1) == 0){ //check if the second level page table is valid
       uintptr_t p_addr = (uintptr_t) new_page(1);
-      printf("va: %p--> pa: %p\n", addr_pos, p_addr);
+      // printf("va: %p--> pa: %p\n", addr_pos, p_addr);
       map(as, (void *) page_addr, (void *)p_addr, 0);
     }
 
@@ -50,7 +50,7 @@ void set_vm_map(AddrSpace* as, uintptr_t vaddr, size_t len){
     addr_pos += MIN(page_space, len);
     len -= MIN(page_space, len);
   }
-  printf("Finished set_vm_map\n");
+  // printf("Finished set_vm_map\n");
 
   return;
 }
@@ -75,6 +75,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
       fs_lseek(fd, current.p_offset, 0);
       fs_read(fd, dst, current.p_filesz);
       memset((void *)(current.p_vaddr + current.p_filesz), 0, current.p_memsz - current.p_filesz);
+      printf("success loaded\n");
     }
   }
 
