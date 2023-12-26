@@ -26,6 +26,7 @@ void set_vm_map(AddrSpace* as, uintptr_t vaddr, size_t len){
   // printf("set_vm_map: %p, %d\n", vaddr, len);
   uintptr_t addr_pos = vaddr;
   PTE *pdir = (PTE *)as->ptr;
+  printf("pdir: %p\n", pdir);
   while(len > 0){
     uintptr_t vpn1 = (addr_pos >> 22) & 0x3ff;
     uintptr_t vpn0 = (addr_pos >> 12) & 0x3ff;
