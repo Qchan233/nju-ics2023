@@ -23,7 +23,7 @@ int fs_close(int fd);
 
 typedef uintptr_t PTE;
 void set_vm_map(AddrSpace* as, uintptr_t vaddr, size_t len){
-  printf("set_vm_map: %p, %p\n", vaddr, len);
+  // printf("set_vm_map: %p, %p\n", vaddr, len);
   uintptr_t addr_pos = vaddr;
   PTE *pdir = (PTE *)as->ptr;
   while(len > 0){
@@ -32,6 +32,7 @@ void set_vm_map(AddrSpace* as, uintptr_t vaddr, size_t len){
 
     uintptr_t page_addr; // second level page table
     if ((pdir[vpn1] & 1) == 0){ //check if the first level page table is valid
+      printf("vpn1: %p\n", vpn1);
       page_addr = (uintptr_t) new_page(1);
       ((uint32_t *) as->ptr)[vpn1] = (page_addr >> 12) << 10 | 1;
     }
