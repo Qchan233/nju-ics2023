@@ -74,7 +74,7 @@ envp_end:
     *stack_ptr = narg; 
 
     context->GPRx = (uintptr_t ) stack_ptr;
-    printf("Starting to load\n");
+    // printf("Starting to load\n");
 
     context->mepc = (uintptr_t) naive_uload(thispcb, filename);
 }
