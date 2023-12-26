@@ -49,7 +49,7 @@ void set_vm_map(AddrSpace* as, uintptr_t vaddr, size_t len){
     int page_space = ROUNDUP(addr_pos + 1, PGSIZE) - addr_pos;  // the remaining space in the page
     addr_pos += MIN(page_space, len);
     len -= MIN(page_space, len);
-    printf("len: %d\n", len);
+    printf("len: %x\n", len);
   }
   // printf("Finished set_vm_map\n");
 
