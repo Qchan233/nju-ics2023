@@ -23,7 +23,7 @@ int fs_close(int fd);
 
 typedef uintptr_t PTE;
 void set_vm_map(AddrSpace* as, uintptr_t vaddr, size_t len){
-  printf("set_vm_map: %p, %p\n", vaddr, len);
+  // printf("set_vm_map: %p, %p\n", vaddr, len);
   uintptr_t addr_pos = vaddr;
   PTE *pdir = (PTE *)as->ptr;
   while(len > 0){
@@ -49,6 +49,7 @@ void set_vm_map(AddrSpace* as, uintptr_t vaddr, size_t len){
     addr_pos += MIN(page_space, len);
     len -= MIN(page_space, len);
   }
+  printf("Finished set_vm_map\n");
 
   return;
 }
