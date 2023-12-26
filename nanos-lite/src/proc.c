@@ -26,9 +26,9 @@ void context_kload(PCB* thispcb, void (*func)(void *), void *arg){
 
 #define BUFSIZE 16
 void context_uload(PCB *thispcb, const char *filename, char *const argv[], char *const envp[]){
-    printf("context_uload\n");
     protect(&thispcb->as);
     Context* context = ucontext(&thispcb->as, (Area) { thispcb->stack, thispcb->stack + STACK_SIZE}, NULL);
+    printf("Finished ucontext\n");
     thispcb->cp = context;
 
     context->GPRx = (uintptr_t) (new_page(8) + 8 * 4096);
