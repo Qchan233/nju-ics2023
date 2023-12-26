@@ -42,7 +42,7 @@ void set_vm_map(AddrSpace* as, uintptr_t vaddr, size_t len){
 
     if ((pdir[vpn0] & 1) == 0){ //check if the second level page table is valid
       uintptr_t p_addr = (uintptr_t) new_page(1);
-      // printf("va: %p--> pa: %p\n", addr_pos, p_addr);
+      printf("va: %p--> pa: %p\n", addr_pos, p_addr);
       map(as, (void *) page_addr, (void *)p_addr, 0);
     }
 
@@ -73,7 +73,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
       set_vm_map(&(pcb->as), current.p_vaddr, current.p_memsz);
       void * dst = (void *) current.p_vaddr;
       fs_lseek(fd, current.p_offset, 0);
-      printf("%p %d\n", dst, current.p_filesz);
+      // printf("%p %d\n", dst, current.p_filesz);
       fs_read(fd, dst, current.p_filesz);
       memset((void *)(current.p_vaddr + current.p_filesz), 0, current.p_memsz - current.p_filesz);
     }
