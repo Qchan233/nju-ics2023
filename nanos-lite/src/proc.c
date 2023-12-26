@@ -87,7 +87,7 @@ void init_proc() {
   // context_kload(&pcb[1], hello_fun, (void*) 1);
   char* argv[] = {"/bin/nterm", NULL};
   char* envp[] = {NULL};
-  context_uload(&pcb[1], "/bin/nterm", argv, envp);
+  context_uload(&pcb[1], "/bin/dummy", argv, envp);
   current_pcb = 1;
   assert(pcb[0].cp != NULL);
   assert(pcb[1].cp != NULL);
