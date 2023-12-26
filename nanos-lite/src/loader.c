@@ -39,7 +39,9 @@ void set_vm_map(AddrSpace* as, uintptr_t vaddr, size_t len){
     }
 
     if ((pdir[vpn0] & 1) == 0){ //check if the second level page table is valid
-      map(as, (void *) page_addr, new_page(1), 0);
+      uintptr_t p_addr = (uintptr_t) new_page(1);
+      printf("va: %p--> pa: %p\n", addr_pos, p_addr);
+      map(as, (void *) page_addr, (void *)p_addr, 0);
     }
 
     int page_space = ROUNDUP(addr_pos + 1, PGSIZE) - addr_pos;  // the remaining space in the page
@@ -65,7 +67,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   for(i=0;i<ehdr.e_phnum;i++){
     Elf_Phdr current = phdr[i];
     if (current.p_type == PT_LOAD){
-      // set_vm_map(&(pcb->as), current.p_vaddr, current.p_memsz);
+      set_vm_map(&(pcb->as), current.p_vaddr, current.p_memsz);
       void * dst = (void *) current.p_vaddr;
       fs_lseek(fd, current.p_offset, 0);
       fs_read(fd, dst, current.p_filesz);

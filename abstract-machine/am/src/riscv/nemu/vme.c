@@ -68,7 +68,6 @@ void __am_switch(Context *c) {
 
 void map(AddrSpace *as, void *va, void *pa, int prot) {
   PTE *pdir = (PTE *)as->ptr;
-  printf("map: va = %p --> pa = %p\n", va, pa);
   uintptr_t vpn1 = ((uintptr_t) va >> 22) & 0x3ff;
   uintptr_t vpn0 = ((uintptr_t) va >> 12) & 0x3ff;
 
