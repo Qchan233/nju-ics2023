@@ -50,7 +50,7 @@ void set_vm_map(AddrSpace* as, uintptr_t vaddr, size_t len){
     addr_pos += MIN(page_space, len);
     len -= MIN(page_space, len);
   }
-  // printf("Finished set_vm_map\n");
+  printf("Finished set_vm_map\n");
 
   return;
 }
