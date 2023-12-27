@@ -61,8 +61,10 @@ uintptr_t get_addr(AddrSpace* as, uintptr_t vaddr){
   uintptr_t vpn0 = (vaddr >> 12) & 0x3ff;
   uintptr_t offset = vaddr & 0xfff;
   PTE *pdir = (PTE *)as->ptr;
+  assert(pdir[vpn1] & 1); // check valid bit
   uintptr_t page_addr = (uintptr_t) (pdir[vpn1] & 0xfffffc00) << 2;
   PTE *pdir2 = (PTE *) page_addr;
+  assert(pdir2[vpn0] & 1); //check valid bit
   uintptr_t p_addr = (uintptr_t) ((pdir2[vpn0] & 0xfffffc00) << 2) + offset;
   return p_addr;
 }
@@ -94,7 +96,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
         uintptr_t addr_pos = (uintptr_t) dst;
         int page_space = ROUNDUP(addr_pos + 1, PGSIZE) - addr_pos;  // the remaining space in the page
         int len = MIN(page_space, load_length);
-        printf("dst: %x, paddr: %x\n",dst, get_addr(&(pcb->as), (uintptr_t)dst));
+        // printf("dst: %x, paddr: %x\n",dst, get_addr(&(pcb->as), (uintptr_t)dst));
         fs_read(fd, (void*) get_addr(&(pcb->as), (uintptr_t)dst), len);
         dst += len;
         load_length -= len;
