@@ -24,12 +24,13 @@ word_t vaddr_ifetch(vaddr_t addr, int len) {
 word_t vaddr_read(vaddr_t addr, int len) {
   int mm_type = isa_mmu_check(addr, len, MEM_TYPE_READ);
   if (mm_type == MMU_DIRECT) {
-    if (addr == 0x40000448){
-      printf("vaddr_read: %x\n", addr);
-    }
+
     return paddr_read(addr, len);
   }
   else if(mm_type == MMU_TRANSLATE){
+    if (addr == 0x40000448){
+      printf("vaddr_read: %x\n", addr);
+    }
     return paddr_read(isa_mmu_translate(addr, len, MEM_TYPE_READ), len);
   }
   assert(0);
