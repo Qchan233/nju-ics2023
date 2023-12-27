@@ -22,6 +22,7 @@ int fs_close(int fd);
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
 
 typedef uintptr_t PTE;
+
 void set_vm_map(AddrSpace* as, uintptr_t vaddr, size_t len){
   // printf("set_vm_map: %p, %d\n", vaddr, len);
   uintptr_t addr_pos = vaddr;
@@ -33,7 +34,6 @@ void set_vm_map(AddrSpace* as, uintptr_t vaddr, size_t len){
 
     uintptr_t page_addr; // second level page table
     if ((pdir[vpn1] & 1) == 0){ //check if the first level page table is valid
-      // printf("vpn1: %p\n", vpn1);
       page_addr = (uintptr_t) new_page(1);
       ((uint32_t *) as->ptr)[vpn1] = (page_addr >> 12) << 10 | 1;
     }
@@ -50,12 +50,24 @@ void set_vm_map(AddrSpace* as, uintptr_t vaddr, size_t len){
     int page_space = ROUNDUP(addr_pos + 1, PGSIZE) - addr_pos;  // the remaining space in the page
     addr_pos += MIN(page_space, len);
     len -= MIN(page_space, len);
-    printf("len: %x\n", len);
+    // printf("len: %x\n", len);
   }
   // printf("Finished set_vm_map\n");
-
   return;
 }
+
+uintptr_t get_addr(AddrSpace* as, uintptr_t vaddr){
+  uintptr_t vpn1 = (vaddr >> 22) & 0x3ff;
+  uintptr_t vpn0 = (vaddr >> 12) & 0x3ff;
+  uintptr_t offset = vaddr & 0xfff;
+  PTE *pdir = (PTE *)as->ptr;
+  uintptr_t page_addr = (uintptr_t) (pdir[vpn1] & 0xfffffc00) << 2;
+  PTE *pdir2 = (PTE *) page_addr;
+  uintptr_t p_addr = (uintptr_t) ((pdir2[vpn0] & 0xfffffc00) << 2) + offset;
+  return p_addr;
+}
+
+
 
 static uintptr_t loader(PCB *pcb, const char *filename) {
   int fd = fs_open(filename, 0, 0);
@@ -75,9 +87,26 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
       set_vm_map(&(pcb->as), current.p_vaddr, current.p_memsz);
       void * dst = (void *) current.p_vaddr;
       fs_lseek(fd, current.p_offset, 0);
-      // printf("%p %d\n", dst, current.p_filesz);
-      fs_read(fd, dst, current.p_filesz);
-      memset((void *)(current.p_vaddr + current.p_filesz), 0, current.p_memsz - current.p_filesz);
+      int load_length = current.p_filesz;
+      // fs_read(fd, dst, current.p_filesz);
+      while(load_length > 0){
+        uintptr_t addr_pos = (uintptr_t) dst;
+        int page_space = ROUNDUP(addr_pos + 1, PGSIZE) - addr_pos;  // the remaining space in the page
+        int len = MIN(page_space, load_length);
+        fs_read(fd, (void*) get_addr(&(pcb->as), (uintptr_t)dst), len);
+        dst += len;
+        load_length -= len;
+      }
+      // memset((void *)(current.p_vaddr + current.p_filesz), 0, current.p_memsz - current.p_filesz);
+      load_length = current.p_memsz - current.p_filesz;
+      while(load_length > 0){
+        uintptr_t addr_pos = (uintptr_t) dst;
+        int page_space = ROUNDUP(addr_pos + 1, PGSIZE) - addr_pos;  // the remaining space in the page
+        int len = MIN(page_space, load_length);
+        memset((void*) get_addr(&(pcb->as), (uintptr_t) dst), 0, len);
+        dst += len;
+        load_length -= len;
+      }
     }
   }
 
