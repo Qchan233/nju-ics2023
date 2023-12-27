@@ -89,11 +89,12 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
       fs_lseek(fd, current.p_offset, 0);
       int load_length = current.p_filesz;
       // fs_read(fd, dst, current.p_filesz);
-      printf("load_length: %d\n", load_length);
+      // printf("load_length: %d\n", load_length);
       while(load_length > 0){
         uintptr_t addr_pos = (uintptr_t) dst;
         int page_space = ROUNDUP(addr_pos + 1, PGSIZE) - addr_pos;  // the remaining space in the page
         int len = MIN(page_space, load_length);
+        printf("paddr: %x", get_addr(&(pcb->as), (uintptr_t)dst));
         fs_read(fd, (void*) get_addr(&(pcb->as), (uintptr_t)dst), len);
         dst += len;
         load_length -= len;
