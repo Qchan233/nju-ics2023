@@ -35,6 +35,7 @@ word_t vaddr_read(vaddr_t addr, int len) {
 void vaddr_write(vaddr_t addr, int len, word_t data) {
   int mm_type = (int) isa_mmu_check(addr, len, MEM_TYPE_WRITE);
   if (mm_type == MMU_DIRECT) {
+    printf("addr: %x, len: %d, data: %x\n", addr, len, data);
     paddr_write(addr, len, data);
   }
   else if(mm_type == MMU_TRANSLATE){
