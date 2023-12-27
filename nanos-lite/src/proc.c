@@ -85,14 +85,13 @@ void init_proc() {
   Log("Initializing processes...");
   context_kload(&pcb[0], hello_fun, (void*) 0);
   // context_kload(&pcb[1], hello_fun, (void*) 1);
-  char* argv[] = {"/bin/nterm", NULL};
+  char* argv[] = {"/bin/dummy", NULL};
   char* envp[] = {NULL};
   context_uload(&pcb[1], "/bin/dummy", argv, envp);
   current_pcb = 1;
   assert(pcb[0].cp != NULL);
   assert(pcb[1].cp != NULL);
   switch_boot_pcb();
-
   // load program here
   // naive_uload(NULL, "/bin/nterm");
 }
