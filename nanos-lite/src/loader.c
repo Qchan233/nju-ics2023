@@ -93,6 +93,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
         uintptr_t addr_pos = (uintptr_t) dst;
         int page_space = ROUNDUP(addr_pos + 1, PGSIZE) - addr_pos;  // the remaining space in the page
         int len = MIN(page_space, load_length);
+        printf("va: %p--> pa: %p\n", addr_pos, get_addr(&(pcb->as), (uintptr_t)dst));
         fs_read(fd, (void*) get_addr(&(pcb->as), (uintptr_t)dst), len);
         dst += len;
         load_length -= len;
