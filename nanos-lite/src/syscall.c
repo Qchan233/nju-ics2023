@@ -43,6 +43,7 @@ void do_syscall(Context *c) {
 
   switch (a[0]) {
     case SYS_exit: 
+      halt(0);
       char *argv[] = {"/bin/nterm", NULL};
       context_uload(&pcb[current_pcb], "/bin/nterm", argv, NULL);
       switch_boot_pcb();
