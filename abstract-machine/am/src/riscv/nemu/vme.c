@@ -81,7 +81,7 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
   }
 
   pdir = (PTE *) page_addr;
-  // printf("va: %p--> pa: %p\n", va, pa);
+  printf("va: %p--> pa: %p\n", va, pa);
   pdir[vpn0] = (PTE) ((uintptr_t) pa >> 12) << 10 | 1; // set valit bit
 }
 
