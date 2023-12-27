@@ -76,6 +76,7 @@ envp_end:
     context->GPRx = (uintptr_t ) stack_ptr;
     // printf("Starting to load\n");
 
+    
     context->mepc = (uintptr_t) naive_uload(thispcb, filename);
 }
 #undef BUFSIZE
