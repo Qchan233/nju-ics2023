@@ -5,7 +5,7 @@ Context* schedule(Context *prev);
 static Context* do_event(Event e, Context* c) {
   switch (e.event) {
     case EVENT_YIELD:
-      // Log("schedule");
+      Log("schedule");
       return schedule(c);
       c->GPRx = 0;
       break;
