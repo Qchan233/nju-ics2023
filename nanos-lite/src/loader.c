@@ -64,6 +64,7 @@ uintptr_t get_addr(AddrSpace* as, uintptr_t vaddr){
   assert(pdir[vpn1] & 1); // check valid bit
   uintptr_t page_addr = (uintptr_t) (pdir[vpn1] & 0xfffffc00) << 2;
   PTE *pdir2 = (PTE *) page_addr;
+  printf("%p\n", pdir2[vpn0]);
   assert(pdir2[vpn0] & 1); //check valid bit
   uintptr_t p_addr = (uintptr_t) ((pdir2[vpn0] & 0xfffffc00) << 2) + offset;
   return p_addr;
