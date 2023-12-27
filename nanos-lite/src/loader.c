@@ -43,7 +43,7 @@ void set_vm_map(AddrSpace* as, uintptr_t vaddr, size_t len){
 
     if ((pdir[vpn0] & 1) == 0){ //check if the second level page table is valid
       uintptr_t p_addr = (uintptr_t) new_page(1);
-      // printf("va: %p--> pa: %p\n", addr_pos, p_addr);
+      printf("va: %p--> pa: %p\n", addr_pos, p_addr);
       map(as, (void *) page_addr, (void *)p_addr, 0);
     }
 
@@ -70,7 +70,6 @@ uintptr_t get_addr(AddrSpace* as, uintptr_t vaddr){
 }
 
 
-
 static uintptr_t loader(PCB *pcb, const char *filename) {
   int fd = fs_open(filename, 0, 0);
   Elf_Ehdr ehdr;
@@ -89,28 +88,28 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
       set_vm_map(&(pcb->as), current.p_vaddr, current.p_memsz);
       void * dst = (void *) current.p_vaddr;
       fs_lseek(fd, current.p_offset, 0);
-      int load_length = current.p_filesz;
-      // fs_read(fd, dst, current.p_filesz);
+      // int load_length = current.p_filesz;
+      fs_read(fd, dst, current.p_filesz);
       // printf("load_length: %d\n", load_length);
-      while(load_length > 0){
-        uintptr_t addr_pos = (uintptr_t) dst;
-        int page_space = ROUNDUP(addr_pos + 1, PGSIZE) - addr_pos;  // the remaining space in the page
-        int len = MIN(page_space, load_length);
-        // printf("dst: %x, paddr: %x\n",dst, get_addr(&(pcb->as), (uintptr_t)dst));
-        fs_read(fd, (void*) get_addr(&(pcb->as), (uintptr_t)dst), len);
-        dst += len;
-        load_length -= len;
-      }
-      // memset((void *)(current.p_vaddr + current.p_filesz), 0, current.p_memsz - current.p_filesz);
-      load_length = current.p_memsz - current.p_filesz;
-      while(load_length > 0){
-        uintptr_t addr_pos = (uintptr_t) dst;
-        int page_space = ROUNDUP(addr_pos + 1, PGSIZE) - addr_pos;  // the remaining space in the page
-        int len = MIN(page_space, load_length);
-        memset((void*) get_addr(&(pcb->as), (uintptr_t) dst), 0, len);
-        dst += len;
-        load_length -= len;
-      }
+      // while(load_length > 0){
+      //   uintptr_t addr_pos = (uintptr_t) dst;
+      //   int page_space = ROUNDUP(addr_pos + 1, PGSIZE) - addr_pos;  // the remaining space in the page
+      //   int len = MIN(page_space, load_length);
+      //   // printf("dst: %x, paddr: %x\n",dst, get_addr(&(pcb->as), (uintptr_t)dst));
+      //   fs_read(fd, (void*) get_addr(&(pcb->as), (uintptr_t)dst), len);
+      //   dst += len;
+      //   load_length -= len;
+      // }
+      memset((void *)(current.p_vaddr + current.p_filesz), 0, current.p_memsz - current.p_filesz);
+      // load_length = current.p_memsz - current.p_filesz;
+      // while(load_length > 0){
+      //   uintptr_t addr_pos = (uintptr_t) dst;
+      //   int page_space = ROUNDUP(addr_pos + 1, PGSIZE) - addr_pos;  // the remaining space in the page
+      //   int len = MIN(page_space, load_length);
+      //   memset((void*) get_addr(&(pcb->as), (uintptr_t) dst), 0, len);
+      //   dst += len;
+      //   load_length -= len;
+      // }
     }
   }
 
