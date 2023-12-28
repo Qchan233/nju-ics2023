@@ -24,7 +24,9 @@ void free_page(void *p) {
 }
 
 /* The brk() system call handler. */
+// static uintptr_t max_brk = 0;
 int mm_brk(uintptr_t brk) {
+  printf("brk: %p\n", brk);
   return 0;
 }
 
