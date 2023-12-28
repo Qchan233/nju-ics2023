@@ -6,7 +6,7 @@ static void *pf = NULL;
 void* new_page(size_t nr_page) {
   void * prev_p = pf;
   pf += nr_page * PAGE_SIZE;
-  printf("nr_page: %d new_page: %x\n",nr_page, prev_p);
+  printf("prev_page: %x next_page: %x\n", prev_p, pf);
   return prev_p;
 }
 
@@ -30,7 +30,6 @@ int mm_brk(uintptr_t brk) {
 
 void init_mm() {
   pf = (void *)ROUNDUP(heap.start, PGSIZE);
-  Log("%x\n", 0x93E7F000 + 0x1000);
   Log("free physical pages starting from %p", pf);
 
 #ifdef HAS_VME
