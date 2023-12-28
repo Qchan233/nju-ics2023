@@ -32,7 +32,7 @@ paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
     if (!(pte2 & 0x1)) {
     printf("vaddr %x\n", vaddr);
   }
-  // assert(pte2 & 0x1); //check valid bit
+  assert(pte2 & 0x1); //check valid bit
   word_t translated = ((pte2 & 0xfffffc00) << 2) + offset;
   // assert(translated == vaddr);
   // if (vaddr == 0x40000448){
