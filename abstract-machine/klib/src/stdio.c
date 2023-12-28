@@ -80,12 +80,10 @@ char* uitoa(unsigned int num, char* str, int base)
         str[i++] = index[rem];
         num = num / base;
     }
- 
- 
+  
     str[i] = '\0'; // Append string terminator
     // Reverse the string
     reverse(str, i);
- 
     return str;
 }
 

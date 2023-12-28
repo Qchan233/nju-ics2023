@@ -6,7 +6,7 @@ static void *pf = NULL;
 void* new_page(size_t nr_page) {
   void * prev_p = pf;
   pf += nr_page * PAGE_SIZE;
-  printf("prev_page: %x next_page: %x\n", prev_p, pf);
+  // printf("prev_page: %x next_page: %x\n", prev_p, pf);
   return prev_p;
 }
 
