@@ -29,9 +29,9 @@ paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
   // }
   assert(pte1 & 0x1); // check valid bit
   word_t pte2 = paddr_read(((pte1 & 0xfffffc00) << 2) + vpn0 * 4, 4);
-  // if (!(pte2 & 0x1)) {
-  //   printf("vaddr %x\n", vaddr);
-  // }
+  if (!(pte2 & 0x1)) {
+    printf("vaddr %x\n", vaddr);
+  }
   assert(pte2 & 0x1); //check valid bit
   word_t translated = ((pte2 & 0xfffffc00) << 2) + offset;
   // assert(translated == vaddr);
