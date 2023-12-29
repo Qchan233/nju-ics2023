@@ -28,8 +28,13 @@ void free_page(void *p) {
 /* The brk() system call handler. */
 extern int current_pcb;
 extern PCB pcb[];
+void set_vm_map(AddrSpace* as, uintptr_t vaddr, size_t len);
 int mm_brk(uintptr_t brk) {
-  printf("brk: %p\n", pcb[current_pcb].max_brk);
+  // printf("brk: %p\n", pcb[current_pcb].max_brk);
+  while(brk > pcb[current_pcb].max_brk){
+    set_vm_map(&pcb[current_pcb].as, pcb[current_pcb].max_brk, PAGE_SIZE);
+    pcb[current_pcb].max_brk += PAGE_SIZE;
+  }
   return 0;
 }
 

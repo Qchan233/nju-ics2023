@@ -110,7 +110,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
         dst += len;
         load_length -= len;
       }
-      pcb->max_brk = current.p_vaddr + current.p_memsz;
+      pcb->max_brk = ROUNDUP(current.p_vaddr + current.p_memsz, PGSIZE);
     }
   }
 
