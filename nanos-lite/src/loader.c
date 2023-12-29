@@ -119,8 +119,9 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 uintptr_t naive_uload(PCB *pcb, const char *filename) {
   // printf("filename: %s\n", filename);
   uintptr_t entry = loader(pcb, filename);
+  printf("Address space: %p->%p\n", pcb->as.area.start, pcb->as.area.end);
   uint32_t stack_bottom = (uint32_t) pcb->as.area.end - 4 * PGSIZE;
-  printf("setting stack: %p -> %p\n", pcb->as.area.end, stack_bottom);
+  // printf("setting stack: %p -> %p\n", pcb->as.area.end, stack_bottom);
   set_vm_map(&pcb->as, (uintptr_t) stack_bottom, 4 * PGSIZE);
 
   // printf("filename: %s\n", filename);
