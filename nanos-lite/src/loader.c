@@ -43,7 +43,7 @@ void set_vm_map(AddrSpace* as, uintptr_t vaddr, size_t len){
 
     if ((( (PTE *) page_addr)[vpn0] & 1) == 0){ //check if the second level page table is valid
       uintptr_t p_addr = (uintptr_t) new_page(1);
-      printf("va: %p--> pa: %p\n", addr_pos, p_addr);
+      // printf("va: %p--> pa: %p\n", addr_pos, p_addr);
       map(as, (void *) addr_pos, (void *)p_addr, 0);
     }
 
@@ -122,7 +122,7 @@ uintptr_t naive_uload(PCB *pcb, const char *filename) {
   printf("Address space: %p->%p\n", pcb->as.area.start, pcb->as.area.end);
   uint32_t stack_bottom = (uint32_t) pcb->as.area.end - 4 * PGSIZE;
   printf("setting stack: %p -> %p\n", pcb->as.area.end, stack_bottom);
-  set_vm_map(&pcb->as, (uintptr_t) stack_bottom, 4 * PGSIZE);
+  // set_vm_map(&pcb->as, (uintptr_t) stack_bottom, 4 * PGSIZE);
 
   // printf("filename: %s\n", filename);
   return entry;
