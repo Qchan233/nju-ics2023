@@ -31,7 +31,6 @@ void set_vm_map(AddrSpace* as, uintptr_t vaddr, size_t len){
   while(len > 0){
     uintptr_t vpn1 = (addr_pos >> 22) & 0x3ff;
     uintptr_t vpn0 = (addr_pos >> 12) & 0x3ff;
-    printf("vpn1: %x, vpn0: %x\n", vpn1, vpn0);
 
     uintptr_t page_addr; // second level page table
     if ((pdir[vpn1] & 1) == 0){ //check if the first level page table is valid
