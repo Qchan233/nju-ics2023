@@ -26,7 +26,7 @@ void free_page(void *p) {
 
 /* The brk() system call handler. */
 int mm_brk(uintptr_t brk) {
-  printf("brk: %p\n", brk);
+  printf("brk\n");
   return 0;
 }
 
