@@ -42,11 +42,11 @@ void set_vm_map(AddrSpace* as, uintptr_t vaddr, size_t len){
       page_addr = (uintptr_t) (pdir[vpn1] & 0xfffffc00) << 2;
     }
 
-    // if ((pdir[vpn0] & 1) == 0){ //check if the second level page table is valid
+    if ((( (PTE *) page_addr)[vpn0] & 1) == 0){ //check if the second level page table is valid
       uintptr_t p_addr = (uintptr_t) new_page(1);
       printf("va: %p--> pa: %p\n", addr_pos, p_addr);
       map(as, (void *) addr_pos, (void *)p_addr, 0);
-    // }
+    }
 
     int page_space = ROUNDUP(addr_pos + 1, PGSIZE) - addr_pos;  // the remaining space in the page
     addr_pos += MIN(page_space, len);
