@@ -24,7 +24,7 @@ int fs_close(int fd);
 typedef uintptr_t PTE;
 
 void set_vm_map(AddrSpace* as, uintptr_t vaddr, size_t len){
-  // printf("set_vm_map: %p, %d\n", vaddr, len);
+  printf("set_vm_map: %p, %d\n", vaddr, len);
   uintptr_t addr_pos = vaddr;
   PTE *pdir = (PTE *)as->ptr;
   // printf("pdir: %p\n", pdir);
