@@ -27,9 +27,9 @@ void free_page(void *p) {
 
 /* The brk() system call handler. */
 extern int current_pcb;
-extern PCB pcb;
+extern PCB pcb[];
 int mm_brk(uintptr_t brk) {
-  printf("brk: %p\n", brk);
+  printf("brk: %p\n", pcb[current_pcb].max_brk);
   return 0;
 }
 
