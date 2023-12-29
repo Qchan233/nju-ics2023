@@ -32,7 +32,7 @@ void context_uload(PCB *thispcb, const char *filename, char *const argv[], char 
 
     context->GPRx = (uintptr_t) (new_page(8) + 8 * 4096);
     char* stack_top = (char*) context->GPRx;
-    // printf("stack_top: %p\n", stack_top);
+    printf("stack_top: %p\n", stack_top);
     int narg = 0;
     int nenv = 0;
     char* argbuf[BUFSIZE];
