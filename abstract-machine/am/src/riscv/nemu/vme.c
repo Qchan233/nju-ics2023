@@ -91,6 +91,6 @@ Context *ucontext(AddrSpace *as, Area kstack, void *entry) {
   context->mepc = (uintptr_t) entry;
   context->pdir = as->ptr;
   context->GPRx = (uintptr_t) heap.end;
-  printf("heap end %x\n", heap.end);
+  printf("heap end %x\n", as->area.end);
   return context;
 }
