@@ -43,7 +43,7 @@ void set_vm_map(AddrSpace* as, uintptr_t vaddr, size_t len){
 
     if ((( (PTE *) page_addr)[vpn0] & 1) == 0){ //check if the second level page table is valid
       uintptr_t p_addr = (uintptr_t) new_page(1);
-      // printf("va: %p--> pa: %p\n", addr_pos, p_addr);
+      printf("va: %p--> pa: %p\n", addr_pos, p_addr);
       map(as, (void *) addr_pos, (void *)p_addr, 0);
     }
 
@@ -85,7 +85,6 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   for(i=0;i<ehdr.e_phnum;i++){
     Elf_Phdr current = phdr[i];
     if (current.p_type == PT_LOAD){
-      printf("p_vaddr: %x, p_memsz: %x, p_offset: %x, p_filesz: %x\n", current.p_vaddr, current.p_memsz, current.p_offset, current.p_filesz);
       set_vm_map(&(pcb->as), current.p_vaddr, current.p_memsz);
       void * dst = (void *) current.p_vaddr;
       fs_lseek(fd, current.p_offset, 0);
@@ -122,7 +121,7 @@ uintptr_t naive_uload(PCB *pcb, const char *filename) {
   uintptr_t entry = loader(pcb, filename);
   printf("Address space: %p->%p\n", pcb->as.area.start, pcb->as.area.end);
   uint32_t stack_bottom = (uint32_t) pcb->as.area.end - 4 * PGSIZE;
-  // printf("setting stack: %p -> %p\n", pcb->as.area.end, stack_bottom);
+  printf("setting stack: %p -> %p\n", pcb->as.area.end, stack_bottom);
   set_vm_map(&pcb->as, (uintptr_t) stack_bottom, 4 * PGSIZE);
 
   // printf("filename: %s\n", filename);
