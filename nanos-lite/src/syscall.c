@@ -27,6 +27,7 @@ ReadFn get_read_fn(int fd);
 void naive_uload(PCB *pcb, const char *filename);
 void context_uload(PCB *thispcb, const char *filename, char *const argv[], char *const envp[]);
 void switch_boot_pcb();
+int mm_brk(uintptr_t brk);
 
 extern size_t *open_offsets;
 extern PCB pcb[];
@@ -60,7 +61,8 @@ void do_syscall(Context *c) {
       }
     break;
     case SYS_brk:
-      c->GPRx = 0;
+      uintptr_t addr = (uintptr_t)(a[1]);
+      c->GPRx = mm_brk(addr);
       break;
     case SYS_read: 
       ReadFn rfn = get_read_fn(a[1]);
