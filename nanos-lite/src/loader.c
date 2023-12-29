@@ -85,7 +85,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   for(i=0;i<ehdr.e_phnum;i++){
     Elf_Phdr current = phdr[i];
     if (current.p_type == PT_LOAD){
-      // printf("p_vaddr: %x, p_memsz: %x, p_offset: %x, p_filesz: %x\n", current.p_vaddr, current.p_memsz, current.p_offset, current.p_filesz);
+      printf("p_vaddr: %x, p_memsz: %x, p_offset: %x, p_filesz: %x\n", current.p_vaddr, current.p_memsz, current.p_offset, current.p_filesz);
       set_vm_map(&(pcb->as), current.p_vaddr, current.p_memsz);
       void * dst = (void *) current.p_vaddr;
       fs_lseek(fd, current.p_offset, 0);
@@ -95,7 +95,6 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
         uintptr_t addr_pos = (uintptr_t) dst;
         int page_space = ROUNDUP(addr_pos + 1, PGSIZE) - addr_pos;  // the remaining space in the page
         int len = MIN(page_space, load_length);
-        // printf("dst: %x, paddr: %x\n",dst, get_addr(&(pcb->as), (uintptr_t)dst));
         fs_read(fd, (void*) get_addr(&(pcb->as), (uintptr_t)dst), len);
         dst += len;
         load_length -= len;
