@@ -61,7 +61,7 @@ void set_vm_map(AddrSpace* as, uintptr_t vaddr, size_t len){
 uintptr_t get_addr(AddrSpace* as, uintptr_t vaddr){
   uintptr_t vpn1 = (vaddr >> 22) & 0x3ff;
   uintptr_t vpn0 = (vaddr >> 12) & 0x3ff;
-  printf("vpn1: %x, vpn0: %x\n", vpn1, vpn0);
+  printf("vaddr: %x, vpn1: %x, vpn0: %x\n",vaddr, vpn1, vpn0);
   uintptr_t offset = vaddr & 0xfff;
   PTE *pdir = (PTE *)as->ptr;
   assert(pdir[vpn1] & 1); // check valid bit
