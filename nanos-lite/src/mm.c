@@ -7,7 +7,6 @@ static void *pf = NULL;
 void* new_page(size_t nr_page) {
   void * prev_p = pf;
   pf += nr_page * PAGE_SIZE;
-  memset(prev_p, 0, nr_page * PAGE_SIZE);
   // printf("prev_page: %x next_page: %x\n", prev_p, pf);
   return prev_p;
 }
@@ -16,7 +15,7 @@ void* new_page(size_t nr_page) {
 static void* pg_alloc(int n) {
   int num_page = (n + PAGE_SIZE - 1) / PAGE_SIZE;
   void* pf = new_page(num_page);
-  memset(pf, 0, n); //
+  memset(pf, 0, n * PAGE_SIZE); //
   return pf;
 }
 #endif
