@@ -101,7 +101,6 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
       }
       // memset((void *)(current.p_vaddr + current.p_filesz), 0, current.p_memsz - current.p_filesz);
       load_length = current.p_memsz - current.p_filesz;
-      printf("zero length: %x\n", load_length);
       while(load_length > 0){
         uintptr_t addr_pos = (uintptr_t) dst;
         int page_space = ROUNDUP(addr_pos + 1, PGSIZE) - addr_pos;  // the remaining space in the page
