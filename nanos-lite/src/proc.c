@@ -24,6 +24,8 @@ void context_kload(PCB* thispcb, void (*func)(void *), void *arg){
     thispcb->cp = kcontext((Area) { thispcb->stack, thispcb->stack + STACK_SIZE}, func, arg);
 }
 
+void set_vm_map(AddrSpace* as, uintptr_t vaddr, size_t len);
+
 #define BUFSIZE 16
 void context_uload(PCB *thispcb, const char *filename, char *const argv[], char *const envp[]){
     protect(&thispcb->as);
@@ -77,7 +79,9 @@ envp_end:
     // context->GPRx = (uintptr_t) stack_ptr;
     // printf("Starting to load\n");
     // TODO add stack map from va to pa
-    // set_vm_map(,,);
+    uint32_t stack_bottom = (uint32_t) pcb->as.area.end - 4 * PGSIZE;
+    set_vm_map(&pcb->as, (uintptr_t) stack_bottom, 4 * PGSIZE);
+    printf("setting stack: %p -> %p\n", pcb->as.area.end, stack_bottom);
     context->GPRx = (uintptr_t) thispcb->as.area.end;
 
     context->mepc = (uintptr_t) naive_uload(thispcb, filename);
