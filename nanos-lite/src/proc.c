@@ -77,6 +77,7 @@ envp_end:
     // context->GPRx = (uintptr_t) stack_ptr;
     // printf("Starting to load\n");
     // TODO add stack map from va to pa
+    // set_vm_map(,,);
     context->GPRx = (uintptr_t) thispcb->as.area.end;
 
     context->mepc = (uintptr_t) naive_uload(thispcb, filename);
