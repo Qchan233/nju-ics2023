@@ -81,12 +81,12 @@ envp_end:
     // printf("Starting to load\n");
     // TODO add stack map from va to pa
     void* vstack_top = (void*) pcb->as.area.end - 4 * PGSIZE;
-    printf("area end:%p\n", pcb->as.area.end);
     int stack_i;
     for(stack_i=0; stack_i< 4;stack_i++){
       printf("mapping %p->%p\n", vstack_top + 4096 * stack_i, pstack_top + 4096 * stack_i);
       map(&thispcb->as, vstack_top + 4096 * stack_i, pstack_top + 4096 * stack_i, 0 );
     }
+    printf("area end:%p\n", pcb->as.area.end);
 
     context->GPRx = (uintptr_t) thispcb->as.area.end;
 
