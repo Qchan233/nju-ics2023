@@ -82,7 +82,7 @@ envp_end:
     // TODO add stack map from va to pa
     void* vstack_top = (void*) pcb->as.area.end - 4 * PGSIZE;
     int stack_i;
-    for(stack_i=0; i< 4;i++){
+    for(stack_i=0; stack_i< 4;stack_i++){
       printf("mapping %p->%p\n", vstack_top + 4096 * stack_i, pstack_top + 4096 * stack_i);
       map(&thispcb->as, vstack_top + 4096 * stack_i, pstack_top + 4096 * stack_i, 0 );
     }
