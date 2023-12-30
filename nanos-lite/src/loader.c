@@ -123,170 +123,73 @@ uintptr_t naive_uload(PCB *pcb, const char *filename) {
   return entry;
 }
 
-#define NR_PAGE 8
-#define PAGESIZE 4096
-static size_t ceil_4_bytes(size_t size){
-  if (size & 0x3)
-    return (size & (~0x3)) + 0x4;
-  return size;
-}
-
+#define BUFSIZE 16
 void context_uload(PCB *thispcb, const char *filename, char *const argv[], char *const envp[]){
-//     protect(&thispcb->as);
-//     Context* context = ucontext(&thispcb->as, (Area) { thispcb->stack, thispcb->stack + STACK_SIZE}, NULL);
-//     thispcb->cp = context;
+    protect(&thispcb->as);
+    Context* context = ucontext(&thispcb->as, (Area) { thispcb->stack, thispcb->stack + STACK_SIZE}, NULL);
+    thispcb->cp = context;
 
-//     void* pstack_top = new_page(8); //低位
-//     context->GPRx = (uintptr_t) (pstack_top + 8 * 4096);
-//     char* stack_top = (char*) context->GPRx;
+    void* pstack_top = new_page(8); //低位
+    context->GPRx = (uintptr_t) (pstack_top + 8 * 4096);
+    char* stack_top = (char*) context->GPRx;
 
-//     // printf("stack_top: %p\n", stack_top);
-//     int narg = 0;
-//     int nenv = 0;
-//     char* argbuf[BUFSIZE];
-//     char* envbuf[BUFSIZE];
-//     // 复制 argv 到栈上
-//     while(argv[narg] != NULL){
-//       stack_top -= strlen(argv[narg]) + 1;
-//       strcpy(stack_top, argv[narg]);
-//       argbuf[narg] = stack_top;
-//       narg++;
-//     }
-// if (envp == NULL)  goto envp_end;
-//     // 复制 envp 到栈上
-//     // printf("envp: %p\n", envp[0]);
-//     while(envp[nenv] != NULL){
-//       strcpy(stack_top, envp[nenv]);
-//       stack_top -= strlen(envp[nenv]) + 1;
-//       // printf("%s\n", envp[nenv]);
-//       envbuf[nenv] = stack_top;
-//       nenv++;
-//     }
-// envp_end:
-//     uintptr_t *stack_ptr = (uintptr_t*)((uintptr_t)stack_top & ~0x3);
-//     stack_ptr--;
+    // printf("stack_top: %p\n", stack_top);
+    int narg = 0;
+    int nenv = 0;
+    char* argbuf[BUFSIZE];
+    char* envbuf[BUFSIZE];
+    // 复制 argv 到栈上
+    while(argv[narg] != NULL){
+      stack_top -= strlen(argv[narg]) + 1;
+      strcpy(stack_top, argv[narg]);
+      argbuf[narg] = stack_top;
+      narg++;
+    }
+if (envp == NULL)  goto envp_end;
+    // 复制 envp 到栈上
+    // printf("envp: %p\n", envp[0]);
+    while(envp[nenv] != NULL){
+      strcpy(stack_top, envp[nenv]);
+      stack_top -= strlen(envp[nenv]) + 1;
+      // printf("%s\n", envp[nenv]);
+      envbuf[nenv] = stack_top;
+      nenv++;
+    }
+envp_end:
+    uintptr_t *stack_ptr = (uintptr_t*)((uintptr_t)stack_top & ~0x3);
+    stack_ptr--;
 
-//     *stack_ptr = (uintptr_t) NULL;
-//     int i;
-//     for(i=0;i<nenv;i++){
-//       *stack_ptr = (uintptr_t) envbuf[nenv-i-1];
-//       stack_ptr--;
-//     }
+    *stack_ptr = (uintptr_t) NULL;
+    int i;
+    for(i=0;i<nenv;i++){
+      *stack_ptr = (uintptr_t) envbuf[nenv-i-1];
+      stack_ptr--;
+    }
 
-//     *stack_ptr = (uintptr_t) NULL;
-//     stack_ptr--;
+    *stack_ptr = (uintptr_t) NULL;
+    stack_ptr--;
 
-//     for(i=0;i<narg;i++){
-//       *stack_ptr = (uintptr_t) argbuf[narg-i-1];
-//       stack_ptr--;
-//     }
-//     *stack_ptr = narg; 
+    for(i=0;i<narg;i++){
+      *stack_ptr = (uintptr_t) argbuf[narg-i-1];
+      stack_ptr--;
+    }
+    *stack_ptr = narg; 
 
-//     unsigned int 
+    // context->GPRx = (uintptr_t) stack_ptr;
+    // printf("Starting to load\n");
+    // TODO add stack map from va to pa
+    void * vstack_top = (void*) thispcb->as.area.end - 8 * PGSIZE;
+    int stack_i;
+    for(stack_i=0; stack_i< 8;stack_i++){
+      printf("mapping %p->%p\n", vstack_top + 4096 * stack_i, pstack_top + 4096 * stack_i);
+      map(&thispcb->as, vstack_top + 4096 * stack_i, pstack_top + 4096 * stack_i, 0 );
+    }
 
-//     // context->GPRx = (uintptr_t) stack_ptr;
-//     // printf("Starting to load\n");
-//     // TODO add stack map from va to pa
-//     void* vstack_top = (void*) thispcb->as.area.end - 8 * PGSIZE;
-//     int stack_i;
-//     for(stack_i=0; stack_i< 8;stack_i++){
-//       printf("mapping %p->%p\n", vstack_top + 4096 * stack_i, pstack_top + 4096 * stack_i);
-//       map(&thispcb->as, vstack_top + 4096 * stack_i, pstack_top + 4096 * stack_i, 0 );
-//     }
-
-//     context->GPRx = (uintptr_t) thispcb->as.area.end;
+    context->GPRx = (uintptr_t) thispcb->as.area.end;
     
 
-//     context->mepc = (uintptr_t) naive_uload(thispcb, filename);
-  int envc = 0, argc = 0;
-  AddrSpace *as = &thispcb->as;
-  protect(as);
-  
-  if (envp){
-    for (; envp[envc]; ++envc){}
-  }
-  if (argv){
-    for (; argv[argc]; ++argc){}
-  }
-  char *envp_ustack[envc];
+    context->mepc = (uintptr_t) naive_uload(thispcb, filename);
 
-  void *alloced_page = new_page(NR_PAGE) + NR_PAGE * 4096; //得到栈顶
-
-  //这段代码有古怪，一动就会出问题，莫动
-  //这个问题确实已经被修正了，TMD，真cao dan
-  // 2021/12/16
-  
-  map(as, as->area.end - 8 * PAGESIZE, alloced_page - 8 * PAGESIZE, 1); 
-  map(as, as->area.end - 7 * PAGESIZE, alloced_page - 7 * PAGESIZE, 1);
-  map(as, as->area.end - 6 * PAGESIZE, alloced_page - 6 * PAGESIZE, 1); 
-  map(as, as->area.end - 5 * PAGESIZE, alloced_page - 5 * PAGESIZE, 1);
-  map(as, as->area.end - 4 * PAGESIZE, alloced_page - 4 * PAGESIZE, 1); 
-  map(as, as->area.end - 3 * PAGESIZE, alloced_page - 3 * PAGESIZE, 1);
-  map(as, as->area.end - 2 * PAGESIZE, alloced_page - 2 * PAGESIZE, 1); 
-  map(as, as->area.end - 1 * PAGESIZE, alloced_page - 1 * PAGESIZE, 1); 
-  
-  char *brk = (char *)(alloced_page - 4);
-  // 拷贝字符区
-  for (int i = 0; i < envc; ++i){
-    brk -= (ceil_4_bytes(strlen(envp[i]) + 1)); // 分配大小
-    envp_ustack[i] = brk;
-    strcpy(brk, envp[i]);
-  }
-
-  char *argv_ustack[envc];
-  for (int i = 0; i < argc; ++i){
-    brk -= (ceil_4_bytes(strlen(argv[i]) + 1)); // 分配大小
-    argv_ustack[i] = brk;
-    strcpy(brk, argv[i]);
-  }
-  
-  intptr_t *ptr_brk = (intptr_t *)(brk);
-
-  // 分配envp空间
-  ptr_brk -= 1;
-  *ptr_brk = 0;
-  ptr_brk -= envc;
-  for (int i = 0; i < envc; ++i){
-    ptr_brk[i] = (intptr_t)(envp_ustack[i]);
-  }
-
-  // 分配argv空间
-  ptr_brk -= 1;
-  *ptr_brk = 0;
-  ptr_brk = ptr_brk - argc;
-  
-  // printf("%p\n", ptr_brk);
-  printf("%p\t%p\n", alloced_page, ptr_brk);
-  //printf("%x\n", ptr_brk);
-  //assert((intptr_t)ptr_brk == 0xDD5FDC);
-  for (int i = 0; i < argc; ++i){
-    ptr_brk[i] = (intptr_t)(argv_ustack[i]);
-  }
-
-  ptr_brk -= 1;
-  *ptr_brk = argc;
-  
-  //这条操作会把参数的内存空间扬了，要放在最后
-  uintptr_t entry = loader(thispcb, filename);
-  Area karea;
-  karea.start = &thispcb->cp;
-  karea.end = &thispcb->cp + STACK_SIZE;
-
-  Context* context = ucontext(as, karea, (void *)entry);
-  thispcb->cp = context;
-
-  printf("新分配ptr=%p\n", as->ptr);
-  printf("UContext Allocted at %p\n", context);
-  printf("Alloced Page Addr: %p\t PTR_BRK_ADDR: %p\n", alloced_page, ptr_brk);
-
-  ptr_brk -= 1;
-  *ptr_brk = 0;//为了t0_buffer
-  //设置了sp
-  context->gpr[2]  = (uintptr_t)ptr_brk - (uintptr_t)alloced_page + (uintptr_t)as->area.end;
-
-  //似乎不需要这个了，但我还不想动
-  context->GPRx = (uintptr_t)ptr_brk - (uintptr_t)alloced_page + (uintptr_t)as->area.end + 4;
-  //context->GPRx = (intptr_t)(ptr_brk);
 }
 
 
