@@ -90,7 +90,6 @@ Context *ucontext(AddrSpace *as, Area kstack, void *entry) {
   Context* context = (kstack.end - sizeof(Context));
   context->mepc = (uintptr_t) entry;
   context->pdir = as->ptr;
-  context->GPRx = (uintptr_t) as->area.end;
-  printf("stack end %x\n", as->area.end);
+  // context->GPRx = (uintptr_t) as->area.end;
   return context;
 }
