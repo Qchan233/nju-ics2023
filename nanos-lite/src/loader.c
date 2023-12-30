@@ -130,7 +130,7 @@ void context_uload(PCB *thispcb, const char *filename, char *const argv[], char 
     thispcb->cp = context;
 
     void* pstack_top = new_page(8); //低位
-    context->GPRx = (uintptr_t) (pstack_top + 8 * 4096);
+    // context->GPRx = (uintptr_t) (pstack_top + 8 * 4096);
     char* stack_top = (char*) context->GPRx;
 
     // printf("stack_top: %p\n", stack_top);
@@ -185,7 +185,7 @@ envp_end:
       map(&thispcb->as, vstack_top + 4096 * stack_i, pstack_top + 4096 * stack_i, 0 );
     }
 
-    context->GPRx = (uintptr_t) thispcb->as.area.end;
+    context->GPRx = (uintptr_t) (pstack_top + 8 * 4096);
     
     context->mepc = (uintptr_t) naive_uload(thispcb, filename);
 
