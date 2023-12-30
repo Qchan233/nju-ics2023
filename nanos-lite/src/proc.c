@@ -25,14 +25,15 @@ void context_kload(PCB* thispcb, void (*func)(void *), void *arg){
 }
 
 void set_vm_map(AddrSpace* as, uintptr_t vaddr, size_t len);
-
+void map(AddrSpace *as, void *va, void *pa, int prot);
 #define BUFSIZE 16
 void context_uload(PCB *thispcb, const char *filename, char *const argv[], char *const envp[]){
     protect(&thispcb->as);
     Context* context = ucontext(&thispcb->as, (Area) { thispcb->stack, thispcb->stack + STACK_SIZE}, NULL);
     thispcb->cp = context;
 
-    context->GPRx = (uintptr_t) (new_page(8) + 8 * 4096);
+    void* pstack_top = new_page(8); //低位
+    context->GPRx = (uintptr_t) (pstack_top + 8 * 4096);
     char* stack_top = (char*) context->GPRx;
     // printf("stack_top: %p\n", stack_top);
     int narg = 0;
@@ -79,9 +80,12 @@ envp_end:
     // context->GPRx = (uintptr_t) stack_ptr;
     // printf("Starting to load\n");
     // TODO add stack map from va to pa
-    uint32_t stack_bottom = (uint32_t) pcb->as.area.end - 4 * PGSIZE;
-    set_vm_map(&pcb->as, (uintptr_t) stack_bottom, 4 * PGSIZE);
-    printf("setting stack: %p -> %p\n", pcb->as.area.end, stack_bottom);
+    void* vstack_top = (void*) pcb->as.area.end - 4 * PGSIZE;
+    int stack_i;
+    for(stack_i=0; i< 4;i++){
+      map(&thispcb->as, vstack_top + 4096 * stack_i, pstack_top + 4096 * stack_i, 0 );
+    }
+
     context->GPRx = (uintptr_t) thispcb->as.area.end;
 
     context->mepc = (uintptr_t) naive_uload(thispcb, filename);
