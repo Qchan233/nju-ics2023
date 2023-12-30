@@ -117,6 +117,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 
 uintptr_t naive_uload(PCB *pcb, const char *filename) {
   // printf("brk: %x\n", pcb->max_brk);
+  printf("area end:%p\n", pcb->as.area.end);
   uintptr_t entry = loader(pcb, filename);
   printf("Address space: %p->%p\n", pcb->as.area.start, pcb->as.area.end);
 

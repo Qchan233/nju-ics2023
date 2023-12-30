@@ -86,7 +86,6 @@ envp_end:
       printf("mapping %p->%p\n", vstack_top + 4096 * stack_i, pstack_top + 4096 * stack_i);
       map(&thispcb->as, vstack_top + 4096 * stack_i, pstack_top + 4096 * stack_i, 0 );
     }
-    printf("area end:%p\n", pcb->as.area.end);
 
     context->GPRx = (uintptr_t) thispcb->as.area.end;
 
