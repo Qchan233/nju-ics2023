@@ -175,7 +175,7 @@ envp_end:
     }
     *stack_ptr = narg; 
 
-    // context->GPRx = (uintptr_t) stack_ptr;
+    context->GPRx = (uintptr_t) stack_ptr;
     // printf("Starting to load\n");
     // TODO add stack map from va to pa
     void * vstack_top = (void*) thispcb->as.area.end - 8 * PGSIZE;
