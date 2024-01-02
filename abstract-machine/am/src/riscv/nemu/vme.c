@@ -62,11 +62,8 @@ void __am_get_cur_as(Context *c) {
 }
 
 void __am_switch(Context *c) {
-  if (c->pdir ==NULL){
-    printf("kernel null\n");
-  }
   if (vme_enable && c->pdir != NULL) {
-    printf("switch\n");
+    // printf("switch\n");
     set_satp(c->pdir);
   }
 }
