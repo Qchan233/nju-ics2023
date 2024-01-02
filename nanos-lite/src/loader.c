@@ -187,7 +187,7 @@ envp_end:
     }
 
     context->GPRx = (uintptr_t) ((uint32_t)thispcb->as.area.end - stack_diff);
-    printf("pstack: %x\n", context->GPRx);
+    printf("vstack: %x\n", context->GPRx);
     
     context->mepc = (uintptr_t) naive_uload(thispcb, filename);
 
