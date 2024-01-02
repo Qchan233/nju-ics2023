@@ -186,7 +186,7 @@ envp_end:
     }
 
     context->GPRx = (uintptr_t) (pstack_top + 8 * 4096);
-    printf("pstack: %x", context->GPRx);
+    printf("pstack: %x\n", context->GPRx);
     
     context->mepc = (uintptr_t) naive_uload(thispcb, filename);
 
