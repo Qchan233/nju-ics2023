@@ -25,7 +25,7 @@ paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
 
   word_t pte1 = paddr_read(((cpu.satp & 0x3fffff) << 12) + vpn1 * 4, 4);
   if (!(pte1 & 0x1)) {
-    printf("vaddr %x\n", vaddr);
+    // printf("vaddr %x\n", vaddr);
     printf("pc: %x", cpu.pc);
   }
   assert(pte1 & 0x1); // check valid bit
