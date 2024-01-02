@@ -29,7 +29,7 @@ Context* __am_irq_handle(Context *c) {
     }
 
     c = user_handler(ev, c);
-    // printf("finished handling\n");
+    printf("finished handling\n");
     assert(c != NULL);
   }
   // __am_switch(c);
