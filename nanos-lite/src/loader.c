@@ -177,6 +177,7 @@ envp_end:
 
     // context->GPRx = (uintptr_t) stack_ptr;
     uint32_t stack_diff = (uint32_t) pstack_top - (uint32_t) stack_ptr;
+    printf("stack diff %x\n", stack_diff);
     // printf("Starting to load\n");
     // TODO add stack map from va to pa
     void * vstack_top = (void*) thispcb->as.area.end - 8 * PGSIZE;
