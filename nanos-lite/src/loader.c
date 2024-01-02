@@ -185,7 +185,7 @@ envp_end:
       map(&thispcb->as, vstack_top + 4096 * stack_i, pstack_top + 4096 * stack_i, 0 );
     }
 
-    context->GPRx = (uintptr_t) (pstack_top + 8 * 4096 - 4);
+    context->GPRx = (uintptr_t) (pstack_top + 8 * 4096);
     printf("pstack: %x\n", context->GPRx);
     
     context->mepc = (uintptr_t) naive_uload(thispcb, filename);
