@@ -187,7 +187,7 @@ envp_end:
 
     
     context->mepc = (uintptr_t) naive_uload(thispcb, filename);
-    context->GPRx = (uintptr_t) (pstack_top + 8 * 4096);
+    context->GPRx = (uintptr_t) (vstack_top + 8 * 4096);
 
 }
 
