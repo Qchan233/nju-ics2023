@@ -9,8 +9,8 @@ void __am_switch(Context *c);
 extern int current_pcb;
 Context* __am_irq_handle(Context *c) {
   __am_get_cur_as(c);  //save satp value to context structure
-  // printf("current pcb %d\n", current_pcb); 
-  // printf("__am_irq_handle c->pdir内容地址修改前 页表项:%p\t上下文地址%p\t所在栈帧:%p\n", c->pdir, c, &c);
+  printf("current pcb %d\n", current_pcb); 
+  printf("__am_irq_handle c->pdir内容地址修改前 页表项:%p\t上下文地址%p\t所在栈帧:%p\n", c->pdir, c, &c);
   if (user_handler) {
     Event ev = {0};
     switch (c->mcause) {
@@ -34,8 +34,8 @@ Context* __am_irq_handle(Context *c) {
     c = user_handler(ev, c);
     assert(c != NULL);
   }
-  // printf("current pcb %d\n", current_pcb); 
-  // printf("__am_irq_handle c->pdir内容地址修改后 页表项:%p\t上下文地址%p\t所在栈帧:%p\n", c->pdir, c, &c);
+  printf("current pcb %d\n", current_pcb); 
+  printf("__am_irq_handle c->pdir内容地址修改后 页表项:%p\t上下文地址%p\t所在栈帧:%p\n", c->pdir, c, &c);
   __am_switch(c);
   return c;
 }
