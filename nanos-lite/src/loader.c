@@ -126,6 +126,7 @@ uintptr_t naive_uload(PCB *pcb, const char *filename) {
 #define BUFSIZE 16
 void context_uload(PCB *thispcb, const char *filename, char *const argv[], char *const envp[]){
     protect(&thispcb->as);
+    printf("thispcb->as %x\n", thispcb->as.ptr);
     Context* context = ucontext(&thispcb->as, (Area) { thispcb->stack, thispcb->stack + STACK_SIZE}, NULL);
     thispcb->cp = context;
 
