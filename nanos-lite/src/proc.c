@@ -27,7 +27,6 @@ void context_kload(PCB* thispcb, void (*func)(void *), void *arg){
 void set_vm_map(AddrSpace* as, uintptr_t vaddr, size_t len);
 void map(AddrSpace *as, void *va, void *pa, int prot);
 
-
 void context_uload(PCB *thispcb, const char *filename, char *const argv[], char *const envp[]);
 void init_proc() {
   Log("Initializing processes...");
@@ -35,7 +34,7 @@ void init_proc() {
   // context_kload(&pcb[1], hello_fun, (void*) 1);
   char* argv[] = {"/bin/pal", "--skip", NULL};
   char* envp[] = {NULL};
-  context_uload(&pcb[1], "/bin/pal", argv, envp);
+  context_uload(&pcb[1], "/bin/dummy", argv, envp);
   current_pcb = 1;
   assert(pcb[0].cp != NULL);
   assert(pcb[1].cp != NULL);
