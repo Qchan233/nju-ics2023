@@ -176,6 +176,7 @@ envp_end:
     *stack_ptr = narg; 
 
     // context->GPRx = (uintptr_t) stack_ptr;
+    uint32_t stack_diff = (uint32_t) pstack_top - (uint32_t) stack_ptr;
     // printf("Starting to load\n");
     // TODO add stack map from va to pa
     void * vstack_top = (void*) thispcb->as.area.end - 8 * PGSIZE;
@@ -185,7 +186,7 @@ envp_end:
       map(&thispcb->as, vstack_top + 4096 * stack_i, pstack_top + 4096 * stack_i, 0 );
     }
 
-    context->GPRx = (uintptr_t) (pstack_top + 8 * 4096);
+    context->GPRx = (uintptr_t) ((uint32_t)thispcb->as.area.end - stack_diff);
     printf("pstack: %x\n", context->GPRx);
     
     context->mepc = (uintptr_t) naive_uload(thispcb, filename);
