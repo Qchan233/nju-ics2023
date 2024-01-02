@@ -183,7 +183,7 @@ envp_end:
     void * vstack_top = (void*) thispcb->as.area.end - 8 * PGSIZE;
     int stack_i;
     for(stack_i=0; stack_i< 8;stack_i++){
-      printf("mapping %p->%p\n", vstack_top + 4096 * stack_i, pstack_top + 4096 * stack_i);
+      printf("mapping %x->%x\n", vstack_top + 4096 * stack_i, pstack_top + 4096 * stack_i);
       map(&thispcb->as, vstack_top + 4096 * stack_i, pstack_top + 4096 * stack_i, 0 );
     }
 
