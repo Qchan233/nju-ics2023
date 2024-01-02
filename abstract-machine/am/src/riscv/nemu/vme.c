@@ -66,6 +66,7 @@ void __am_switch(Context *c) {
     printf("kernel null\n");
   }
   if (vme_enable && c->pdir != NULL) {
+    printf("switch\n");
     set_satp(c->pdir);
   }
 }
