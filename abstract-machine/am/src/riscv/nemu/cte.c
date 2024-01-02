@@ -8,6 +8,7 @@ void __am_get_cur_as(Context *c);
 void __am_switch(Context *c);
 Context* __am_irq_handle(Context *c) {
   __am_get_cur_as(c);  //save satp value to context structure
+  printf("__am_irq_handle c->pdir内容地址修改前 页表项:%p\t上下文地址%p\t所在栈帧:%p\n", c->pdir, c, &c);
   if (user_handler) {
     Event ev = {0};
     switch (c->mcause) {
@@ -33,6 +34,7 @@ Context* __am_irq_handle(Context *c) {
     assert(c != NULL);
   }
   __am_switch(c);
+  printf("__am_irq_handle c->pdir内容地址修改后 页表项:%p\t上下文地址%p\t所在栈帧:%p\n", c->pdir, c, &c);
   return c;
 }
 
