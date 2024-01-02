@@ -130,6 +130,7 @@ void context_uload(PCB *thispcb, const char *filename, char *const argv[], char 
     thispcb->cp = context;
 
     void* pstack_top = new_page(8); //低位
+    context->GPRx = (uintptr_t) (pstack_top + 8 * 4096);
     char* stack_top = (char*) context->GPRx;
 
     // printf("stack_top: %p\n", stack_top);
