@@ -7,6 +7,8 @@ void do_syscall(Context *c);
 void __am_get_cur_as(Context *c);
 void __am_switch(Context *c);
 extern int current_pcb;
+
+
 Context* __am_irq_handle(Context *c) {
   __am_get_cur_as(c);  //save satp value to context structure
   printf("current pcb %d\n", current_pcb); 

@@ -60,6 +60,8 @@ word_t get_csr_value(word_t csr){
     return cpu.mstatus;
   case 0x305:
     return cpu.mtvec;
+  case 0x340:
+    return cpu.mscratch;
   case 0x341:
     return cpu.mepc;
   case 0x342:
@@ -80,6 +82,9 @@ void set_csr_value(word_t csr, word_t val){
     break;
   case 0x305:
     cpu.mtvec = val;
+    break;
+  case 0x340:
+    cpu.mscratch = val;
     break;
   case 0x341:
     cpu.mepc = val;

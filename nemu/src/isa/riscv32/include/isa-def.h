@@ -33,6 +33,7 @@ typedef struct {
   word_t mcause;
   word_t mtvec;
   word_t satp;
+  word_t mscratch;
   Level level;
 } MUXDEF(CONFIG_RV64, riscv64_CPU_state, riscv32_CPU_state);
 
