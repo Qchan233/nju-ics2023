@@ -102,6 +102,7 @@ restore_contexts:
   STORE t2, (2 * XLEN)(sp)
   STORE t0, (3 * XLEN)(sp)
 
+  mv t0, sp
   li t1, USER
   LOAD t2, (OFFSET_NP + 3 * XLEN)(sp)
   bne t1, t2, not_user
