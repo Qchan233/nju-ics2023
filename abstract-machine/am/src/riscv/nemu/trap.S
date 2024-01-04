@@ -77,7 +77,6 @@ __am_asm_trap:
   STORE t1, OFFSET_STATUS(sp)
   STORE t2, OFFSET_EPC(sp)
 
-
   # set mstatus.MPRV to pass difftest
   li a0, (1 << 17)
   or t1, t1, a0
@@ -92,18 +91,28 @@ restore_contexts:
   LOAD t1, OFFSET_STATUS(sp)
   LOAD t2, OFFSET_EPC(sp)
 
+  csrw mcause, t0
   csrw mstatus, t1
   csrw mepc, t2
 
   MAP(REGS, POP)
 
-  li t4, USER
-  LOAD t5, OFFSET_NP(sp)
-  bne t4, t5, not_user
+  addi sp, sp, -3 * XLEN
+  STORE t0, XLEN(sp)
+  STORE t1, (2 * XLEN)(sp)
+  STORE t2, (3 * XLEN)(sp)
+  mv t0, sp
+
+  li t1, USER
+  LOAD t5, (OFFSET_NP + 3 * XLEN)(sp)
+  bne t1, t5, not_user
   csrw mscratch, sp
 
   not_user:
   LOAD sp, OFFSET_SP(sp)
-  
+  LOAD t1, (2 * XLEN)(t0)
+  LOAD t2, (3 * XLEN)(t0)
+  LOAD t0, XLEN(t0)
+
   // addi sp, sp, CONTEXT_SIZE
   mret
