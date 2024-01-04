@@ -107,8 +107,8 @@ restore_contexts:
   csrw mscratch, sp
 
   not_user:
-  LOAD t1, (XLEN)(t0)
-  LOAD t2, (2 * XLEN)(t0)
+  LOAD t1, (XLEN)(sp)
+  LOAD t2, (2 * XLEN)(sp)
   addi sp, sp, 2 * XLEN
 
   LOAD sp, OFFSET_SP(sp)
