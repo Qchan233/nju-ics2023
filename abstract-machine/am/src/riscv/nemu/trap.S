@@ -102,7 +102,7 @@ restore_contexts:
   STORE t2, (2 * XLEN)(sp)
 
   li t1, USER
-  LOAD t2, (OFFSET_NP + 3 * XLEN)(sp)
+  LOAD t2, (OFFSET_NP + 2 * XLEN)(sp)
   bne t1, t2, not_user
   csrw mscratch, sp
 
