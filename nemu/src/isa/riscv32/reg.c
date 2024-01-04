@@ -71,6 +71,10 @@ word_t isa_reg_str2val(const char *s, bool *success) {
     *success = true;
     return cpu.mscratch;
   }
+  if (strcmp(s, "satp") == 0){
+    *success = true;
+    return cpu.satp;
+  }
   if (strcmp(s, "pc") == 0){
     *success = true;
     return cpu.pc;
