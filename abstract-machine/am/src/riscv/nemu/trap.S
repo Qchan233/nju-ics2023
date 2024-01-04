@@ -104,8 +104,8 @@ restore_contexts:
   mv t0, sp
 
   li t1, USER
-  LOAD t5, (OFFSET_NP + 3 * XLEN)(sp)
-  bne t1, t5, not_user
+  LOAD t2, (OFFSET_NP + 3 * XLEN)(sp)
+  bne t1, t2, not_user
   csrw mscratch, sp
 
   not_user:
