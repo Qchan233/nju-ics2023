@@ -101,8 +101,9 @@ restore_contexts:
   LOAD t5, OFFSET_NP(sp)
   bne t4, t5, not_user
   csrw mscratch, sp
+
   not_user:
   LOAD sp, OFFSET_SP(sp)
   
-  addi sp, sp, CONTEXT_SIZE
+  // addi sp, sp, CONTEXT_SIZE
   mret
