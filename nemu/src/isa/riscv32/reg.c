@@ -35,6 +35,7 @@ void isa_reg_display() {
   printf("%-6s: %#-10x %-10u\n", "mstatus", cpu.mstatus, cpu.mstatus);
   printf("%-6s: %#-10x %-10u\n", "mepc", cpu.mepc, cpu.mepc);
   printf("%-6s: %#-10x %-10u\n", "mtvec", cpu.mtvec, cpu.mtvec);
+  printf("%-6s: %#-10x %-10u\n", "mscratch", cpu.mscratch, cpu.mscratch);
   printf("%-6s: %#-10x %-10u\n", "satp", cpu.satp, cpu.satp);
   
 }
