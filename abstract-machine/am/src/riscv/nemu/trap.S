@@ -97,19 +97,21 @@ restore_contexts:
 
   MAP(REGS, POP)
 
-  addi sp, sp, -2 * XLEN
+  addi sp, sp, -3 * XLEN
   STORE t1, (XLEN)(sp)
   STORE t2, (2 * XLEN)(sp)
+  STORE t0, (3 * XLEN)(sp)
 
   li t1, USER
-  LOAD t2, (OFFSET_NP + 2 * XLEN)(sp)
+  LOAD t2, (OFFSET_NP + 3 * XLEN)(sp)
   bne t1, t2, not_user
-  csrw mscratch, sp
+  csrw mscratch, t0
 
   not_user:
   LOAD t1, (XLEN)(sp)
   LOAD t2, (2 * XLEN)(sp)
-  addi sp, sp, 2 * XLEN
+  LOAD t0, (3 * XLEN)(sp)
+  addi sp, sp, 3 * XLEN
 
   LOAD sp, OFFSET_SP(sp)
 
