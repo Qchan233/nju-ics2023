@@ -189,7 +189,7 @@ envp_end:
     }
 
     context->GPRx = (uintptr_t) ((uint32_t)thispcb->as.area.end - stack_diff);
-    context->gpr[2] = (uintptr_t) ((uint32_t)thispcb->as.area.end);
+    context->gpr[2] = (uintptr_t) ((uint32_t)thispcb->as.area.end - stack_diff);
     // context->GPRx = (uintptr_t) stack_ptr;
     printf("vstack: %x\n", context->GPRx);
     printf("mapped vstack: %x\n", get_addr(&thispcb->as, 0x7ffff9bc));
