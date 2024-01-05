@@ -54,11 +54,11 @@ __am_asm_trap:
   STORE t4, XLEN(sp)  // save t4
   
   li t4, USER
-  // STORE t4, (OFFSET_NP + XLEN - CONTEXT_SIZE)(sp)  // np = KERNEL;
+  STORE t4, (OFFSET_NP + XLEN - CONTEXT_SIZE)(sp)  // np = KERNEL;
   csrr t4, mscratch
   bnez t4, next_step // if (ksp != 0) np = USER
   li t4, KERNEL
-  // STORE t4, (OFFSET_NP + XLEN - CONTEXT_SIZE)(sp)  // np = USER;
+  STORE t4, (OFFSET_NP + XLEN - CONTEXT_SIZE)(sp)  // np = USER;
 
   next_step:
   LOAD t4, XLEN(sp)   // restore t4
