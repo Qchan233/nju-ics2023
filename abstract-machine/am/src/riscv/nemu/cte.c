@@ -11,7 +11,6 @@ extern int current_pcb;
 
 Context* __am_irq_handle(Context *c) {
   __am_get_cur_as(c);  //save satp value to context structure
-  printf("current pcb %d\n", current_pcb); 
   printf("np:%x\n", c->np);
   printf("__am_irq_handle c->pdir内容地址修改前 页表项:%p\t上下文地址%p\t所在栈帧:%p\n", c->pdir, c, &c);
   if (user_handler) {
