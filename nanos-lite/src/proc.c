@@ -35,7 +35,7 @@ void init_proc() {
   char* argv[] = {"/bin/pal", "--skip", NULL};
   char* envp[] = {NULL};
   context_uload(&pcb[1], "/bin/pal", argv, envp);
-  context_uload(&pcb[1], "/bin/hello", argv, envp);
+  context_uload(&pcb[0], "/bin/hello", argv, envp);
   current_pcb = 1;
   assert(pcb[0].cp != NULL);
   assert(pcb[1].cp != NULL);
