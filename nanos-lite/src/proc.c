@@ -31,10 +31,11 @@ void map(AddrSpace *as, void *va, void *pa, int prot);
 void context_uload(PCB *thispcb, const char *filename, char *const argv[], char *const envp[]);
 void init_proc() {
   Log("Initializing processes...");
-  context_kload(&pcb[0], hello_fun, (void*) 0);
+  // context_kload(&pcb[0], hello_fun, (void*) 0);
   char* argv[] = {"/bin/pal", "--skip", NULL};
   char* envp[] = {NULL};
   context_uload(&pcb[1], "/bin/pal", argv, envp);
+  context_uload(&pcb[1], "/bin/hello", argv, envp);
   current_pcb = 1;
   assert(pcb[0].cp != NULL);
   assert(pcb[1].cp != NULL);
