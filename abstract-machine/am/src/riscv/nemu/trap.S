@@ -43,13 +43,12 @@ f(30) f(31)
 .align 3
 .globl __am_asm_trap
 __am_asm_trap:
-  STORE sp, (OFFSET_SP - CONTEXT_SIZE)(sp)
-
   csrrw sp, mscratch, sp   // (1) atomically exchange sp and mscratch
   bnez sp, save_context    // (2) take the branch if we trapped from user
   csrr sp, mscratch        // (3) if we trapped from kernel, restore the original sp
 
   save_context:
+  STORE sp, (OFFSET_SP - CONTEXT_SIZE)(sp)
   addi sp, sp, -XLEN
   STORE t4, XLEN(sp)  // save t4
   
