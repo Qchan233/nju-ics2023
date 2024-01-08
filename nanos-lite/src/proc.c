@@ -39,8 +39,6 @@ void init_proc() {
   assert(pcb[0].cp != NULL);
   assert(pcb[1].cp != NULL);
   switch_boot_pcb();
-  // load program here
-  // naive_uload(NULL, "/bin/nterm");
 }
 
 Context* schedule(Context *prev) {
