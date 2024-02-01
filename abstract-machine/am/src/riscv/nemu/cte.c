@@ -4,7 +4,17 @@
 
 static Context* (*user_handler)(Event, Context*) = NULL;
 void do_syscall(Context *c);
+void __am_get_cur_as(Context *c);
+void __am_switch(Context *c);
+extern int current_pcb;
+
+
+
 Context* __am_irq_handle(Context *c) {
+  __am_get_cur_as(c);  //save satp value to context structure
+  printf("np:%x\n", c->np);
+  printf("__am_irq_handle c->pdir内容地址修改前 页表项:%p\t上下文地址%p\t所在栈帧:%p\n", c->pdir, c, &c);
+  printf("stored sp: %x\n", c->gpr[2]);
   if (user_handler) {
     Event ev = {0};
     switch (c->mcause) {
@@ -28,7 +38,9 @@ Context* __am_irq_handle(Context *c) {
     c = user_handler(ev, c);
     assert(c != NULL);
   }
-
+  printf("__am_irq_handle c->pdir内容地址修改后 页表项:%p\t上下文地址%p\t所在栈帧:%p\n", c->pdir, c, &c);
+  printf("stored sp: %x\n", c->gpr[2]);
+  __am_switch(c);
   return c;
 }
 
@@ -44,9 +56,20 @@ bool cte_init(Context*(*handler)(Event, Context*)) {
   return true;
 }
 
+
 Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
-  return NULL;
+  Context* context = (kstack.end - sizeof(Context));
+  
+  // printf("Entry %p\n", entry);
+  context->mepc = (uintptr_t) entry;
+  context->gpr[10] = (uint32_t) arg;
+  context->pdir = NULL;
+  context->np = 0; 
+  context->gpr[2] = (uintptr_t) kstack.end;
+  printf("kernel stack: %p\n", kstack.end);
+  return context;
 }
+
 
 void yield() {
 #ifdef __riscv_e

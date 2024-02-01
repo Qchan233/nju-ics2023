@@ -1,6 +1,8 @@
 .globl  _start
 _start:
 
+mv sp, a0
+
 #if defined(__ISA_AM_NATIVE__)
 
   movq $0, %rbp

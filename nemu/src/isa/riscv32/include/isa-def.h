@@ -32,6 +32,8 @@ typedef struct {
   word_t mstatus;
   word_t mcause;
   word_t mtvec;
+  word_t satp;
+  word_t mscratch;
   Level level;
 } MUXDEF(CONFIG_RV64, riscv64_CPU_state, riscv32_CPU_state);
 
@@ -42,6 +44,6 @@ typedef struct {
   } inst;
 } MUXDEF(CONFIG_RV64, riscv64_ISADecodeInfo, riscv32_ISADecodeInfo);
 
-#define isa_mmu_check(vaddr, len, type) (MMU_DIRECT)
+#define isa_mmu_check(vaddr, len, type) ((cpu.satp & 0x80000000) ? MMU_TRANSLATE : MMU_DIRECT)
 
 #endif

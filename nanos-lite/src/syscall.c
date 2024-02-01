@@ -25,8 +25,13 @@ typedef size_t (*WriteFn) (const void *buf, size_t offset, size_t len);
 WriteFn get_write_fn(int fd);
 ReadFn get_read_fn(int fd);
 void naive_uload(PCB *pcb, const char *filename);
+void context_uload(PCB *thispcb, const char *filename, char *const argv[], char *const envp[]);
+void switch_boot_pcb();
+int mm_brk(uintptr_t brk);
 
 extern size_t *open_offsets;
+extern PCB pcb[];
+extern int current_pcb;
 
 void do_syscall(Context *c) {
   uintptr_t a[4];
@@ -38,21 +43,15 @@ void do_syscall(Context *c) {
   // printf("syscall %s\n", sysname[a[0]]);
 
   switch (a[0]) {
-    case SYS_exit: naive_uload(NULL, "/bin/nterm"); break;
+    case SYS_exit: 
+      halt(0);
+      char *argv[] = {"/bin/nterm", NULL};
+      context_uload(&pcb[current_pcb], "/bin/nterm", argv, NULL);
+      switch_boot_pcb();
+      yield();
+      break; 
     case SYS_open: c->GPRx = fs_open((char *)a[1], (int) a[2], (int) a[3]); break;
     case SYS_write:
-      // int fd = (int) a[1];
-      // if (fd == 1 || fd == 2){
-      //   int count = (int) a[3];
-      //   int i;
-      //   for (i = 0; i < count; i++){
-      //     putch(((char *)a[2])[i]);
-      //   }
-      //   c->GPRx = count;
-      // }
-      // else{
-      //   c->GPRx = fs_write(fd, (void *)a[2], (size_t)a[3]);
-      // }
       WriteFn wfn = get_write_fn(a[1]);
       if (wfn == NULL){
         c->GPRx = fs_write(a[1], (void *)a[2], (size_t)a[3]);
@@ -62,7 +61,8 @@ void do_syscall(Context *c) {
       }
     break;
     case SYS_brk:
-      c->GPRx = 0;
+      uintptr_t addr = (uintptr_t)(a[1]);
+      c->GPRx = mm_brk(addr);
       break;
     case SYS_read: 
       ReadFn rfn = get_read_fn(a[1]);
@@ -73,10 +73,14 @@ void do_syscall(Context *c) {
         c->GPRx = rfn((void *)a[2], open_offsets[a[1]], a[3]);
       }
       break;
-
     case SYS_close: c->GPRx = fs_close((int) a[1]); break;
     case SYS_lseek: c->GPRx = fs_lseek((int) a[1], (size_t) a[2], (int) a[3]); break;
-    case SYS_execve: naive_uload(NULL, (char *)a[1]); break;
+    case SYS_execve: 
+      context_uload(&pcb[current_pcb], (char *)a[1], (char **)a[2], (char **)a[3]);
+      switch_boot_pcb();
+      yield();
+      break;
+
     case SYS_gettimeofday: 
         struct timeval *tv = (struct timeval *)a[1];
         tv->tv_usec = io_read(AM_TIMER_UPTIME).us;

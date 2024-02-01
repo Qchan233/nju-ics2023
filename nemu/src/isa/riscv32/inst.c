@@ -60,10 +60,14 @@ word_t get_csr_value(word_t csr){
     return cpu.mstatus;
   case 0x305:
     return cpu.mtvec;
+  case 0x340:
+    return cpu.mscratch;
   case 0x341:
     return cpu.mepc;
   case 0x342:
     return cpu.mcause; 
+  case 0x180:
+    return cpu.satp;
   default:
     return 0;
     break;
@@ -79,11 +83,17 @@ void set_csr_value(word_t csr, word_t val){
   case 0x305:
     cpu.mtvec = val;
     break;
+  case 0x340:
+    cpu.mscratch = val;
+    break;
   case 0x341:
     cpu.mepc = val;
     break;
   case 0x342:
     cpu.mcause = val; 
+    break;
+  case 0x180:
+    cpu.satp = val;
     break;
   default:
     return;
@@ -94,16 +104,16 @@ word_t env_call(Level level){
   switch (level)
   {
   case U:
-    cpu.level = S;
+    // cpu.level = S;
     return 8;
   case S:
-    cpu.level = M;
+    // cpu.level = M;
     return 9;
   case M:
-    cpu.level = M;
+    // cpu.level = M;
     return 11;
   }
-  return level;
+  return 0;
 }
 
 

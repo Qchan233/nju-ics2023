@@ -62,6 +62,31 @@ char* itoa(int num, char* str, int base)
     return str;
 }
 
+char* uitoa(unsigned int num, char* str, int base)
+{
+    char* index = "0123456789ABCDEF";
+    int i = 0;
+ 
+    /* Handle 0 explicitly, otherwise empty string is
+     * printed for 0 */
+    if (num == 0) {
+        str[i++] = '0';
+        str[i] = '\0';
+        return str;
+    }
+    
+    while (num != 0) {
+        int rem = ((unsigned int) num) % base;
+        str[i++] = index[rem];
+        num = num / base;
+    }
+  
+    str[i] = '\0'; // Append string terminator
+    // Reverse the string
+    reverse(str, i);
+    return str;
+}
+
 int vsnprintf(char *out, size_t n, const char *fmt, va_list ap);
 #define BUFFER_SIZE 2048
 int printf(const char *fmt, ...) {
@@ -138,7 +163,7 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
       case 'p':
       case 'x':
         unsigned int value2 = va_arg(ap, int);
-        itoa(value2, buffer, 16);
+        uitoa(value2, buffer, 16);
         dlen = strlen(buffer);
         while(format_length > dlen){
           format_length--;

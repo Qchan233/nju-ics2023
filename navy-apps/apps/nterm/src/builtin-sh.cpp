@@ -22,12 +22,23 @@ static void sh_prompt() {
   sh_printf("sh> ");
 }
 
+
+#define MAX_ARG_COUNT 16
+char *argv_buf[MAX_ARG_COUNT];
 static void sh_handle_cmd(const char *cmd) {
   char* cmd_copy = strdup(cmd);
   cmd_copy[strcspn(cmd_copy, "\n")] = 0;
-  char *binary = strtok(cmd_copy, " ");
+  int argc = 0;
+  char *token = strtok(cmd_copy, " ");
+  while (token != NULL && argc < MAX_ARG_COUNT) {
+      argv_buf[argc++] = strdup(token);
+      // printf("%s\n", token);
+      token = strtok(NULL, " ");
+  }
+  argv_buf[argc] = NULL;
+  free(cmd_copy);
 
-  execvp(binary, NULL);
+  execve(argv_buf[0], argv_buf, NULL);
 }
 
 void builtin_sh_run() {

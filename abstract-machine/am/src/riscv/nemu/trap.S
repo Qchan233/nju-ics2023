@@ -31,15 +31,40 @@ f(30) f(31)
 #define PUSH(n) STORE concat(x, n), (n * XLEN)(sp);
 #define POP(n)  LOAD  concat(x, n), (n * XLEN)(sp);
 
-#define CONTEXT_SIZE  ((NR_REGS + 3 + 1) * XLEN)
+#define CONTEXT_SIZE  ((NR_REGS + 3 + 1 + 1) * XLEN)
 #define OFFSET_SP     ( 2 * XLEN)
 #define OFFSET_CAUSE  ((NR_REGS + 0) * XLEN)
 #define OFFSET_STATUS ((NR_REGS + 1) * XLEN)
 #define OFFSET_EPC    ((NR_REGS + 2) * XLEN)
+#define OFFSET_NP     ((NR_REGS + 4) * XLEN)
+#define KERNEL 0
+#define USER   1
 
 .align 3
 .globl __am_asm_trap
 __am_asm_trap:
+  STORE sp, (OFFSET_SP - CONTEXT_SIZE)(sp)
+
+  csrrw sp, mscratch, sp   // (1) atomically exchange sp and mscratch
+  bnez sp, save_context    // (2) take the branch if we trapped from user
+  csrr sp, mscratch        // (3) if we trapped from kernel, restore the original sp
+
+  save_context:
+  addi sp, sp, -XLEN
+  STORE t4, XLEN(sp)  // save t4
+  
+  li t4, USER
+  STORE t4, (OFFSET_NP + XLEN - CONTEXT_SIZE)(sp)  // np = KERNEL;
+  csrr t4, mscratch
+  bnez t4, next_step // if (ksp != 0) np = USER
+  li t4, KERNEL
+  STORE t4, (OFFSET_NP + XLEN - CONTEXT_SIZE)(sp)  // np = USER;
+
+  next_step:
+  LOAD t4, XLEN(sp)   // restore t4
+  addi sp, sp, XLEN
+
+  csrw mscratch, x0       // ksp = 0;
   addi sp, sp, -CONTEXT_SIZE
 
   MAP(REGS, PUSH)
@@ -59,13 +84,37 @@ __am_asm_trap:
 
   mv a0, sp
   jal __am_irq_handle
+  mv sp, a0
 
+restore_contexts:
+  LOAD t0, OFFSET_CAUSE(sp)
   LOAD t1, OFFSET_STATUS(sp)
   LOAD t2, OFFSET_EPC(sp)
+
+  csrw mcause, t0
   csrw mstatus, t1
   csrw mepc, t2
 
   MAP(REGS, POP)
 
-  addi sp, sp, CONTEXT_SIZE
+  addi sp, sp, -3 * XLEN
+  STORE t1, (XLEN)(sp)
+  STORE t2, (2 * XLEN)(sp)
+  STORE t0, (3 * XLEN)(sp)
+
+  addi t0, sp, 3 * XLEN
+  li t1, USER
+  LOAD t2, (OFFSET_NP + 3 * XLEN)(sp)
+  bne t1, t2, not_user
+  csrw mscratch, t0 
+
+  not_user:
+  LOAD t1, (XLEN)(sp)
+  LOAD t2, (2 * XLEN)(sp)
+  LOAD t0, (3 * XLEN)(sp)
+  addi sp, sp, 3 * XLEN
+
+  LOAD sp, OFFSET_SP(sp)
+
+  // addi sp, sp, CONTEXT_SIZE
   mret

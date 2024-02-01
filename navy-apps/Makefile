@@ -65,6 +65,9 @@ ifeq ($(MAKECMDGOALS),archive)
 LIBS := $(LIB_DEP) # overwrite here to only build and archive the dependent libraries
 endif
 
+## Virtual Memory
+VME=1
+
 ### Files to be linked: object files (`.o`) and libraries (`.a`)
 OBJS      = $(addprefix $(DST_DIR)/, $(addsuffix .o, $(basename $(SRCS))))
 LIBS     := $(sort $(LIBS)) # lazy evaluation ("=") causes infinite recursions
@@ -167,7 +170,7 @@ $(CLEAN_ALL):
 
 ### Build fsimg and ramdisk for Nanos-lite
 APPS = menu nterm pal
-TESTS = hello dummy file-test timer-test event-test bmp-test
+TESTS = hello dummy file-test timer-test event-test bmp-test exec-test
 
 fsimg: $(addprefix apps/, $(APPS)) $(addprefix tests/, $(TESTS))
 	-for t in $^; do $(MAKE) -s -C $(NAVY_HOME)/$$t install; done
