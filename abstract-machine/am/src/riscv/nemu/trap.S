@@ -87,6 +87,6 @@ restore_contexts:
 //回到了用户栈
   mv sp, t4
   LOAD t4, (sp)
-  addi sp, sp, XLEN
+//  addi sp, sp, XLEN
   
   mret
