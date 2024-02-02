@@ -73,7 +73,7 @@ Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
   context->pdir = NULL;
   context->np = KERNEL; 
   context->gpr[2] = (uintptr_t) kstack.end;
-  printf("kernel stack: %p\n", kstack.end);
+  printf("kernel stack end: %p\n", kstack.end);
   return context;
 }
 
