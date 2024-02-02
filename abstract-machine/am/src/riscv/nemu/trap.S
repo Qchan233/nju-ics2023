@@ -75,7 +75,6 @@ __am_asm_trap:
   csrw mscratch, t4
 
 restore_contexts:
-
   LOAD t1, OFFSET_STATUS(sp)
   LOAD t2, OFFSET_EPC(sp)
   csrw mstatus, t1
