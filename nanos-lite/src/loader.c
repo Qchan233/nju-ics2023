@@ -180,7 +180,6 @@ envp_end:
     uint32_t stack_diff = (uint32_t) pstack_top + + 8 * 4096 - (uint32_t) stack_ptr;
     printf("stack diff: %x\n", stack_diff);
     // printf("Starting to load\n");
-    // TODO add stack map from va to pa
     void * vstack_top = (void*) thispcb->as.area.end - 8 * PGSIZE;
     int stack_i;
     for(stack_i=0; stack_i< 8;stack_i++){

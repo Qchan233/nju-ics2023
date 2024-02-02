@@ -9,8 +9,15 @@ void __am_switch(Context *c);
 extern int current_pcb;
 
 
+#define KERNEL 3
+#define USER 0
 
 Context* __am_irq_handle(Context *c) {
+  uintptr_t mscratch;
+  uintptr_t kas = 0;
+  asm volatile("csrr %0, mscratch" : "=r"(mscratch));
+  c->np = (mscratch == 0 ? KERNEL : USER);
+  asm volatile("csrw mscratch, %0" : : "r"(kas));
   __am_get_cur_as(c);  //save satp value to context structure
   printf("np:%x\n", c->np);
   printf("__am_irq_handle c->pdir内容地址修改前 页表项:%p\t上下文地址%p\t所在栈帧:%p\n", c->pdir, c, &c);
@@ -64,7 +71,7 @@ Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
   context->mepc = (uintptr_t) entry;
   context->gpr[10] = (uint32_t) arg;
   context->pdir = NULL;
-  context->np = 0; 
+  context->np = KERNEL; 
   context->gpr[2] = (uintptr_t) kstack.end;
   printf("kernel stack: %p\n", kstack.end);
   return context;
