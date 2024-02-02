@@ -47,5 +47,6 @@ Context* schedule(Context *prev) {
   current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
   current_pcb = (current_pcb == 0 ? 1 : 0);
   // printf("current_pcb: %d\n", current_pcb);
+  assert(current->cp != 0);
   return current->cp;
 }
