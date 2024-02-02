@@ -36,7 +36,7 @@ void init_proc() {
   char* argv[] = {"/bin/pal", "--skip", NULL};
   char* envp[] = {NULL};
   context_uload(&pcb[1], "/bin/pal", argv, envp);
-  current_pcb = 1;
+  current_pcb = 0;
   printf("pcb1:%x\n", &(pcb[1].cp));
   assert(pcb[0].cp != NULL);
   assert(pcb[1].cp != NULL);
