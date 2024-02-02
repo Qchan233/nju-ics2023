@@ -4,6 +4,7 @@
 void do_syscall(Context *c);
 Context* schedule(Context *prev);
 static Context* do_event(Event e, Context* c) {
+  printf("do event\n");
   switch (e.event) {
     case EVENT_YIELD:
       return schedule(c);
@@ -14,7 +15,7 @@ static Context* do_event(Event e, Context* c) {
       break;
     default: panic("Unhandled event ID = %d", e.event);
   }
-  printf("c:%x\n", c);
+  // printf("c:%x\n", c);
   return c;
 }
 
