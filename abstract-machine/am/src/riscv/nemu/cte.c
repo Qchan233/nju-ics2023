@@ -65,7 +65,7 @@ bool cte_init(Context*(*handler)(Event, Context*)) {
 
 
 Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
-  Context* context = (kstack.end - sizeof(Context));
+  Context* context = (kstack.end - sizeof(Context) - 4);
   
   // printf("Entry %p\n", entry);
   context->mepc = (uintptr_t) entry;
