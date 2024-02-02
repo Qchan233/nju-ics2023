@@ -21,7 +21,8 @@ void hello_fun(void *arg) {
 }
 
 void context_kload(PCB* thispcb, void (*func)(void *), void *arg){
-    // printf("kernel stack: %p\n", thispcb->stack);
+    printf("kernel stack: %p\n", thispcb->stack);
+    printf("Stack end: %x\n", thispcb->stack + STACK_SIZE);
     thispcb->cp = kcontext((Area) { thispcb->stack, thispcb->stack + STACK_SIZE}, func, arg);
 }
 
