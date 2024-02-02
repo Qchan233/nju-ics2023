@@ -37,6 +37,7 @@ void init_proc() {
   char* envp[] = {NULL};
   context_uload(&pcb[1], "/bin/pal", argv, envp);
   current_pcb = 1;
+  printf("pcb1:%x\n", &pcb[1].cp);
   assert(pcb[0].cp != NULL);
   assert(pcb[1].cp != NULL);
   switch_boot_pcb();
