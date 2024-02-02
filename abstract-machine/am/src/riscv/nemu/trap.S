@@ -83,7 +83,7 @@ restore_contexts:
   MAP(REGS, POP)
 
   LOAD t4, OFFSET_SP(sp)
-//  addi sp, sp, CONTEXT_SIZE
+  addi sp, sp, CONTEXT_SIZE
 //回到了用户栈
   mv sp, t4
   LOAD t4, (sp)
