@@ -2,7 +2,7 @@
 
 #define MAX_NR_PROC 4
 uintptr_t naive_uload(PCB *pcb, const char *filename);
-/*static*/ PCB pcb[MAX_NR_PROC] __attribute__((used)) = {};
+PCB pcb[MAX_NR_PROC] __attribute__((used)) = {};
 static PCB pcb_boot = {};
 int current_pcb;
 PCB *current = NULL;
@@ -37,7 +37,7 @@ void init_proc() {
   char* envp[] = {NULL};
   context_uload(&pcb[1], "/bin/pal", argv, envp);
   current_pcb = 1;
-  printf("pcb1:%x\n", &pcb[1].cp);
+  printf("pcb1:%x\n", &(pcb[1].cp));
   assert(pcb[0].cp != NULL);
   assert(pcb[1].cp != NULL);
   switch_boot_pcb();
