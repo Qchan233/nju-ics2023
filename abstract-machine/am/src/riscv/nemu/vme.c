@@ -91,7 +91,6 @@ Context *ucontext(AddrSpace *as, Area kstack, void *entry) {
   Context* context = (kstack.end - sizeof(Context));
   context->mepc = (uintptr_t) entry;
   context->pdir = as->ptr;
-  context->np = 1; // 1 for USER, 0 for KERNEL
-  // context->GPRx = (uintptr_t) as->area.end;
+  context->np = 0; 
   return context;
 }

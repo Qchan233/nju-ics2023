@@ -2,7 +2,7 @@
 
 #define MAX_NR_PROC 4
 uintptr_t naive_uload(PCB *pcb, const char *filename);
-/*static*/ PCB pcb[MAX_NR_PROC] __attribute__((used)) = {};
+PCB pcb[MAX_NR_PROC] __attribute__((used)) = {};
 static PCB pcb_boot = {};
 int current_pcb;
 PCB *current = NULL;
@@ -21,7 +21,8 @@ void hello_fun(void *arg) {
 }
 
 void context_kload(PCB* thispcb, void (*func)(void *), void *arg){
-    // printf("kernel stack: %p\n", thispcb->stack);
+    printf("kernel stack: %p\n", thispcb->stack);
+    printf("Stack end: %x\n", thispcb->stack + STACK_SIZE);
     thispcb->cp = kcontext((Area) { thispcb->stack, thispcb->stack + STACK_SIZE}, func, arg);
 }
 
@@ -36,16 +37,18 @@ void init_proc() {
   char* envp[] = {NULL};
   context_uload(&pcb[1], "/bin/pal", argv, envp);
   current_pcb = 1;
+  printf("pcb1:%x\n", &(pcb[1].cp));
   assert(pcb[0].cp != NULL);
   assert(pcb[1].cp != NULL);
   switch_boot_pcb();
 }
 
 Context* schedule(Context *prev) {
-  // printf("schedule\n");
+  assert(pcb[1].cp != NULL);
   current->cp = prev;
   current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
   current_pcb = (current_pcb == 0 ? 1 : 0);
-  // printf("current_pcb: %d\n", current_pcb);
+  printf("current_pcb: %d\n", current_pcb);
+  assert(current->cp != 0);
   return current->cp;
 }

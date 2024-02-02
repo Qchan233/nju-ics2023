@@ -118,7 +118,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 uintptr_t naive_uload(PCB *pcb, const char *filename) {
   // printf("brk: %x\n", pcb->max_brk);
   uintptr_t entry = loader(pcb, filename);
-  printf("Address space: %p->%p\n", pcb->as.area.start, pcb->as.area.end);
+  // printf("Address space: %p->%p\n", pcb->as.area.start, pcb->as.area.end);
 
   return entry;
 }
@@ -180,7 +180,6 @@ envp_end:
     uint32_t stack_diff = (uint32_t) pstack_top + + 8 * 4096 - (uint32_t) stack_ptr;
     printf("stack diff: %x\n", stack_diff);
     // printf("Starting to load\n");
-    // TODO add stack map from va to pa
     void * vstack_top = (void*) thispcb->as.area.end - 8 * PGSIZE;
     int stack_i;
     for(stack_i=0; stack_i< 8;stack_i++){
@@ -190,9 +189,8 @@ envp_end:
 
     context->GPRx = (uintptr_t) ((uint32_t)thispcb->as.area.end - stack_diff);
     context->gpr[2] = (uintptr_t) ((uint32_t)thispcb->as.area.end - stack_diff);
-    // context->GPRx = (uintptr_t) stack_ptr;
     printf("vstack: %x\n", context->GPRx);
-    printf("mapped vstack: %x\n", get_addr(&thispcb->as, 0x7ffff9bc));
+    printf("mapped vstack: %x\n", get_addr(&thispcb->as, context->gpr[2]));
     
     context->mepc = (uintptr_t) naive_uload(thispcb, filename);
 }
